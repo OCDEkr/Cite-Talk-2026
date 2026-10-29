@@ -13,4 +13,4 @@ The folder lives inside a larger Obsidian vault (`/Users/kevin/Documents/Obsidia
 - Write content as Obsidian-flavored Markdown. Use `[[wikilinks]]` to link notes within this folder, and keep links relative to this folder so they resolve when the repo is cloned on its own.
 - Put reusable sources and citations in their own notes so the talk outline can link to them rather than duplicating text.
 - Do not commit Obsidian workspace state (`.obsidian/workspace*.json`) or OS metadata; `.gitignore` already excludes these.
-- The GitHub remote is `git@github.com:ocdekr/Cite-Talk-2026.git` over SSH (key: `~/.ssh/id_ed25519`). Default branch is `main`.
+- The GitHub remote is `git@github.com:OCDEkr/Cite-Talk-2026.git` over SSH (key: `~/.ssh/id_ed25519`). Default branch is `main`.
