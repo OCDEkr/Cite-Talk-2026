@@ -11,9 +11,10 @@ Working outline for Cite Talk 2026: AI for Cyber Security. Each section is its o
 1. [[Intro]]: what AI-assisted coding is, how it applies to security work, and why it matters most for small teams. Drafted 2026-10-29.
 2. Hands-on setup: [[Setup Walkthrough]] (presenter) and [[Setup Guide]] (attendee handout). Drafted 2026-10-29.
 3. Examples and demos: [[Examples]], five areas with prompts (GRC, red team, blue team, code review, OSINT). Drafted 2026-10-29.
-4. Guardrails (reading before running, test environments, data handling): not started.
-5. Getting started (tools, cost, first project): not started.
-6. Close: not started.
+4. Skills, agents, and plugins: [[Skills Agents Plugins]], a deck plus manual tutorials and ECC install. Drafted 2026-10-29.
+5. Guardrails (reading before running, test environments, data handling): not started.
+6. Getting started (tools, cost, first project): not started.
+7. Close: not started.
 
 Supporting notes:
 - [[Sources]]: citations, with TODO markers for claims that still need backing.
