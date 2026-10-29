@@ -24,9 +24,15 @@ Everything below happens in a terminal.
 
 - macOS: open Terminal from Applications > Utilities, or press Cmd+Space and type "Terminal".
 - Linux: Ctrl+Alt+T on most desktops.
-- Windows: install WSL first (step 2), then use the Ubuntu app it creates. Claude Code also runs natively in PowerShell, but this guide uses WSL so that Windows, Mac, and Linux users all type the same commands from here on.
+- Windows: you have two choices, covered in step 2. Either one gets you a Bash shell so the commands in this guide match what Mac and Linux users type. Claude Code also runs in plain PowerShell, but this guide does not cover that path.
 
-## 2. Windows only: install WSL
+## 2. Windows only: pick WSL or Git Bash
+
+Option A, WSL, gives you a full Ubuntu Linux inside Windows. It is the better choice if you expect to do more Linux-style work later, and it supports Claude Code's sandboxing. It needs admin rights and a reboot.
+
+Option B, Git Bash, is a lighter install. It is a Bash shell that runs directly on Windows and comes with Git and ssh-keygen built in. Pick this if WSL is blocked on your machine, you cannot reboot, or you just want the smaller download. Claude Code uses Git Bash as its shell when it is present.
+
+### Option A: WSL
 
 Open PowerShell as Administrator and run:
 
@@ -43,6 +49,34 @@ cat /etc/os-release | head -2
 ```
 
 You should see an Ubuntu version.
+
+### Option B: Git Bash
+
+Download Git for Windows from https://git-scm.com/downloads/win and run the installer, or from PowerShell:
+
+```powershell
+winget install Git.Git
+```
+
+Accept the installer defaults. The one worth checking is "Git from the command line and also from 3rd-party software", which puts Git on your PATH so VS Code and Claude Code can find it.
+
+After it finishes, open "Git Bash" from the Start menu. From here on, "terminal" means that Git Bash window.
+
+Check:
+
+```bash
+git --version
+echo $HOME
+```
+
+The second line shows your Windows user folder in Unix form, something like `/c/Users/yourname`. That is where `~/.bashrc` and `~/.ssh` will live.
+
+Where Git Bash differs from WSL in the rest of this guide:
+
+- Step 3: install Python and Node with winget, under the "Windows native" heading. Git is already installed.
+- Step 4: use the PowerShell install command for Claude Code, then run `claude` from Git Bash.
+- Step 6: the alias goes in `~/.bashrc`, the same as Linux. Git Bash creates the file if it is missing.
+- Step 9: the WSL extension is not needed. Set Git Bash as the VS Code terminal instead.
 
 ## 3. Install Git, Python, and Node
 
@@ -77,11 +111,15 @@ source ~/.bashrc
 nvm install --lts
 ```
 
-### Windows native (only if you skipped WSL)
+### Windows native (Git Bash users)
+
+Run this in PowerShell, not in Git Bash. You already have Git from step 2.
 
 ```powershell
-winget install Git.Git Python.Python.3.12 OpenJS.NodeJS.LTS
+winget install Python.Python.3.12 OpenJS.NodeJS.LTS
 ```
+
+Then close Git Bash and open it again so it sees the new PATH. In Git Bash, `python3` may not exist; use `python --version` instead.
 
 ### Check
 
@@ -112,7 +150,7 @@ macOS, Linux, and WSL:
 curl -fsSL https://claude.ai/install.sh | bash
 ```
 
-Windows native PowerShell, if you skipped WSL:
+Windows with Git Bash: run the installer in PowerShell, then use `claude` from Git Bash afterward.
 
 ```powershell
 irm https://claude.ai/install.ps1 | iex
@@ -153,7 +191,7 @@ If the browser does not open (common in WSL), the terminal prints a URL. Copy it
 
 By default Claude Code asks before every file edit and every command. That is the right default for your real work. For the exercises in this session we are going to turn that off, because stopping to approve every step would eat the whole hour.
 
-Add this line to `~/.zshrc` on macOS or `~/.bashrc` on Linux and WSL:
+Add this line to `~/.zshrc` on macOS or `~/.bashrc` on Linux, WSL, and Git Bash:
 
 ```bash
 alias clauded="claude --dangerously-skip-permissions"
@@ -163,7 +201,7 @@ Then reload the shell:
 
 ```bash
 source ~/.zshrc    # macOS
-source ~/.bashrc   # Linux and WSL
+source ~/.bashrc   # Linux, WSL, and Git Bash
 ```
 
 Read the flag name. It means what it says. With this on, Claude will run commands and change files without asking. Use `clauded` only in a scratch folder or a fresh project that contains nothing you care about. For anything connected to a real system, use plain `claude` and approve steps as they come.
@@ -214,6 +252,12 @@ Linux and WSL:
 sudo apt install -y gh
 ```
 
+Windows with Git Bash, from PowerShell:
+
+```powershell
+winget install GitHub.cli
+```
+
 Then log in:
 
 ```bash
@@ -234,11 +278,13 @@ Download from https://code.visualstudio.com/download and install.
 
 On Windows with WSL, also install the "WSL" extension so VS Code can open folders inside Ubuntu. Then from the Ubuntu terminal, `code .` opens the current folder in VS Code.
 
+On Windows with Git Bash, make it the default terminal inside VS Code so the commands in this guide work there too: open the Command Palette (Ctrl+Shift+P), run "Terminal: Select Default Profile", and choose Git Bash.
+
 Extensions to install (Cmd+Shift+X on Mac, Ctrl+Shift+X elsewhere, then search):
 
 - Python, by Microsoft.
 - Claude Code, by Anthropic. This adds a chat panel inside the editor. It bundles its own copy of Claude Code, so it works even if the terminal install in step 4 gave you trouble.
-- WSL, by Microsoft (Windows only).
+- WSL, by Microsoft (Windows with WSL only).
 
 VS Code already understands JavaScript and Node without an extension.
 
@@ -278,3 +324,5 @@ Check: open github.com/YOUR_GITHUB_USERNAME/my-project in a browser. The files C
 - `Permission denied (publickey)` from GitHub. The key is not on your GitHub account yet, or you generated it under a different name. Run `ls ~/.ssh` and check for `id_ed25519.pub`, then redo the paste in step 7.
 - WSL cannot reach the network. On some district laptops the VPN client blocks WSL networking. Disconnect the VPN for the session.
 - `code .` does nothing in WSL. Install the WSL extension in VS Code on the Windows side, then restart the Ubuntu terminal.
+- Git Bash says `python3: command not found`. The Windows installer names it `python`. Use that, or run `alias python3=python` and add the same line to `~/.bashrc`.
+- Claude Code in Git Bash cannot find Git Bash. Add the path to `~/.claude/settings.json`: `{"env": {"CLAUDE_CODE_GIT_BASH_PATH": "C:\\Program Files\\Git\\bin\\bash.exe"}}`.

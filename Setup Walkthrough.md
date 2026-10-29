@@ -21,7 +21,7 @@ Presenter notes for the hands-on setup. The attendee version is [[Setup Guide]];
 
 Say what the end state is: Claude Code running in a terminal, logged in, with a project pushed to GitHub, and VS Code open on it. Everything after this in the talk builds on that.
 
-Explain the one platform choice. Windows users go through WSL so everyone types the same commands. Native Windows works too, but supporting two command sets live is not worth it.
+Explain the platform choice. Windows users get a Bash shell, either WSL or Git Bash, so everyone types the same commands. Recommend WSL to anyone who can reboot and has admin rights, and Git Bash to anyone who cannot. Plain PowerShell works too, but supporting a third command set live is not worth it.
 
 ## Slide: Steps 1 to 3, terminal and language runtimes
 
@@ -106,4 +106,5 @@ These are additions beyond what was first planned. Keep or drop as you see fit.
 - The original prompt had a typo in the key filename (`is_ed236665.pub`). The default from `ssh-keygen -t ed25519` is `id_ed25519.pub`, which is what the handout uses.
 - A troubleshooting section at the end of the handout, written from the failures most likely in a K-12 room: PATH, free accounts, VPN clients that block WSL.
 - A prework email. Even a 20 percent prework rate cuts the runtime step in half.
+- Git Bash as a second Windows path. Some district laptops cannot enable WSL without a ticket to the imaging team. Git Bash installs as a normal app and gives Claude Code the shell it wants.
 - Consider whether to show `/permissions` instead of the alias for the real-work guidance later in the talk. The alias is fine for the workshop. Leaving a room of security staff with only the alias as the pattern they learned is a bad look.
