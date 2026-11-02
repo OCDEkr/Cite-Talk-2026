@@ -91,7 +91,7 @@ Speaker notes:
 
 ## Open questions for this section
 
-- Decide whether this needs a one-page attendee handout like [[Setup Guide]], a "guardrails checklist" they can keep. It would be easy to pull from these slides.
+- One-page attendee handout built: [[Guardrails Checklist]], a tick-off version of these five rules to keep by the desk.
 - Confirm the FERPA and SOPIPA framing matches your district's actual data privacy agreement process. The slide states the obligation generally; you may want to name your specific vetting or DPA workflow.
 - Placement decided: this sits at section 2, right after the intro, so the discipline frames every demo. References to later features (the clauded alias, the log-triage agent, ECC) are now forward-looking on purpose.
 - The prompt injection point is compressed into one line on slide 6. Decide whether this audience wants more on it, given OSINT and log triage both feed untrusted text to the tool.

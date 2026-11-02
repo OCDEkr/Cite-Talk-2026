@@ -18,5 +18,6 @@ Working outline for Cite Talk 2026: AI for Cyber Security. Each section is its o
 8. Close: [[Close]], recap, the one frame, the one action, handout pointer, and Q&A. Drafted 2026-11-02.
 
 Supporting notes:
+- [[Guardrails Checklist]]: one-page tick-off handout of the five guardrails.
 - [[Resource Index]]: repositories worth knowing, grouped by category with a description each.
-- [[Sources]]: citations, with TODO markers for claims that still need backing.
+- [[Sources]]: citations backing the talk's key claims.
