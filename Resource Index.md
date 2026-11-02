@@ -56,6 +56,7 @@ Linked from [[Talk Outline]]. This is a living list; add to it as you find thing
 
 - **[GitHub MCP](https://github.com/github/github-mcp-server)** GitHub's official MCP server, connecting AI tools to GitHub to browse repos and manage issues and pull requests through natural language. Runs hosted or locally.
 - **[CC Switch](https://github.com/farion1231/cc-switch)** A desktop control panel for AI coding tools that lets you switch API providers and manage MCP servers, skills, and prompts without hand-editing each tool's config.
+- **[Visual Explainer](https://github.com/nicobailon/visual-explainer)** A skill that turns complex terminal output into styled HTML pages for diagrams, diff reviews, plan audits, and tables. Installs as a Claude Code plugin and also supports other agents.
 
 ## Security
 
