@@ -14,7 +14,7 @@ Working outline for Cite Talk 2026: AI for Cyber Security. Each section is its o
 4. Skills, agents, and plugins: [[Skills Agents Plugins]], a deck plus manual tutorials and ECC install. Drafted 2026-10-29.
 5. Application builds: [[Application Builds]], building a working app (demo 1: nmap web front end). Drafted 2026-10-29.
 6. Guardrails: [[Guardrails]], read before you run, safe place, protect data, tight permissions, verify output. Drafted 2026-10-29.
-7. Getting started (tools, cost, first project): not started.
+7. Getting started: [[Getting Started]], pick a plan, what to install first, choose a first project, build the habit, bring it to your team. Drafted 2026-11-02.
 8. Close: not started.
 
 Supporting notes:
