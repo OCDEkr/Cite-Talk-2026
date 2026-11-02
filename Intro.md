@@ -69,8 +69,8 @@ Speaker notes:
 
 Speaker notes:
 - Stating the risk early makes the rest of the talk easier to trust.
-- Preview three rules: read before you run, test on a non-production copy, and never paste secrets or student data into a tool you have not vetted against your data agreements.
-- Hand straight into [[Guardrails]], the next section, which turns this preview into the five rules the talk works by.
+- Preview the five guardrails the next section details: read before you run, work in a safe place, protect the data, keep permissions tight, and verify the output.
+- Hand straight into [[Guardrails]], the next section, which takes each of the five in turn.
 
 ## Open questions for this section
 
