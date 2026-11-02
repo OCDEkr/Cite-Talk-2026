@@ -61,7 +61,7 @@ Speaker notes:
 - A two-person district IT shop has none of those roles. The script never gets written, so the control never gets implemented. For that shop the change is not speed. Work that did not exist before now does, and that is a step change rather than a percentage improvement.
 - What changes in practice: one generalist can now work across scripting, log analysis, and config review at a usable level, because the tool fills in syntax and library knowledge while the person supplies the judgment. The "someday" backlog of projects that needed a week of coding shrinks to projects that need a day, so the list of known but unaddressed risks gets shorter.
 - There is also the other side of the equation. Adversaries use the same tools to write phishing kits and scan for exposures faster, and small targets are the ones who could never keep up. This is the first time the defender's costs have dropped too. See [[Sources#Attacker use of AI]].
-- Set up the rest of the talk: the next sections show real examples, then the guardrails, because the ways to hurt yourself with this are as real as the capability.
+- Set up the rest of the talk: the next section sets the guardrails, then the hands-on setup and the real examples, because the ways to hurt yourself with this are as real as the capability.
 
 ## Slide 6. The caveat before we go on
 
@@ -69,8 +69,8 @@ Speaker notes:
 
 Speaker notes:
 - Stating the risk early makes the rest of the talk easier to trust.
-- The talk returns to three rules: read before you run, test on a non-production copy, and never paste secrets or student data into a tool you have not vetted against your data agreements.
-- Transition to the next section of [[Talk Outline]].
+- Preview three rules: read before you run, test on a non-production copy, and never paste secrets or student data into a tool you have not vetted against your data agreements.
+- Hand straight into [[Guardrails]], the next section, which turns this preview into the five rules the talk works by.
 
 ## Open questions for this section
 

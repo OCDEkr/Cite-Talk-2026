@@ -27,7 +27,7 @@ Speaker notes:
 **Slide:** The model writes a confident command that deletes the wrong accounts. You are the last check.
 
 Speaker notes:
-- This is the habit the whole talk is built on. It appeared in the code review and application build sections. Here it gets stated as a rule.
+- This is the habit the whole talk is built on. It runs through the code review and application build sections you will see. Here it gets stated as a rule up front.
 - Claude will propose a command or a script that looks right and is wrong in a way you only catch by reading it: a wildcard that matches too much, a date filter off by a year, a destructive flag.
 - The rule: for anything that changes state (deletes, disables, writes, sends), read what it will do before you let it run. For anything read-only, you can move faster.
 - Tie it to permissions: the default Claude Code asks before each action for exactly this reason. In setup you will create an alias called `clauded` that turns this off, which is why it is scoped to scratch folders only.
@@ -51,10 +51,10 @@ Speaker notes:
 Speaker notes:
 - This is the one with legal weight for K-12. FERPA, California SOPIPA, and your signed data privacy agreements govern where student data can go. A chat tool you have not vetted for that data is not a cleared destination.
 - Practical rules:
-  - Strip personal data before you hand a file to the tool. The demos in [[Examples]] all work on scrubbed or synthetic data for this reason.
+  - Strip personal data before you hand a file to the tool. The demos later in [[Examples]] all work on scrubbed or synthetic data for this reason.
   - Never paste passwords, API keys, or tokens into a prompt. If a script needs a secret, it reads it from the environment, not from the chat.
   - Know what your plan sends where. Understand whether your Claude plan's terms cover the data you are about to use, and check your district's own agreement list before putting district data through any AI tool.
-- Separate but related: do not commit secrets to the GitHub repos you just learned to create. A `.gitignore` and a quick scan before you push. The talk taught them to push; this closes that loop.
+- Separate but related: do not commit secrets to the GitHub repos you will create in setup. A `.gitignore` and a quick scan before you push. The setup section has you push to GitHub, so flag this now and it lands when you get there.
 
 ## Slide 5. Keep your permissions tight
 

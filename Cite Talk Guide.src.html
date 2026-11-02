@@ -50,6 +50,7 @@
     <a href="#try">Try prompts</a>
     <a href="#build">Build an app</a>
     <a href="#extend">Extend it</a>
+    <a href="#start">Get started</a>
     <a href="#more">Resources</a>
   </div>
   <span class="pos"></span>
@@ -101,7 +102,7 @@
 
 <section id="setup">
   <div class="sec-head"><p class="ve-label caps">Set up</p><h2>Install the tools once, then log in</h2></div>
-  <p>Work top to bottom. Each step ends with a check. You need a laptop you have admin rights on and a paid Claude plan (Pro, Max, Team, or Enterprise). The free claude.ai plan does not include Claude Code.</p>
+  <p>Work top to bottom. Each step ends with a check. You need a laptop you have admin rights on and a paid Claude plan (Pro, Max, Ultra, Team, or Enterprise). The free claude.ai plan does not include Claude Code, but step 4b shows a free way to try the tool.</p>
 
   <figure>
     <ve-flow label="Your laptop runs Claude Code, which signs in to your Claude plan and pushes projects to GitHub over SSH.">
@@ -290,9 +291,38 @@ clarifying questions.</code></pre>
   </div>
 </section>
 
+<section id="start">
+  <div class="sec-head"><p class="ve-label caps">Get started</p><h2>Pick a plan, then do one task Monday</h2></div>
+  <p>The hardest part is starting. Pick one annoying, repetitive task and give it one hour. The first hour is slower than doing it by hand; the second run wins the time back, and every run after that.</p>
+  <div class="ve-table">
+    <table>
+      <thead><tr><th>Plan</th><th>Cost / month</th><th>Who it fits</th></tr></thead>
+      <tbody>
+        <tr><td>Free</td><td class="num">$0</td><td>Chat only, no Claude Code. Use the OpenRouter path in step 4b to try the tool free.</td></tr>
+        <tr><td>Pro</td><td class="num">$17</td><td>One person, light to moderate use. Where most people start.</td></tr>
+        <tr><td>Max</td><td class="num">$100</td><td>One person who leans on the tool daily.</td></tr>
+        <tr><td>Ultra</td><td class="num">$200</td><td>The highest limits, for all-day use.</td></tr>
+        <tr><td>Team / Enterprise</td><td class="num">per seat</td><td>A district rollout, with admin controls.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Pro is enough to start; do not buy up until you have felt the limit. Prices move, so check Anthropic's page before you commit.</p>
+  <p>A good first task is low stakes, repetitive, and checkable, so a confident mistake cannot hurt and you can spot it:</p>
+  <ul class="lede-list">
+    <li>Summarize a week of sign-in logs into the handful worth looking at.</li>
+    <li>Turn a policy into an offboarding checklist.</li>
+    <li>Read a vendor's privacy policy against your vetting form.</li>
+  </ul>
+  <p>Then turn the task you repeat most into a skill, so the tool does it your way every time. Grow by one thing a month: a skill, then an agent, then a plugin.</p>
+  <div class="ve-co">
+    <span class="chip ok">the one action</span>
+    Monday: pick one annoying task, open a terminal, and give it one hour. Everything else follows from that.
+  </div>
+</section>
+
 <section id="more">
   <div class="sec-head"><p class="ve-label caps">Resources</p><h2>Repositories worth knowing</h2></div>
-  <p>Start by writing one skill for the task you repeat most. It is a folder and a file. When you want more, these open-source projects are grouped by what they do. Check each repository before you rely on it; projects move fast.</p>
+  <p>These open-source projects are grouped by what they do. Check each repository before you rely on it; projects move fast.</p>
 
   <div class="reslist">
     <h3>Claude Code core and official</h3>
@@ -358,7 +388,7 @@ clarifying questions.</code></pre>
 
 <section class="sources" aria-label="Sources">
   <p class="ve-label caps">Sources</p>
-  <p>Built from the Cite Talk 2026 notes: <code>Intro.md</code>, <code>Setup Guide.md</code>, <code>Setup Walkthrough.md</code>, <code>Examples.md</code>, <code>Skills Agents Plugins.md</code>, <code>Application Builds.md</code>, <code>Guardrails.md</code>, and <code>Resource Index.md</code>. Commands and paths checked against the Claude Code docs. Framework and data-handling claims in <code>Sources.md</code> still need citations before the talk.</p>
+  <p>Built from the Cite Talk 2026 notes. Commands and paths checked against the Claude Code docs. Key claims are sourced in <code>Sources.md</code>: the Claude Code documentation, the 2022 Stanford study on security of AI-assisted code, Anthropic's September 2026 threat report on adversary use of AI, and CoSN's K-12 cybersecurity staffing data.</p>
 </section>
 
 </main></body>
