@@ -15,7 +15,7 @@ Working outline for Cite Talk 2026: AI for Cyber Security. Each section is its o
 5. Application builds: [[Application Builds]], building a working app (demo 1: nmap web front end). Drafted 2026-10-29.
 6. Guardrails: [[Guardrails]], read before you run, safe place, protect data, tight permissions, verify output. Drafted 2026-10-29.
 7. Getting started: [[Getting Started]], pick a plan, what to install first, choose a first project, build the habit, bring it to your team. Drafted 2026-11-02.
-8. Close: not started.
+8. Close: [[Close]], recap, the one frame, the one action, handout pointer, and Q&A. Drafted 2026-11-02.
 
 Supporting notes:
 - [[Resource Index]]: repositories worth knowing, grouped by category with a description each.
