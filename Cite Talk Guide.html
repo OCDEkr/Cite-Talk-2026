@@ -369,18 +369,18 @@ summary { cursor: pointer; font: 500 var(--t-label) var(--font-mono); margin-bot
 </header>
 
 <figure>
-  <div class="frame"><svg class="ve-svg ve-flow" style="--min: 600px; --max: 910px" viewBox="0 0 700 216" role="img" aria-label="Six stages: understand the tool, set up your machine, try prompts, build an app, extend it, and work safely."><g><path class="ve-e" d="M156 48H280"/><text class="ve-el" x="218" y="39">then</text></g><g><path class="ve-e" d="M420 48H544"/><text class="ve-el" x="482" y="39">then</text></g><g><path class="ve-e" d="M544 48H86V136"/><text class="ve-el" x="315" y="39">then</text></g><g><path class="ve-e" d="M156 168H280"/><text class="ve-el" x="218" y="159">then</text></g><g><path class="ve-e" d="M420 168H544"/><text class="ve-el" x="482" y="159">always</text></g><g class="ve-n" data-ref="understand" transform="translate(16 16)"><rect class="sh" width="140" height="64" rx="6"/><text x="70" y="32">Understand</text></g><g class="ve-n is-key" data-ref="setup" transform="translate(280 16)"><rect class="sh" width="140" height="64" rx="6"/><text x="70" y="32">Set up</text></g><g class="ve-n" data-ref="try" transform="translate(544 16)"><rect class="sh" width="140" height="64" rx="6"/><text x="70" y="32">Try prompts</text></g><g class="ve-n" data-ref="build" transform="translate(16 136)"><rect class="sh" width="140" height="64" rx="6"/><text x="70" y="32">Build an app</text></g><g class="ve-n" data-ref="extend" transform="translate(280 136)"><rect class="sh" width="140" height="64" rx="6"/><text x="70" y="32">Extend it</text></g><g class="ve-n is-hot" data-ref="safe" transform="translate(544 136)"><rect class="sh" width="140" height="64" rx="6"/><text x="70" y="32">Work safely</text></g></svg></div>
-  <figcaption><span class="fig-n">Fig. 1</span>The path this guide follows. Set up is the longest stage; working safely runs through all of them.</figcaption>
+  <div class="frame"><svg class="ve-svg ve-flow" style="--min: 600px; --max: 910px" viewBox="0 0 700 216" role="img" aria-label="Understand the tool, learn the safety rules, set up your machine, try prompts, build an app, then extend it."><g><path class="ve-e" d="M156 48H280"/><text class="ve-el" x="218" y="39">first</text></g><g><path class="ve-e" d="M420 48H544"/><text class="ve-el" x="482" y="39">then</text></g><g><path class="ve-e" d="M544 48H86V136"/><text class="ve-el" x="315" y="39">then</text></g><g><path class="ve-e" d="M156 168H280"/><text class="ve-el" x="218" y="159">then</text></g><g><path class="ve-e" d="M420 168H544"/><text class="ve-el" x="482" y="159">then</text></g><g class="ve-n" data-ref="understand" transform="translate(16 16)"><rect class="sh" width="140" height="64" rx="6"/><text x="70" y="32">Understand</text></g><g class="ve-n is-hot" data-ref="safe" transform="translate(280 16)"><rect class="sh" width="140" height="64" rx="6"/><text x="70" y="32">Work safely</text></g><g class="ve-n is-key" data-ref="setup" transform="translate(544 16)"><rect class="sh" width="140" height="64" rx="6"/><text x="70" y="32">Set up</text></g><g class="ve-n" data-ref="try" transform="translate(16 136)"><rect class="sh" width="140" height="64" rx="6"/><text x="70" y="32">Try prompts</text></g><g class="ve-n" data-ref="build" transform="translate(280 136)"><rect class="sh" width="140" height="64" rx="6"/><text x="70" y="32">Build an app</text></g><g class="ve-n" data-ref="extend" transform="translate(544 136)"><rect class="sh" width="140" height="64" rx="6"/><text x="70" y="32">Extend it</text></g></svg></div>
+  <figcaption><span class="fig-n">Fig. 1</span>The path this guide follows. The safety rules come first and run through every stage that follows.</figcaption>
 </figure>
 
 <nav class="ve-toc" aria-label="Sections">
   <div>
     <a href="#understand">Understand</a>
+    <a href="#safe">Work safely</a>
     <a href="#setup">Set up</a>
     <a href="#try">Try prompts</a>
     <a href="#build">Build an app</a>
     <a href="#extend">Extend it</a>
-    <a href="#safe">Work safely</a>
     <a href="#more">Resources</a>
   </div>
   <span class="pos"></span>
@@ -410,6 +410,23 @@ summary { cursor: pointer; font: 500 var(--t-label) var(--font-mono); margin-bot
   <div class="ve-co">
     <span class="chip warn">honest caveat</span>
     It is not a security product. It knows nothing about your environment until you show it, and it makes confident mistakes. You stay the person who checks the result.
+  </div>
+</section>
+
+<section id="safe">
+  <div class="sec-head"><p class="ve-label caps">Work safely</p><h2>The tool is fast, confident, and wrong often enough to check</h2></div>
+  <p>Learn these five rules before the demos. They cost little time and are the difference between a tool that saves you a day and one that costs you a weekend. Use it like a fast junior analyst: capable, tireless, and never trusted blind.</p>
+  <div class="ve-table">
+    <table>
+      <thead><tr><th>Rule</th><th>What it means</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td><span class="rule-n">1</span>Read before you run</td><td>For anything that deletes, disables, writes, or sends, read what it will do first.</td><td><span class="chip risk">state-changing</span></td></tr>
+        <tr><td><span class="rule-n">2</span>Work in a safe place</td><td>Scratch folder, test tenant, non-production copy. Run cleanup scripts in report-only mode first.</td><td><span class="chip warn">sandbox</span></td></tr>
+        <tr><td><span class="rule-n">3</span>Protect the data</td><td>No student records, credentials, or data-privacy-agreement material in a prompt. FERPA and SOPIPA apply.</td><td><span class="chip risk">legal weight</span></td></tr>
+        <tr><td><span class="rule-n">4</span>Keep permissions tight</td><td>Leave prompts on for real work. Use <code>/permissions</code>, narrow agents, and least privilege.</td><td><span class="chip warn">least privilege</span></td></tr>
+        <tr><td><span class="rule-n">5</span>Verify the output</td><td>Confidence is not accuracy. Check queries against known data and spot-check citations.</td><td><span class="chip warn">you own it</span></td></tr>
+      </tbody>
+    </table>
   </div>
 </section>
 
@@ -593,23 +610,6 @@ clarifying questions.</code></pre>
   <div class="ve-co">
     <span class="chip risk">plugins run as you</span>
     An enabled plugin's hooks and servers run with your permissions in every session. Read what a plugin does before you install it, the same way you read a script.
-  </div>
-</section>
-
-<section id="safe">
-  <div class="sec-head"><p class="ve-label caps">Work safely</p><h2>The tool is fast, confident, and wrong often enough to check</h2></div>
-  <p>These five rules cost little time and are the difference between a tool that saves you a day and one that costs you a weekend. Use it like a fast junior analyst: capable, tireless, and never trusted blind.</p>
-  <div class="ve-table">
-    <table>
-      <thead><tr><th>Rule</th><th>What it means</th><th>Status</th></tr></thead>
-      <tbody>
-        <tr><td><span class="rule-n">1</span>Read before you run</td><td>For anything that deletes, disables, writes, or sends, read what it will do first.</td><td><span class="chip risk">state-changing</span></td></tr>
-        <tr><td><span class="rule-n">2</span>Work in a safe place</td><td>Scratch folder, test tenant, non-production copy. Run cleanup scripts in report-only mode first.</td><td><span class="chip warn">sandbox</span></td></tr>
-        <tr><td><span class="rule-n">3</span>Protect the data</td><td>No student records, credentials, or data-privacy-agreement material in a prompt. FERPA and SOPIPA apply.</td><td><span class="chip risk">legal weight</span></td></tr>
-        <tr><td><span class="rule-n">4</span>Keep permissions tight</td><td>Leave prompts on for real work. Use <code>/permissions</code>, narrow agents, and least privilege.</td><td><span class="chip warn">least privilege</span></td></tr>
-        <tr><td><span class="rule-n">5</span>Verify the output</td><td>Confidence is not accuracy. Check queries against known data and spot-check citations.</td><td><span class="chip warn">you own it</span></td></tr>
-      </tbody>
-    </table>
   </div>
 </section>
 

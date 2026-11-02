@@ -26,30 +26,30 @@
 </header>
 
 <figure>
-  <ve-flow label="Six stages: understand the tool, set up your machine, try prompts, build an app, extend it, and work safely.">
+  <ve-flow label="Understand the tool, learn the safety rules, set up your machine, try prompts, build an app, then extend it.">
     <ve-node id="understand" at="1 1" data-ref="understand">Understand</ve-node>
-    <ve-node id="setup" at="2 1" key data-ref="setup">Set up</ve-node>
-    <ve-node id="try" at="3 1" data-ref="try">Try prompts</ve-node>
-    <ve-node id="build" at="1 2" data-ref="build">Build an app</ve-node>
-    <ve-node id="extend" at="2 2" data-ref="extend">Extend it</ve-node>
-    <ve-node id="safe" at="3 2" hot data-ref="safe">Work safely</ve-node>
-    <ve-edge from="understand" to="setup" label="then"/>
+    <ve-node id="safe" at="2 1" hot data-ref="safe">Work safely</ve-node>
+    <ve-node id="setup" at="3 1" key data-ref="setup">Set up</ve-node>
+    <ve-node id="try" at="1 2" data-ref="try">Try prompts</ve-node>
+    <ve-node id="build" at="2 2" data-ref="build">Build an app</ve-node>
+    <ve-node id="extend" at="3 2" data-ref="extend">Extend it</ve-node>
+    <ve-edge from="understand" to="safe" label="first"/>
+    <ve-edge from="safe" to="setup" label="then"/>
     <ve-edge from="setup" to="try" label="then"/>
     <ve-edge from="try" to="build" label="then"/>
     <ve-edge from="build" to="extend" label="then"/>
-    <ve-edge from="extend" to="safe" label="always"/>
   </ve-flow>
-  <figcaption><span class="fig-n">Fig. 1</span>The path this guide follows. Set up is the longest stage; working safely runs through all of them.</figcaption>
+  <figcaption><span class="fig-n">Fig. 1</span>The path this guide follows. The safety rules come first and run through every stage that follows.</figcaption>
 </figure>
 
 <nav class="ve-toc" aria-label="Sections">
   <div>
     <a href="#understand">Understand</a>
+    <a href="#safe">Work safely</a>
     <a href="#setup">Set up</a>
     <a href="#try">Try prompts</a>
     <a href="#build">Build an app</a>
     <a href="#extend">Extend it</a>
-    <a href="#safe">Work safely</a>
     <a href="#more">Resources</a>
   </div>
   <span class="pos"></span>
@@ -79,6 +79,23 @@
   <div class="ve-co">
     <span class="chip warn">honest caveat</span>
     It is not a security product. It knows nothing about your environment until you show it, and it makes confident mistakes. You stay the person who checks the result.
+  </div>
+</section>
+
+<section id="safe">
+  <div class="sec-head"><p class="ve-label caps">Work safely</p><h2>The tool is fast, confident, and wrong often enough to check</h2></div>
+  <p>Learn these five rules before the demos. They cost little time and are the difference between a tool that saves you a day and one that costs you a weekend. Use it like a fast junior analyst: capable, tireless, and never trusted blind.</p>
+  <div class="ve-table">
+    <table>
+      <thead><tr><th>Rule</th><th>What it means</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td><span class="rule-n">1</span>Read before you run</td><td>For anything that deletes, disables, writes, or sends, read what it will do first.</td><td><span class="chip risk">state-changing</span></td></tr>
+        <tr><td><span class="rule-n">2</span>Work in a safe place</td><td>Scratch folder, test tenant, non-production copy. Run cleanup scripts in report-only mode first.</td><td><span class="chip warn">sandbox</span></td></tr>
+        <tr><td><span class="rule-n">3</span>Protect the data</td><td>No student records, credentials, or data-privacy-agreement material in a prompt. FERPA and SOPIPA apply.</td><td><span class="chip risk">legal weight</span></td></tr>
+        <tr><td><span class="rule-n">4</span>Keep permissions tight</td><td>Leave prompts on for real work. Use <code>/permissions</code>, narrow agents, and least privilege.</td><td><span class="chip warn">least privilege</span></td></tr>
+        <tr><td><span class="rule-n">5</span>Verify the output</td><td>Confidence is not accuracy. Check queries against known data and spot-check citations.</td><td><span class="chip warn">you own it</span></td></tr>
+      </tbody>
+    </table>
   </div>
 </section>
 
@@ -270,23 +287,6 @@ clarifying questions.</code></pre>
   <div class="ve-co">
     <span class="chip risk">plugins run as you</span>
     An enabled plugin's hooks and servers run with your permissions in every session. Read what a plugin does before you install it, the same way you read a script.
-  </div>
-</section>
-
-<section id="safe">
-  <div class="sec-head"><p class="ve-label caps">Work safely</p><h2>The tool is fast, confident, and wrong often enough to check</h2></div>
-  <p>These five rules cost little time and are the difference between a tool that saves you a day and one that costs you a weekend. Use it like a fast junior analyst: capable, tireless, and never trusted blind.</p>
-  <div class="ve-table">
-    <table>
-      <thead><tr><th>Rule</th><th>What it means</th><th>Status</th></tr></thead>
-      <tbody>
-        <tr><td><span class="rule-n">1</span>Read before you run</td><td>For anything that deletes, disables, writes, or sends, read what it will do first.</td><td><span class="chip risk">state-changing</span></td></tr>
-        <tr><td><span class="rule-n">2</span>Work in a safe place</td><td>Scratch folder, test tenant, non-production copy. Run cleanup scripts in report-only mode first.</td><td><span class="chip warn">sandbox</span></td></tr>
-        <tr><td><span class="rule-n">3</span>Protect the data</td><td>No student records, credentials, or data-privacy-agreement material in a prompt. FERPA and SOPIPA apply.</td><td><span class="chip risk">legal weight</span></td></tr>
-        <tr><td><span class="rule-n">4</span>Keep permissions tight</td><td>Leave prompts on for real work. Use <code>/permissions</code>, narrow agents, and least privilege.</td><td><span class="chip warn">least privilege</span></td></tr>
-        <tr><td><span class="rule-n">5</span>Verify the output</td><td>Confidence is not accuracy. Check queries against known data and spot-check citations.</td><td><span class="chip warn">you own it</span></td></tr>
-      </tbody>
-    </table>
   </div>
 </section>
 
