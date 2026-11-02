@@ -3,7 +3,6 @@ title: Sources
 status: draft
 tags: [cite-talk-2026, sources]
 ---
-
 # Sources
 
 Citations and reference material for the talk. Sections are linked from [[Intro]] and other outline notes. Every entry needs a URL and an access date before the talk is final. Entries marked **TODO** are claims made in the notes that do not yet have a source behind them.
@@ -24,3 +23,7 @@ Citations and reference material for the talk. Sections are linked from [[Intro]
 ## Small-team security staffing
 
 - **TODO** A survey on K-12 security staffing levels. Candidates: CoSN annual State of EdTech Leadership survey, K12 SIX reports. Supports [[Intro#Slide 2. Who this is for]].
+
+## Repository list
+
+The repo list moved to [[Resource Index]], a readable index grouped by category with a description for each. Add new repos there.

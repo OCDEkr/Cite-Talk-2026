@@ -13,9 +13,10 @@ Working outline for Cite Talk 2026: AI for Cyber Security. Each section is its o
 3. Examples and demos: [[Examples]], five areas with prompts (GRC, red team, blue team, code review, OSINT). Drafted 2026-10-29.
 4. Skills, agents, and plugins: [[Skills Agents Plugins]], a deck plus manual tutorials and ECC install. Drafted 2026-10-29.
 5. Application builds: [[Application Builds]], building a working app (demo 1: nmap web front end). Drafted 2026-10-29.
-6. Guardrails (reading before running, test environments, data handling): not started.
+6. Guardrails: [[Guardrails]], read before you run, safe place, protect data, tight permissions, verify output. Drafted 2026-10-29.
 7. Getting started (tools, cost, first project): not started.
 8. Close: not started.
 
 Supporting notes:
+- [[Resource Index]]: repositories worth knowing, grouped by category with a description each.
 - [[Sources]]: citations, with TODO markers for claims that still need backing.
