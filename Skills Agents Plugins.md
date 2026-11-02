@@ -180,7 +180,51 @@ npx ecc-universal@2.2.3 setup
 - Check the repository for the current version number before the talk; the `npx` line pins one. The two `/plugin` commands do not, so they are the safer choice on stage.
 - After it installs, show one thing it added. Run `/plugin` and point at ECC in the installed list, or trigger one of its security skills.
 
-## Slide 9. When to use which
+## Slide 9. A starter kit of plugins
+
+**Slide:** ECC is one option. Here are five smaller ones worth installing the same way.
+
+Speaker notes:
+- ECC is a large bundle. These five are focused plugins that each do one thing well, installed with the same two-command pattern. Install the ones that fit the work; skip the rest.
+- Install each inside a Claude Code session, then run `/reload-plugins` or restart so they load.
+
+Humanizer. Rewrites AI-sounding text so it reads like a person wrote it. Useful for the policy and communication drafts from the GRC examples.
+
+```
+/plugin marketplace add blader/humanizer
+/plugin install humanizer@humanizer
+```
+
+Superpowers. A library of workflows for planning, test-first development, and systematic debugging. It makes Claude plan before it builds.
+
+```
+/plugin marketplace add obra/superpowers-marketplace
+/plugin install superpowers@superpowers-marketplace
+```
+
+Frontend design. Anthropic's own skill for building interfaces that look right. Its marketplace is already registered, so it is a one-line install. Relevant to the nmap web front end from [[Application Builds]].
+
+```
+/plugin install frontend-design@claude-plugins-official
+```
+
+Impeccable. A design-quality skill that audits a front end for accessibility, performance, and responsiveness. It builds on the frontend design skill above, so install one or the other, not both, unless you want the audit commands.
+
+```
+/plugin marketplace add pbakaus/impeccable
+/plugin install impeccable@impeccable
+```
+
+TDD. Enforces red-green-refactor so the code Claude writes comes with tests. Several TDD plugins exist; this is one of the simpler ones.
+
+```
+/plugin marketplace add mattpocock/skills
+/plugin install tdd@skills
+```
+
+- Say the security line once more here: each of these runs with your permissions when enabled. These five are popular and open source, but the rule stands. Check a plugin before you install it.
+
+## Slide 10. When to use which
 
 **Slide:** Skill for a task. Agent for a delegated job. Plugin to package or install.
 
@@ -196,6 +240,8 @@ Speaker notes:
 - The ECC agent and skill counts come from its repository and will drift. Say "dozens of agents and hundreds of skills" if you do not want to recheck exact numbers.
 - ECC installs a large amount into every session, which has a context and usage cost. Mention that the guided installer's smaller profiles exist for people who do not want all of it.
 - The plugin security point is not optional for this audience. Keep it.
+- Install commands for the starter kit (slide 9) were checked against each project on 2026-10-30. Humanizer is confirmed working from this session. The others come from the projects' own pages. Confirm the exact `plugin@marketplace` name on your machine before the talk by running the marketplace-add line and reading what `/plugin` lists, since `impeccable@impeccable` and `tdd@skills` are the install names most likely to have changed.
+- "TDD" is a crowded space. The slide uses the mattpocock/skills version. Alternatives include nizos/tdd-guard for hard enforcement that blocks out-of-order edits. Superpowers also bundles a test-first workflow, so if you install superpowers you may not need a separate TDD plugin.
 
 ## Open questions for this section
 
