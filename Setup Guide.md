@@ -15,7 +15,7 @@ If you can do steps 1 through 4 before the session, do. Conference wifi is slow 
 ## What you need before you start
 
 - A laptop you have admin rights on. District-managed machines that block installers or terminal access will not work for the hands-on part.
-- A paid Claude account (Pro, Max, Team, or Enterprise). The free plan does not include Claude Code. Sign up at claude.ai if you need to.
+- A paid Claude account (Pro, Max, Ultra, Team, or Enterprise). The free plan does not include Claude Code; the [[Cite Talk Guide]] shows a free way to try the tool through OpenRouter. Sign up at claude.ai if you need to.
 - About 45 minutes and a decent internet connection.
 
 ## 1. Open a terminal

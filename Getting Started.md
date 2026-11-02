@@ -102,4 +102,4 @@ Speaker notes:
 
 - Pricing uses the current Free, Pro, Max, Ultra tiers ($0, $17, $100, $200). Give it a quick check against Anthropic's page near the talk date in case it moves again.
 - Decide whether this section needs its own one-page handout, or whether the [[Cite Talk Guide]] and [[Setup Guide]] already cover the takeaway.
-- Decide the order of sections 6 and 7. Getting started reads well right before the close. If you moved guardrails earlier, this stays last.
+- Order settled: guardrails moved to section 2, so getting started is section 7 and sits right before the close, which is where it reads best.
