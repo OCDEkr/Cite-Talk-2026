@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="en" data-register="blueprint">
+<head>
+<title>AI-assisted coding for small security teams</title>
+<link rel="stylesheet" href="kit.css" data-ve-kit>
+<style>
+.prompt { margin-block: var(--s-5); }
+.prompt-head { display: flex; align-items: baseline; gap: var(--s-3); flex-wrap: wrap; }
+.prompt-head h3 { margin: 0; }
+.prompt > p { margin-block: var(--s-2) var(--s-3); }
+.step-cmd { margin-top: var(--s-3); }
+.lede-list > li { margin-block: var(--s-2); }
+.reslist h3 { margin-top: var(--s-6); }
+.reslist ul { margin-top: var(--s-2); }
+.reslist li { margin-block: var(--s-2); }
+.rule-n { font: var(--t-h2); color: var(--accent); margin-right: var(--s-2); }
+</style>
+</head>
+<body><main>
+
+<header>
+  <p class="eyebrow">Cite Talk 2026 · hands-on guide</p>
+  <h1>One person, the work of <span class="num">three</span></h1>
+  <p class="lead">AI-assisted coding lets a small K-12 IT team do security work that used to need a team. <b>This guide takes you from install to safe daily use.</b></p>
+  <p class="meta">Claude Code · for school district IT staff · follow top to bottom</p>
+</header>
+
+<figure>
+  <ve-flow label="Six stages: understand the tool, set up your machine, try prompts, build an app, extend it, and work safely.">
+    <ve-node id="understand" at="1 1" data-ref="understand">Understand</ve-node>
+    <ve-node id="setup" at="2 1" key data-ref="setup">Set up</ve-node>
+    <ve-node id="try" at="3 1" data-ref="try">Try prompts</ve-node>
+    <ve-node id="build" at="1 2" data-ref="build">Build an app</ve-node>
+    <ve-node id="extend" at="2 2" data-ref="extend">Extend it</ve-node>
+    <ve-node id="safe" at="3 2" hot data-ref="safe">Work safely</ve-node>
+    <ve-edge from="understand" to="setup" label="then"/>
+    <ve-edge from="setup" to="try" label="then"/>
+    <ve-edge from="try" to="build" label="then"/>
+    <ve-edge from="build" to="extend" label="then"/>
+    <ve-edge from="extend" to="safe" label="always"/>
+  </ve-flow>
+  <figcaption><span class="fig-n">Fig. 1</span>The path this guide follows. Set up is the longest stage; working safely runs through all of them.</figcaption>
+</figure>
+
+<nav class="ve-toc" aria-label="Sections">
+  <div>
+    <a href="#understand">Understand</a>
+    <a href="#setup">Set up</a>
+    <a href="#try">Try prompts</a>
+    <a href="#build">Build an app</a>
+    <a href="#extend">Extend it</a>
+    <a href="#safe">Work safely</a>
+    <a href="#more">Resources</a>
+  </div>
+  <span class="pos"></span>
+</nav>
+
+<section id="understand">
+  <div class="sec-head"><p class="ve-label caps">Understand</p><h2>The tool reads, writes code, and runs it for you</h2></div>
+  <p>AI-assisted coding means a model that reads your files, your logs, and your question, then writes and runs code to answer it. The tools come in three levels. This guide uses the third.</p>
+  <div class="cases">
+    <div class="case" data-st="warn">
+      <span class="chip warn">saves minutes</span>
+      <h3>Autocomplete</h3>
+      <p>It finishes the line you started. You still do all the work.</p>
+    </div>
+    <div class="case" data-st="warn">
+      <span class="chip warn">saves minutes</span>
+      <h3>Chat</h3>
+      <p>You paste a script or an error and get an answer. You still copy and run everything yourself.</p>
+    </div>
+    <div class="case" data-st="ok">
+      <span class="chip ok">changes the job</span>
+      <h3>Agents</h3>
+      <p>It reads what it needs, writes code, runs it, reads the output, and fixes its own mistakes. Claude Code works this way.</p>
+    </div>
+  </div>
+  <p>Why this matters most for a small team: a large security operations center already has a scripter and an analyst, so the tool makes them a little faster. A two-person district shop has neither, so the script never got written and the control never got implemented. For that shop the work did not exist before. Now it does.</p>
+  <div class="ve-co">
+    <span class="chip warn">honest caveat</span>
+    It is not a security product. It knows nothing about your environment until you show it, and it makes confident mistakes. You stay the person who checks the result.
+  </div>
+</section>
+
+<section id="setup">
+  <div class="sec-head"><p class="ve-label caps">Set up</p><h2>Install the tools once, then log in</h2></div>
+  <p>Work top to bottom. Each step ends with a check. You need a laptop you have admin rights on and a paid Claude plan (Pro, Max, Team, or Enterprise). The free claude.ai plan does not include Claude Code.</p>
+
+  <figure>
+    <ve-flow label="Your laptop runs Claude Code, which signs in to your Claude plan and pushes projects to GitHub over SSH.">
+      <ve-node id="laptop" at="1 1" sub="terminal" key>Your laptop</ve-node>
+      <ve-node id="cc" at="2 1" sub="the tool">Claude Code</ve-node>
+      <ve-node id="plan" at="3 1" sub="paid plan">Claude</ve-node>
+      <ve-node id="gh" at="2 2" shape="db" sub="your repos">GitHub</ve-node>
+      <ve-edge from="laptop" to="cc" label="runs"/>
+      <ve-edge from="cc" to="plan" label="logs in"/>
+      <ve-edge from="cc" to="gh" label="push · SSH"/>
+    </ve-flow>
+    <figcaption><span class="fig-n">Fig. 2</span>What you are wiring together: the terminal, the tool, your plan, and GitHub.</figcaption>
+  </figure>
+
+  <h3>1. Get a terminal that speaks Bash</h3>
+  <p>On a Mac or Linux, open the terminal. On Windows, pick one of two paths so your commands match everyone else's:</p>
+  <ul class="lede-list">
+    <li><b>WSL</b> gives you a full Ubuntu Linux inside Windows. Run <code>wsl --install</code> in an Administrator PowerShell, then reboot. Best if you can reboot and have admin rights.</li>
+    <li><b>Git Bash</b> is a lighter install. Get it from git-scm.com or <code>winget install Git.Git</code>. Best when WSL is blocked.</li>
+  </ul>
+
+  <h3>2. Install Git, Python, and Node</h3>
+  <p>Claude Code does not need Python or Node. The exercises do, because the scripts it writes for you are in one or the other.</p>
+  <pre class="step-cmd"><code># macOS (Homebrew also installs Git)
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+brew install python node
+
+# Linux and WSL (Ubuntu or Debian)
+sudo apt update &amp;&amp; sudo apt install -y git python3 python3-pip python3-venv curl
+
+# Windows with Git Bash (run in PowerShell; the Windows binary is "python", not "python3")
+winget install Python.Python.3.12 OpenJS.NodeJS.LTS</code></pre>
+  <p><b>Check:</b> open a new terminal and run <code>git --version</code>, <code>python3 --version</code> (or <code>python</code> on Windows), and <code>node --version</code>. Each prints a version.</p>
+
+  <h3>3. Install Claude Code</h3>
+  <pre class="step-cmd"><code># macOS, Linux, WSL, Git Bash
+curl -fsSL https://claude.ai/install.sh | bash
+
+# Native Windows PowerShell
+irm https://claude.ai/install.ps1 | iex</code></pre>
+  <p><b>Check:</b> in a new terminal, run <code>claude --version</code> and <code>claude doctor</code>. The first prints a version; the second runs diagnostics and should report no errors. If <code>claude</code> is not found, close and reopen the terminal.</p>
+
+  <h3>4. Log in to your plan</h3>
+  <pre class="step-cmd"><code>mkdir -p ~/claude-scratch &amp;&amp; cd ~/claude-scratch
+claude</code></pre>
+  <p>The first run opens a browser to sign in. Use the account with the paid plan. At the Claude prompt, type <code>/status</code> to confirm the account, then <code>/exit</code>.</p>
+  <h3>4b. No paid plan? Use a free model through OpenRouter</h3>
+  <p>If you do not have a paid Claude plan, you can point Claude Code at a free model hosted on OpenRouter instead. Make a free account and an API key at openrouter.ai/keys, then add this to <code>~/.zshrc</code> (macOS) or <code>~/.bashrc</code> (Linux, WSL, Git Bash):</p>
+  <pre class="step-cmd"><code>export OPENROUTER_API_KEY="paste-your-openrouter-key-here"
+export ANTHROPIC_BASE_URL="https://openrouter.ai/api"
+export ANTHROPIC_AUTH_TOKEN="$OPENROUTER_API_KEY"
+export ANTHROPIC_API_KEY=""   # must be empty, or Claude Code tries Anthropic instead
+export ANTHROPIC_DEFAULT_OPUS_MODEL="nvidia/nemotron-3-ultra-550b-a55b:free"
+export ANTHROPIC_DEFAULT_SONNET_MODEL="nvidia/nemotron-3-ultra-550b-a55b:free"
+export ANTHROPIC_DEFAULT_HAIKU_MODEL="nvidia/nemotron-3-ultra-550b-a55b:free"
+export CLAUDE_CODE_SUBAGENT_MODEL="nvidia/nemotron-3-ultra-550b-a55b:free"</code></pre>
+  <p>Reload the shell with <code>source ~/.zshrc</code> or <code>source ~/.bashrc</code>. If you logged into Anthropic earlier, run <code>/logout</code> inside Claude Code first, then restart it. <b>Check:</b> <code>/status</code> shows the OpenRouter base URL and the Nemotron model instead of an Anthropic account.</p>
+  <div class="ve-co">
+    <span class="chip risk">everything you type is logged</span>
+    Anything you send to this free model is logged and may be used to train it. Treat every prompt as public. Never enter student data, credentials, district information, or anything sensitive. This is the opposite of the paid setup, where your data is not used for training.
+  </div>
+  <div class="ve-co">
+    <span class="chip warn">it may not work smoothly</span>
+    OpenRouter's own docs say Claude Code is optimized for Anthropic models and may not work correctly with others. Expect the free model to be slower and to stumble on the agentic steps. It is good enough to follow along, not the full experience.
+  </div>
+
+  <h3>5. A faster shortcut for the exercises</h3>
+  <p>By default Claude Code asks before every change. That is right for real work. For a hands-on session you can turn it off so the exercises move. Add this line to <code>~/.zshrc</code> (macOS) or <code>~/.bashrc</code> (Linux, WSL, Git Bash):</p>
+  <pre class="step-cmd"><code>alias clauded="claude --dangerously-skip-permissions"</code></pre>
+  <div class="ve-co">
+    <span class="chip risk">read the flag name</span>
+    With this on, Claude runs commands and changes files without asking. Use <code>clauded</code> only in a scratch folder with nothing you care about. For anything connected to a real system, use plain <code>claude</code>.
+  </div>
+
+  <h3>6. Create a GitHub account and an SSH key</h3>
+  <p>An SSH key proves to GitHub that your machine is you, without a password each time.</p>
+  <pre class="step-cmd"><code>ssh-keygen -t ed25519 -C "you@yourdistrict.org"   # press Enter to accept the defaults
+cat ~/.ssh/id_ed25519.pub                          # copy this whole line into GitHub</code></pre>
+  <p>In GitHub: profile picture, Settings, SSH and GPG keys, New SSH key. Paste and save. <b>Check:</b> <code>ssh -T git@github.com</code> prints "successfully authenticated".</p>
+
+  <h3>7. Install VS Code and the gh tool</h3>
+  <p>Download VS Code from code.visualstudio.com and add the Python and Claude Code extensions. Install the GitHub command-line tool so Claude can create repositories for you: <code>brew install gh</code> on Mac, <code>sudo apt install -y gh</code> on Linux and WSL, then <code>gh auth login</code>.</p>
+
+  <h3>8. Connect your first project</h3>
+  <pre class="step-cmd"><code>mkdir -p ~/my-project &amp;&amp; cd ~/my-project
+clauded</code></pre>
+  <p>At the Claude prompt, run <code>/init</code>, then paste:</p>
+  <pre><code>Set up this folder as a git repository named "my-project", create a
+private GitHub repository under the username YOUR_GITHUB_USERNAME, add it
+as the origin remote using SSH, and push. Use the gh command for anything
+that needs GitHub itself.</code></pre>
+  <p><b>Check:</b> open your repository page on GitHub. The files Claude created are there. Watch what Claude runs as it works. That habit carries through the rest of this guide.</p>
+</section>
+
+<section id="try">
+  <div class="sec-head"><p class="ve-label caps">Try prompts</p><h2>The work that never got done because nobody had time</h2></div>
+  <p>Every example below was always possible. What blocked it was the cost of writing and debugging code. Use only systems and data you own or are authorized to assess, and strip student records and credentials out of any file before you hand it over. Pick one and try it; copy the prompt as written.</p>
+
+  <div class="prompt">
+    <div class="prompt-head"><span class="chip ok">GRC</span><h3>Policy gap analysis</h3></div>
+    <p>Compare your acceptable use policy to CIS and NIST, and get a table of gaps with draft replacement text.</p>
+    <pre><code>Read the policy in aup.pdf. Compare it against the CIS Controls v8
+Implementation Group 1 safeguards and the NIST CSF 2.0 Govern function.
+Produce a table marked covered, partially covered, or missing, then list
+the five biggest gaps for a K-12 district and draft replacement language.</code></pre>
+  </div>
+
+  <div class="prompt">
+    <div class="prompt-head"><span class="chip ok">Red team</span><h3>Make sense of a scan</h3></div>
+    <p>Turn a 40-page exposure report you already have into a cabinet summary and a remediation table.</p>
+    <pre><code>Read scan-report.pdf. This is an external exposure report for assets our
+district owns. Summarize it for a non-technical cabinet, then produce a
+remediation table sorted by risk with the fix, the owner, and an effort
+estimate. Flag likely false positives and say why.</code></pre>
+  </div>
+
+  <div class="prompt">
+    <div class="prompt-head"><span class="chip ok">Blue team</span><h3>Triage a log export</h3></div>
+    <p>Point it at a week of sign-in logs. It writes the code and shows you only the odd events.</p>
+    <pre><code>I have an Entra ID sign-in log export in signins.csv. Write and run a
+script that flags unusual-country logins, impossible travel, failures
+followed by a success, and off-hours activity. Show a ranked table of
+flagged events with the reason for each. Do not change the file.</code></pre>
+  </div>
+
+  <div class="prompt">
+    <div class="prompt-head"><span class="chip ok">Code review</span><h3>Read before you run</h3></div>
+    <p>Have it explain a vendor script before you run it as admin.</p>
+    <pre><code>Read deploy.ps1. I am about to run this as a domain admin. Walk me
+through what it does. Flag anything that reaches the internet, changes
+permissions, touches the registry, or deletes files, and tell me the
+three things most likely to cause damage.</code></pre>
+  </div>
+
+  <div class="prompt">
+    <div class="prompt-head"><span class="chip ok">OSINT</span><h3>What you leak publicly</h3></div>
+    <p>Build the picture an outsider sees of your district, from public sources only.</p>
+    <pre><code>Using only public web sources, build a profile of what an outsider could
+learn about Example Unified School District to target us: email format,
+IT and finance staff on the public site, tech in job postings, and public
+documents mentioning internal systems. Present it as a risk briefing.</code></pre>
+  </div>
+
+  <p>The strongest one to watch live is log triage. You review the handful of flagged events instead of the whole log, and the script it wrote is yours to run again next week.</p>
+</section>
+
+<section id="build">
+  <div class="sec-head"><p class="ve-label caps">Build an app</p><h2>From one-off scripts to something that runs</h2></div>
+  <p>Given a real project, Claude does not jump to code. It researches, plans, and asks you questions first. Set the model to Opus 5.5 for the build, then try this in a fresh folder:</p>
+  <pre><code>I would like to build a user friendly interface to nmap similar to zenmap
+but a web app. Do your own research while planning and ask me any
+clarifying questions.</code></pre>
+  <p>Watch the planning happen before any code. Have answers ready for the questions it asks: which scan types to expose, the tech stack, and whether to run real scans or mock them.</p>
+  <div class="ve-co">
+    <span class="chip risk">a scanner you exposed</span>
+    A web page that runs nmap for whoever opens it is a scanner on your network. Keep it on localhost. Only scan hosts you own or are authorized to scan; use scanme.nmap.org for a live target.
+  </div>
+</section>
+
+<section id="extend">
+  <div class="sec-head"><p class="ve-label caps">Extend it</p><h2>Teach it your tasks, or install what others built</h2></div>
+  <p>Three features make the tool yours. They nest from smallest to largest.</p>
+  <div class="cases">
+    <div class="case" data-st="ok">
+      <span class="chip ok">a task</span>
+      <h3>Skill</h3>
+      <p>A folder with a <code>SKILL.md</code> that teaches one task. Lives in <code>~/.claude/skills/</code>. Runs as <code>/skill-name</code>.</p>
+    </div>
+    <div class="case" data-st="ok">
+      <span class="chip ok">a worker</span>
+      <h3>Agent</h3>
+      <p>A subagent you delegate a job to, with its own tools and clean context. A read-only reviewer that cannot change files is the classic case.</p>
+    </div>
+    <div class="case" data-st="ok">
+      <span class="chip ok">a package</span>
+      <h3>Plugin</h3>
+      <p>A directory that bundles skills, agents, and more. Install from a marketplace in two commands.</p>
+    </div>
+  </div>
+  <p>You do not have to build it all. ECC is a free, open-source bundle of agents and skills, including a security scanner. Install it live inside a Claude Code session:</p>
+  <pre><code>/plugin marketplace add https://github.com/affaan-m/ECC
+/plugin install ecc@ecc</code></pre>
+  <div class="ve-co">
+    <span class="chip risk">plugins run as you</span>
+    An enabled plugin's hooks and servers run with your permissions in every session. Read what a plugin does before you install it, the same way you read a script.
+  </div>
+</section>
+
+<section id="safe">
+  <div class="sec-head"><p class="ve-label caps">Work safely</p><h2>The tool is fast, confident, and wrong often enough to check</h2></div>
+  <p>These five rules cost little time and are the difference between a tool that saves you a day and one that costs you a weekend. Use it like a fast junior analyst: capable, tireless, and never trusted blind.</p>
+  <div class="ve-table">
+    <table>
+      <thead><tr><th>Rule</th><th>What it means</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td><span class="rule-n">1</span>Read before you run</td><td>For anything that deletes, disables, writes, or sends, read what it will do first.</td><td><span class="chip risk">state-changing</span></td></tr>
+        <tr><td><span class="rule-n">2</span>Work in a safe place</td><td>Scratch folder, test tenant, non-production copy. Run cleanup scripts in report-only mode first.</td><td><span class="chip warn">sandbox</span></td></tr>
+        <tr><td><span class="rule-n">3</span>Protect the data</td><td>No student records, credentials, or data-privacy-agreement material in a prompt. FERPA and SOPIPA apply.</td><td><span class="chip risk">legal weight</span></td></tr>
+        <tr><td><span class="rule-n">4</span>Keep permissions tight</td><td>Leave prompts on for real work. Use <code>/permissions</code>, narrow agents, and least privilege.</td><td><span class="chip warn">least privilege</span></td></tr>
+        <tr><td><span class="rule-n">5</span>Verify the output</td><td>Confidence is not accuracy. Check queries against known data and spot-check citations.</td><td><span class="chip warn">you own it</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="more">
+  <div class="sec-head"><p class="ve-label caps">Resources</p><h2>Repositories worth knowing</h2></div>
+  <p>Start by writing one skill for the task you repeat most. It is a folder and a file. When you want more, these open-source projects are grouped by what they do. Check each repository before you rely on it; projects move fast.</p>
+
+  <div class="reslist">
+    <h3>Claude Code core and official</h3>
+    <ul>
+      <li><a href="https://github.com/anthropics/claude-code">Claude Code</a>. Anthropic's agentic coding tool that runs in your terminal. The tool this guide is built on.</li>
+      <li><a href="https://github.com/anthropics/skills">Anthropic Skills</a>. Anthropic's public collection of Agent Skills, usable as examples and as a template.</li>
+      <li><a href="https://github.com/anthropics/claude-plugins-official">Claude Plugins (Official)</a>. Anthropic's curated directory of Claude Code plugins.</li>
+    </ul>
+
+    <h3>Skill collections and frameworks</h3>
+    <ul>
+      <li><a href="https://github.com/obra/superpowers">Superpowers</a>. A framework that makes an agent brainstorm, plan, and test-drive before writing code.</li>
+      <li><a href="https://github.com/mattpocock/skills">Matt Pocock Skills</a>. Reusable agent skills for alignment, test-driven development, and bug diagnosis.</li>
+      <li><a href="https://github.com/ComposioHQ/awesome-claude-skills">Awesome Claude Skills</a>. A curated catalog of skills sorted by category. A good place to browse.</li>
+      <li><a href="https://github.com/multica-ai/andrej-karpathy-skills">Karpathy Skills</a>. A single guidelines file based on common LLM coding mistakes.</li>
+      <li><a href="https://github.com/garrytan/gstack">G-Stack</a>. Slash commands that give the agent roles such as designer, QA lead, and release engineer.</li>
+      <li><a href="https://github.com/yeachan-heo/oh-my-claudecode">Oh My Claude Code</a>. Multi-agent orchestration with workflows like <code>/autopilot</code> and <code>/team</code>.</li>
+      <li><a href="https://github.com/affaan-m/ecc">ECC</a>. A large open-source harness with planning, memory, a security scanner, and many skills and agents.</li>
+      <li><a href="https://github.com/dietrichgebert/ponytail">Ponytail</a>. Prompts that push the agent toward the smallest solution that still handles security and errors.</li>
+    </ul>
+
+    <h3>Memory</h3>
+    <ul>
+      <li><a href="https://github.com/thedotmack/claude-mem">Claude Memory</a>. Records a session into searchable summaries and feeds context back into later ones.</li>
+      <li><a href="https://github.com/rohitg00/agentmemory">Agent Memory</a>. A persistent memory store shared across agents over MCP, REST, or hooks.</li>
+    </ul>
+
+    <h3>Planning and orchestration</h3>
+    <ul>
+      <li><a href="https://github.com/othmanadi/planning-with-files">Planning with Files</a>. Keeps task plans in Markdown that survive context loss, compaction, and crashes.</li>
+      <li><a href="https://github.com/coleam00/archon">Archon</a>. Defines development processes as YAML workflows with scripts, tests, and approval gates.</li>
+      <li><a href="https://github.com/BloopAI/vibe-kanban">Vibe-Kanban</a>. A kanban board paired with coding agents. Note: the project is shutting down.</li>
+    </ul>
+
+    <h3>Codebase and web context</h3>
+    <ul>
+      <li><a href="https://github.com/upstash/context7">Context7</a>. Gives agents current, version-specific documentation for libraries.</li>
+      <li><a href="https://github.com/yamadashy/repomix">RepoMix</a>. Packs a whole repository into one AI-friendly file, with secret scanning.</li>
+      <li><a href="https://github.com/colbymchenry/codegraph">CodeGraph</a>. A local knowledge graph of a codebase's symbols and calls, served over MCP.</li>
+      <li><a href="https://github.com/Graphify-Labs/graphify">Graphify</a>. Turns code, docs, and schemas into a queryable knowledge graph.</li>
+      <li><a href="https://github.com/firecrawl/firecrawl">Firecrawl</a>. An API to search and scrape the web into Markdown or structured JSON.</li>
+    </ul>
+
+    <h3>Design and UX</h3>
+    <ul>
+      <li><a href="https://github.com/nextlevelbuilder/ui-ux-pro-max-skill">UI/UX Pro Max</a>. Design guidance across frameworks: styles, palettes, and font pairings.</li>
+      <li><a href="https://github.com/leonxlnx/taste-skill">TasteSkill</a>. Gives agents art direction and a browser check for distinctive interfaces.</li>
+    </ul>
+
+    <h3>Tooling and infrastructure</h3>
+    <ul>
+      <li><a href="https://github.com/github/github-mcp-server">GitHub MCP</a>. GitHub's official MCP server for browsing repos and managing issues and pull requests.</li>
+      <li><a href="https://github.com/farion1231/cc-switch">CC Switch</a>. A control panel to switch API providers and manage MCP servers, skills, and prompts.</li>
+      <li><a href="https://github.com/nicobailon/visual-explainer">Visual Explainer</a>. Turns complex terminal output into styled HTML pages. This guide was built with it.</li>
+    </ul>
+
+    <h3>Security</h3>
+    <ul>
+      <li><a href="https://github.com/HPE-AppliedSecurityResearch/maltese">Maltese</a>. Emulates malware network traffic to test detectors. Dual-use; keep it in an isolated lab with authorization.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="sources" aria-label="Sources">
+  <p class="ve-label caps">Sources</p>
+  <p>Built from the Cite Talk 2026 notes: <code>Intro.md</code>, <code>Setup Guide.md</code>, <code>Setup Walkthrough.md</code>, <code>Examples.md</code>, <code>Skills Agents Plugins.md</code>, <code>Application Builds.md</code>, <code>Guardrails.md</code>, and <code>Resource Index.md</code>. Commands and paths checked against the Claude Code docs. Framework and data-handling claims in <code>Sources.md</code> still need citations before the talk.</p>
+</section>
+
+</main></body>
+</html>
