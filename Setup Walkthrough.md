@@ -29,7 +29,24 @@ Walk through step 3 on your own machine only for the platform you use. Point Win
 
 Say explicitly that Claude Code does not need Python or Node. People will ask. The exercises need them because the scripts Claude writes for you will be in Python or JavaScript.
 
-Checkpoint: ask for hands when `git --version`, `python3 --version`, and `node --version` all print something.
+Install commands to show on the slide, by platform:
+
+macOS, using Homebrew (which also gives them Git):
+
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+brew install python node
+```
+
+Windows with Git Bash. Run these in PowerShell, not in Git Bash, because winget is a Windows tool. Git itself came with the Git Bash install in step 2.
+
+```powershell
+winget install Python.Python.3.12 OpenJS.NodeJS.LTS
+```
+
+Then close Git Bash and reopen it so it sees the new PATH. Point out the naming gotcha: the Windows Python installer makes a `python` command, not `python3`. In Git Bash they check with `python --version`.
+
+Checkpoint: ask for hands when `git --version`, `python --version` (or `python3` on Mac), and `node --version` all print something.
 
 ## Slide: Step 4, install Claude Code
 
@@ -44,6 +61,35 @@ Checkpoint: hands up for `claude --version`.
 Start `claude` live and do the browser login. Mention the WSL case where the browser does not open and you paste a URL instead.
 
 Checkpoint: `/status` shows the right account.
+
+## Slide: Step 5b, a free option through OpenRouter
+
+Offer this for anyone who does not have a paid Claude plan and wants to follow along without paying. It routes Claude Code to a free model hosted on OpenRouter instead of to Anthropic.
+
+Be honest about two things before anyone sets it up.
+
+First, the big one for this room. Set it up on a throwaway account and say this out loud: anything you type into this free model is logged and may be used to train it. NVIDIA's free endpoint logs prompts to improve its products, and OpenRouter marks these free providers as ones that may train on your input. Treat every prompt as public. Do not enter student data, credentials, district information, or anything you would not post on a billboard. This is the opposite of the paid setup, where your data is not used for training.
+
+Second, the honest limitation. OpenRouter's own documentation says Claude Code is optimized for Anthropic models and may not work correctly with other providers. Expect the free model to be slower and to stumble on the agentic steps that the paid models handle cleanly. It is good enough to follow along and see the shape of the tool. It is not the experience the rest of the talk demonstrates.
+
+Setup. First make a free OpenRouter account and an API key at openrouter.ai/keys. Then add this to `~/.zshrc` on macOS or `~/.bashrc` on Linux and Git Bash:
+
+```bash
+export OPENROUTER_API_KEY="paste-your-openrouter-key-here"
+export ANTHROPIC_BASE_URL="https://openrouter.ai/api"
+export ANTHROPIC_AUTH_TOKEN="$OPENROUTER_API_KEY"
+export ANTHROPIC_API_KEY=""   # must be empty, or Claude Code tries Anthropic instead
+export ANTHROPIC_DEFAULT_OPUS_MODEL="nvidia/nemotron-3-ultra-550b-a55b:free"
+export ANTHROPIC_DEFAULT_SONNET_MODEL="nvidia/nemotron-3-ultra-550b-a55b:free"
+export ANTHROPIC_DEFAULT_HAIKU_MODEL="nvidia/nemotron-3-ultra-550b-a55b:free"
+export CLAUDE_CODE_SUBAGENT_MODEL="nvidia/nemotron-3-ultra-550b-a55b:free"
+```
+
+Reload the shell (`source ~/.zshrc` or `source ~/.bashrc`). If anyone logged into Anthropic earlier, have them run `/logout` inside Claude Code first to clear the cached login, then restart Claude Code.
+
+Checkpoint: `/status` shows the OpenRouter base URL and the Nemotron model instead of an Anthropic account.
+
+Presenter note: the model ID and the free status can change. Confirm `nvidia/nemotron-3-ultra-550b-a55b:free` is still listed at openrouter.ai before the talk, and have a backup free model ID ready in case it is retired or rate-limited on the day.
 
 ## Slide: Step 6, the alias
 
@@ -87,6 +133,7 @@ Checkpoint: hands up for a repository visible on GitHub. This is the gate for th
 | 1 to 3, runtimes | 8 | Longest if nobody did prework |
 | 4, install Claude Code | 4 | |
 | 5, login | 4 | WSL browser issue costs time |
+| 5b, OpenRouter free option | 3 | Only if someone needs it; say the training warning |
 | 6, alias | 4 | Do not rush the warning |
 | 7, SSH keys | 7 | Most hands-on help needed here |
 | 8, gh CLI | 3 | |
