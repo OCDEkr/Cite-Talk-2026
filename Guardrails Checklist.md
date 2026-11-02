@@ -13,12 +13,13 @@ A one-page checklist to keep by your desk. It is the [[Guardrails]] section turn
 
 - [ ] Read the command or script before you let it run, for anything that deletes, disables, writes, or sends.
 - [ ] Run a destructive script in report-only mode first, against an export, before it touches anything live.
-- [ ] Work in a scratch folder or a non-production copy, not the live system.
+- [ ] Work in a scratch folder or a non-production copy, not the live system. Use a test tenant for anything that touches identity.
+- [ ] Generate and review config changes first, then apply them in a maintenance window, not live from the chat.
 - [ ] Use plain `claude` with approvals on for anything connected to a real system. Keep the `clauded` alias to throwaway folders only.
 
 ## Protect the data
 
-- [ ] No student records, credentials, API keys, or tokens in a prompt.
+- [ ] No student records, credentials, API keys, or tokens in a prompt. If a script needs a secret, it reads it from the environment, not the chat.
 - [ ] Strip personal data from a file before you hand it over, or use synthetic data.
 - [ ] Confirm your Claude plan's terms cover the data you are about to use. FERPA, California SOPIPA, and your signed data privacy agreements apply.
 - [ ] Never paste anything sensitive into a free or third-party model you have not vetted. Assume its prompts are logged.
