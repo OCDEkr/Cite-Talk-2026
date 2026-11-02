@@ -27,13 +27,14 @@ Speaker notes:
 Speaker notes:
 - Walk the options. Prices move, so verify the current numbers on Anthropic's pricing page before the talk. These are the shape, not a quote.
 
-| Option | Rough cost | Who it fits |
+| Plan | Cost per month | Who it fits |
 | --- | --- | --- |
-| Claude Pro | about $20 per month | One person, light to moderate use. Where most people start. |
-| Claude Max | about $100 per month (and a higher tier around $200) | One person who lives in the tool all day. |
+| Free | $0 | Claude chat only. Does not include Claude Code. To try the tool free, use the OpenRouter path in the setup walkthrough. |
+| Pro | $17 | One person, light to moderate use. Where most people start. |
+| Max | $100 | One person who leans on the tool daily. |
+| Ultra | $200 | The highest limits, for all-day heavy use. |
 | Team or Enterprise | per seat | A district rolling it out to staff, with admin controls. |
 | API or Console | pay per token | Automation and scripts, or metered team use. |
-| OpenRouter free model | free | Trying it with no commitment. See the setup walkthrough. |
 
 - Two things people get wrong:
   - Usage is not a monthly bucket. It is a rolling limit per few hours plus a weekly cap, and the Claude Code tool and the Claude chat app draw from the same quota. Heavy days hit the limit; it resets.
@@ -99,6 +100,6 @@ Speaker notes:
 
 ## Open questions for this section
 
-- Confirm the pricing figures against Anthropic's current plan page near the talk date. The top tier was being restructured as of late 2026.
+- Pricing uses the current Free, Pro, Max, Ultra tiers ($0, $17, $100, $200). Give it a quick check against Anthropic's page near the talk date in case it moves again.
 - Decide whether this section needs its own one-page handout, or whether the [[Cite Talk Guide]] and [[Setup Guide]] already cover the takeaway.
 - Decide the order of sections 6 and 7. Getting started reads well right before the close. If you moved guardrails earlier, this stays last.

@@ -74,4 +74,4 @@ Speaker notes:
 
 ## Open questions for this section
 
-- The attacker claim on Slide 5 needs a citation. See the placeholder in [[Sources#Attacker use of AI]].
+- The attacker claim on Slide 5 is now sourced to Anthropic's September 2026 threat report. See [[Sources#Attacker use of AI]].

@@ -1,13 +1,13 @@
 ---
 title: Skills, Agents, and Plugins
-section: 4
+section: 5
 status: draft
 tags: [cite-talk-2026, slides, skills, agents, plugins, ecc]
 ---
 
 # Skills, agents, and plugins
 
-Section 4 of [[Talk Outline]]. This is a deck. Each `##` heading is one slide. The **Slide** line is on-screen text; the rest is speaker notes. It ends with installing ECC, a large open-source bundle, so the room sees that they do not have to build everything from scratch.
+Section 5 of [[Talk Outline]]. This is a deck. Each `##` heading is one slide. The **Slide** line is on-screen text; the rest is speaker notes. It ends with installing ECC, a large open-source bundle, so the room sees that they do not have to build everything from scratch.
 
 Teaching order is smallest to largest: a skill is a page of instructions, an agent is a worker you hand a job to, and a plugin is a package that ships skills, agents, and more as one unit.
 
@@ -215,11 +215,11 @@ Impeccable. A design-quality skill that audits a front end for accessibility, pe
 /plugin install impeccable@impeccable
 ```
 
-TDD. Enforces red-green-refactor so the code Claude writes comes with tests. Several TDD plugins exist; this is one of the simpler ones.
+TDD. Enforces red-green-refactor so the code Claude writes comes with tests. Matt Pocock's plugin bundles a `tdd` skill you run as `/tdd`. Several other TDD plugins exist too.
 
 ```
 /plugin marketplace add mattpocock/skills
-/plugin install tdd@skills
+/plugin install mattpocock-skills@mattpocock
 ```
 
 - Say the security line once more here: each of these runs with your permissions when enabled. These five are popular and open source, but the rule stands. Check a plugin before you install it.
@@ -240,8 +240,8 @@ Speaker notes:
 - The ECC agent and skill counts come from its repository and will drift. Say "dozens of agents and hundreds of skills" if you do not want to recheck exact numbers.
 - ECC installs a large amount into every session, which has a context and usage cost. Mention that the guided installer's smaller profiles exist for people who do not want all of it.
 - The plugin security point is not optional for this audience. Keep it.
-- Install commands for the starter kit (slide 9) were checked against each project on 2026-10-30. Humanizer is confirmed working from this session. The others come from the projects' own pages. Confirm the exact `plugin@marketplace` name on your machine before the talk by running the marketplace-add line and reading what `/plugin` lists, since `impeccable@impeccable` and `tdd@skills` are the install names most likely to have changed.
-- "TDD" is a crowded space. The slide uses the mattpocock/skills version. Alternatives include nizos/tdd-guard for hard enforcement that blocks out-of-order edits. Superpowers also bundles a test-first workflow, so if you install superpowers you may not need a separate TDD plugin.
+- Install names verified against each marketplace manifest on 2026-11-02: `humanizer@humanizer`, `superpowers@superpowers-marketplace`, `frontend-design@claude-plugins-official`, `impeccable@impeccable`, and `mattpocock-skills@mattpocock`. Marketplaces change, so a quick check with `/plugin` before the talk is still worth it.
+- "TDD" is a crowded space. The slide uses Matt Pocock's plugin, where tdd is one skill among several. Alternatives include nizos/tdd-guard for hard enforcement that blocks out-of-order edits. Superpowers also bundles a test-first workflow, so if you install superpowers you may not need a separate TDD plugin.
 
 ## Open questions for this section
 

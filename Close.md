@@ -45,14 +45,15 @@ Speaker notes:
 ## Slide 5. Thanks and questions
 
 **Slide:** Thank you. What would you want it to do first?
+Kevin Riley · kriley@ocde.us
 
 Speaker notes:
 - Thank the room and the organizers.
 - Open with a question that gets hands up, not silence: ask what task in their own week they would point it at first. It surfaces real use cases and warms up the Q&A.
-- Have your contact on the slide so people can follow up. Add your name and district email before the talk.
+- Your contact is on the slide so people can follow up: Kevin Riley, kriley@ocde.us.
 
 ## Open questions for this section
 
-- Add the real handout link and your contact details before presenting. Both are placeholders.
+- Add the real handout link before presenting. The contact is set to kriley@ocde.us.
 - Decide whether to end on the question (slide 5) or hold a hard call to action as the final image. The question invites engagement; a single "one task, one hour" slide is a stronger last image if you want them to leave with the instruction, not a discussion.
 - If the session runs tight, slides 1 and 2 can merge into one recap slide.

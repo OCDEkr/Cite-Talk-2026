@@ -1,13 +1,13 @@
 ---
 title: Application Builds
-section: 5
+section: 6
 status: draft
 tags: [cite-talk-2026, demos, prompts, app-builds]
 ---
 
 # Application builds
 
-Section 5 of [[Talk Outline]]. This is where the talk moves from one-off tasks to building a working application. The earlier sections showed Claude writing a script and finishing. Here it plans, researches, asks questions, and builds something that runs.
+Section 6 of [[Talk Outline]]. This is where the talk moves from one-off tasks to building a working application. The earlier sections showed Claude writing a script and finishing. Here it plans, researches, asks questions, and builds something that runs.
 
 Demo prompts in this section are meant to be run live. Each is written to show a different part of the build workflow.
 

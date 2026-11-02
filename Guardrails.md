@@ -1,25 +1,25 @@
 ---
 title: Guardrails
-section: 6
+section: 2
 status: draft
 tags: [cite-talk-2026, slides, guardrails, safety]
 ---
 
 # Guardrails
 
-Section 6 of [[Talk Outline]]. A deck. Each `##` heading is one slide; the **Slide** line is on-screen text, the rest is speaker notes.
+Section 2 of [[Talk Outline]]. A deck. Each `##` heading is one slide; the **Slide** line is on-screen text, the rest is speaker notes.
 
-This section earns the rest of the talk. The earlier sections showed the power. This one is the part that keeps a one-person IT shop from turning that power into an incident. The room is security staff, so pitch it as professional practice, not as a warning label.
+This section sets the ground rules before any demo. It sits here on purpose, so the discipline frames every example that follows instead of arriving as an afterthought. The room is security staff, so pitch it as professional practice, not as a warning label.
 
-The thread running through every slide: the human stays responsible. The tool is fast and confident and wrong often enough that you cannot hand it the keys and walk away.
+The thread running through every slide: the human stays responsible. The tool is fast and confident and wrong often enough that you cannot hand it the keys and walk away. The later sections point back to these five rules.
 
-## Slide 1. Why this section exists
+## Slide 1. The rules before the demos
 
-**Slide:** Everything so far was the upside. These are the five ways it bites.
+**Slide:** Five rules first. They are what make everything after this safe.
 
 Speaker notes:
-- Name the shift. Up to here the talk sold the capability. If you stop there, you have handed a room of busy admins a loaded tool and no trigger discipline.
-- The five guardrails, previewed: read before you run, work in a safe place, protect the data, keep your permissions tight, and verify the output. The rest of the section is one slide each.
+- Set expectations. You are about to see the tool do powerful things. Before that, the discipline that keeps a busy admin from turning power into an incident.
+- The five guardrails, previewed: read before you run, work in a safe place, protect the data, keep your permissions tight, and verify the output. The rest of the section is one slide each, and the demos that follow lean on them.
 - Say it plainly: none of these slow you down much. They are the difference between a tool that saves you a day and a tool that costs you a weekend.
 
 ## Slide 2. Read before you run
@@ -30,7 +30,7 @@ Speaker notes:
 - This is the habit the whole talk is built on. It appeared in the code review and application build sections. Here it gets stated as a rule.
 - Claude will propose a command or a script that looks right and is wrong in a way you only catch by reading it: a wildcard that matches too much, a date filter off by a year, a destructive flag.
 - The rule: for anything that changes state (deletes, disables, writes, sends), read what it will do before you let it run. For anything read-only, you can move faster.
-- Tie it to permissions: the default Claude Code asks before each action for exactly this reason. The `clauded` alias from [[Setup Guide]] turns that off, which is why it is scoped to scratch folders only.
+- Tie it to permissions: the default Claude Code asks before each action for exactly this reason. In setup you will create an alias called `clauded` that turns this off, which is why it is scoped to scratch folders only.
 
 ## Slide 3. Work in a safe place
 
@@ -41,7 +41,7 @@ Speaker notes:
 - Concrete cases for this room:
   - Account cleanup scripts: run them in report-only mode first, against an export, before they disable anything live.
   - Config changes: generate and review them, apply them in a maintenance window, not live from the chat.
-  - Anything with `--dangerously-skip-permissions`: scratch folders with nothing you care about, as the setup section said.
+  - Anything with `--dangerously-skip-permissions`: scratch folders with nothing you care about, as the setup section will cover.
 - The point is not fear. It is that the tool is fast, and fast plus a mistake on production is how you spend Saturday on restores.
 
 ## Slide 4. Protect the data
@@ -63,8 +63,8 @@ Speaker notes:
 Speaker notes:
 - Three levers, from the earlier sections:
   - The permission prompts. Leave them on for real work. `/permissions` lets you allow specific safe commands without turning everything off, which is the grown-up version of the `clauded` alias.
-  - Agent tool limits. The read-only `log-triage` agent in [[Skills Agents Plugins]] could not change a file even if it tried. Build narrow agents for narrow jobs.
-  - Plugins run as you. An enabled plugin's hooks and servers run with your permissions in every session. Review what a plugin does before installing it, the same way you read a script. This matters more for a bundle like ECC that installs a lot.
+  - Agent tool limits. A read-only agent, like the `log-triage` one you will build later in [[Skills Agents Plugins]], cannot change a file even if it tried. Build narrow agents for narrow jobs.
+  - Plugins run as you. An enabled plugin's hooks and servers run with your permissions in every session. Review what a plugin does before installing it, the same way you read a script. This matters more for a large bundle, as you will see when we install ECC.
 - The principle is least privilege, which this room already applies to users and service accounts. Apply it to the AI tool too.
 
 ## Slide 6. Verify the output
@@ -87,11 +87,11 @@ Speaker notes:
 Speaker notes:
 - Give the room a single frame to remember. A sharp junior who works at machine speed. You would not let a new hire disable accounts in production unsupervised on day one. Same here.
 - Supervision here is cheap: read the state-changing commands, sandbox the risky work, protect the data, keep permissions narrow, and verify what matters. That is the whole section in one breath.
-- Transition: the next section is how to get started for real, now that they know both the power and the discipline.
+- Transition: with the rules set, the next section gets your machine set up so you can try it.
 
 ## Open questions for this section
 
 - Decide whether this needs a one-page attendee handout like [[Setup Guide]], a "guardrails checklist" they can keep. It would be easy to pull from these slides.
 - Confirm the FERPA and SOPIPA framing matches your district's actual data privacy agreement process. The slide states the obligation generally; you may want to name your specific vetting or DPA workflow.
-- Decide placement. This reads well as section 6, after the builds. An argument exists for moving it earlier, right after the intro, so the discipline frames every demo. Your call.
+- Placement decided: this sits at section 2, right after the intro, so the discipline frames every demo. References to later features (the clauded alias, the log-triage agent, ECC) are now forward-looking on purpose.
 - The prompt injection point is compressed into one line on slide 6. Decide whether this audience wants more on it, given OSINT and log triage both feed untrusted text to the tool.

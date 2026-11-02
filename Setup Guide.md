@@ -1,6 +1,6 @@
 ---
 title: Setup Guide
-section: 2
+section: 3
 status: draft
 audience: attendees
 tags: [cite-talk-2026, setup, handout]

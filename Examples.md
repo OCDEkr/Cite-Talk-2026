@@ -1,13 +1,13 @@
 ---
 title: Examples
-section: 3
+section: 4
 status: draft
 tags: [cite-talk-2026, examples, demos, prompts]
 ---
 
 # Examples
 
-Section 3 of [[Talk Outline]]. Five areas, two or three examples each. Every example is sized to run in under five minutes on stage and ends with something the room can see: a document, a table, a script, or a finding.
+Section 4 of [[Talk Outline]]. Five areas, two or three examples each. Every example is sized to run in under five minutes on stage and ends with something the room can see: a document, a table, a script, or a finding.
 
 Each example has a one-line pitch, what to have ready, the prompt, and what to point at when it finishes. Prompts assume the attendee is in a scratch folder with `clauded` running, per [[Setup Guide]] step 6.
 
