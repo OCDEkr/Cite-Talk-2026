@@ -9,7 +9,7 @@ tags: [cite-talk-2026, examples, demos, prompts]
 
 Section 4 of [[Talk Outline]]. Five areas, two or three examples each. Every example is sized to run in under five minutes on stage and ends with something the room can see: a document, a table, a script, or a finding.
 
-Each example has a one-line pitch, what to have ready, the prompt, and what to point at when it finishes. Prompts assume the attendee is in a scratch folder with `clauded` running, per [[Setup Guide]] step 6.
+Each example has a one-line pitch, what to have ready, the prompt, and what to point at when it finishes. Prompts assume the attendee is in a scratch folder running plain `claude` with Manual approvals on and existing allow rules reviewed, per [[Setup Guide]] step 6. A scratch folder is not isolation.
 
 Two rules apply to every example and should be stated once at the start of the section:
 

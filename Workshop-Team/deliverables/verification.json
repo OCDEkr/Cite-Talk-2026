@@ -1,0 +1,154 @@
+{
+  "status": "PASS_STRUCTURAL_AND_LOCAL_REFERENCE_CHECKS",
+  "python": "3.14.9",
+  "platform": "macOS-27.2-arm64-arm-64bit-Mach-O",
+  "core_slides": 21,
+  "hidden_support_slides": 4,
+  "computed_minutes": 120,
+  "editable_text_blocks": 297,
+  "shapes_checked": 342,
+  "local_html_links_checked": 100,
+  "packages": {
+    "python-pptx": "1.0.2",
+    "Pillow": "13.0.0",
+    "pypdf": "6.21.4",
+    "pypdfium2": "5.14.0"
+  },
+  "executed": [
+    {
+      "command": [
+        "/Users/kevin/.hermes/environments/documents/gen-673c9dde9c6d4bbc80b99ddee6dc1bc5/venv/bin/python",
+        "-I",
+        "/Users/kevin/Documents/Obsidian Vault/Cite Talk - AI for Cyber Security/Workshop-Team/design/check_tokens.py",
+        "--slides",
+        "/Users/kevin/Documents/Obsidian Vault/Cite Talk - AI for Cyber Security/Workshop-Team/integration/core-slides.json",
+        "--agenda",
+        "/Users/kevin/Documents/Obsidian Vault/Cite Talk - AI for Cyber Security/Workshop-Team/teaching/agenda.json"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/kevin/.hermes/environments/documents/gen-673c9dde9c6d4bbc80b99ddee6dc1bc5/venv/bin/python",
+        "-I",
+        "/Users/kevin/Documents/Obsidian Vault/Cite Talk - AI for Cyber Security/Workshop-Team/design/check_tokens.py",
+        "--slides",
+        "/Users/kevin/Documents/Obsidian Vault/Cite Talk - AI for Cyber Security/Workshop-Team/integration/slides.json"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "bash",
+        "-n",
+        "/Users/kevin/Documents/Obsidian Vault/Cite Talk - AI for Cyber Security/Workshop-Team/deliverables/participant/linux/preflight.sh"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "bash",
+        "/Users/kevin/Documents/Obsidian Vault/Cite Talk - AI for Cyber Security/Workshop-Team/deliverables/participant/linux/preflight.sh"
+      ],
+      "exit_code": 2,
+      "stdout": "SKIP: Linux/WSL2 preflight requires Linux. Use the platform appendix or offline workbook.\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/kevin/.hermes/environments/documents/gen-673c9dde9c6d4bbc80b99ddee6dc1bc5/venv/bin/python",
+        "-I",
+        "/Users/kevin/Documents/Obsidian Vault/Cite Talk - AI for Cyber Security/Workshop-Team/integration/extracted-check-ohrf8ngu/validator-source/teaching/validate_teaching.py"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: 120 minutes; 21 matching narrative slides; 4 zero-time support views; 25 local checks; 10 CLI checks; design lint PASS\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/kevin/.hermes/environments/documents/gen-673c9dde9c6d4bbc80b99ddee6dc1bc5/venv/bin/python",
+        "labs/reference_triage.py",
+        "labs/signins.csv",
+        "work/reference-events.csv"
+      ],
+      "exit_code": 0,
+      "stdout": "4 flagged events written to reference-events.csv\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/kevin/.hermes/environments/documents/gen-673c9dde9c6d4bbc80b99ddee6dc1bc5/venv/bin/python",
+        "labs/check_triage.py",
+        "work/reference-events.csv"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: exact IDs, order, source values and reasons\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/kevin/.hermes/environments/documents/gen-673c9dde9c6d4bbc80b99ddee6dc1bc5/venv/bin/python",
+        "labs/reference_report.py",
+        "work/reference-events.csv",
+        "work/reference-review.html"
+      ],
+      "exit_code": 0,
+      "stdout": "4 events rendered as local HTML\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/kevin/.hermes/environments/documents/gen-673c9dde9c6d4bbc80b99ddee6dc1bc5/venv/bin/python",
+        "labs/reference_report.py",
+        "work/flagged-events.csv",
+        "work/fallback-from-checked.html"
+      ],
+      "exit_code": 0,
+      "stdout": "4 events rendered as local HTML\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/kevin/.hermes/environments/documents/gen-673c9dde9c6d4bbc80b99ddee6dc1bc5/venv/bin/python",
+        "labs/reference_report.py",
+        "work/wrong-header-only.csv",
+        "work/rejected.html"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "ERROR: Expected columns: event_id,user,timestamp_utc,reasons\n"
+    },
+    {
+      "command": [
+        "/Users/kevin/.hermes/environments/documents/gen-673c9dde9c6d4bbc80b99ddee6dc1bc5/venv/bin/python",
+        "labs/reference_report.py",
+        "work/reference-events.csv",
+        "work/reference-review.html"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "ERROR: [Errno 17] File exists: 'work/reference-review.html'\n"
+    }
+  ],
+  "native_export": {
+    "status": "NOT RUN / awaiting user approval",
+    "reason": "Approval request canceled without authorization; not retried. No PDF generated."
+  },
+  "not_run": [
+    "Native PowerPoint PDF export",
+    "Native slide visual inspection / PDF raster",
+    "Browser rendering",
+    "Linux/WSL VM execution",
+    "Python 3.11 or 3.12 runtime rehearsal",
+    "Live agent login/inference",
+    "Participant-generated code",
+    "Classroom timing rehearsal"
+  ],
+  "final_peer_signoff": "Coordinator-relayed design/teaching findings resolved; regression checks PASS. Native visual review NOT RUN."
+}

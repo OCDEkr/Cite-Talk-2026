@@ -30,7 +30,7 @@ Speaker notes:
 - This is the habit the whole talk is built on. It runs through the code review and application build sections you will see. Here it gets stated as a rule up front.
 - Claude will propose a command or a script that looks right and is wrong in a way you only catch by reading it: a wildcard that matches too much, a date filter off by a year, a destructive flag.
 - The rule: for anything that changes state (deletes, disables, writes, sends), read what it will do before you let it run. For anything read-only, you can move faster.
-- Tie it to permissions: the default Claude Code asks before each action for exactly this reason. In setup you will create an alias called `clauded` that turns this off, which is why it is scoped to scratch folders only.
+- Tie it to permissions: check the active mode and allow rules, select Manual, and review proposed state-changing actions. The workshop uses plain `claude`, not a permission-bypass alias.
 
 ## Slide 3. Work in a safe place
 
@@ -41,7 +41,7 @@ Speaker notes:
 - Concrete cases for this room:
   - Account cleanup scripts: run them in report-only mode first, against an export, before they disable anything live.
   - Config changes: generate and review them, apply them in a maintenance window, not live from the chat.
-  - Anything with `--dangerously-skip-permissions`: scratch folders with nothing you care about, as the setup section will cover.
+  - A scratch folder is not isolation. Keep approval prompts on; the workshop does not use `--dangerously-skip-permissions`.
 - The point is not fear. It is that the tool is fast, and fast plus a mistake on production is how you spend Saturday on restores.
 
 ## Slide 4. Protect the data
@@ -62,8 +62,8 @@ Speaker notes:
 
 Speaker notes:
 - Three levers, from the earlier sections:
-  - The permission prompts. Leave them on for real work. `/permissions` lets you allow specific safe commands without turning everything off, which is the grown-up version of the `clauded` alias.
-  - Agent tool limits. A read-only agent, like the `log-triage` one you will build later in [[Skills Agents Plugins]], cannot change a file even if it tried. Build narrow agents for narrow jobs.
+  - The permission prompts. Keep them on in the workshop and for real work. Check the active mode and existing allow rules. `/permissions` supports narrow, deliberate exceptions.
+  - Agent tool limits. Leaving Edit and Write out of the `log-triage` example does not enforce read-only access: Bash can still change or delete files. Keep approvals on, use a copy, and verify that the source stayed unchanged.
   - Plugins run as you. An enabled plugin's hooks and servers run with your permissions in every session. Review what a plugin does before installing it, the same way you read a script. This matters more for a large bundle, as you will see when we install ECC.
 - The principle is least privilege, which this room already applies to users and service accounts. Apply it to the AI tool too.
 
@@ -93,5 +93,5 @@ Speaker notes:
 
 - One-page attendee handout built: [[Guardrails Checklist]], a tick-off version of these five rules to keep by the desk.
 - Confirm the FERPA and SOPIPA framing matches your district's actual data privacy agreement process. The slide states the obligation generally; you may want to name your specific vetting or DPA workflow.
-- Placement decided: this sits at section 2, right after the intro, so the discipline frames every demo. References to later features (the clauded alias, the log-triage agent, ECC) are now forward-looking on purpose.
+- Placement decided: this sits at section 2, right after the intro, so the discipline frames every demo. Later references cover approval prompts, the log-triage agent, and optional plugin review; no bypass alias is part of the workshop.
 - The prompt injection point is compressed into one line on slide 6. Decide whether this audience wants more on it, given OSINT and log triage both feed untrusted text to the tool.

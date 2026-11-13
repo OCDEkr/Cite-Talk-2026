@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="1660" viewBox="0 0 960 1660" font-family="Arial, Helvetica, sans-serif">
+<title>CITE workshop templates, round 2: route, lab with phase and status strips, reveal</title>
+<desc>Drawn from slide-manifest.json slides 7, 14 and 15 and tokens.json. Proposal mockups only, not the final deck.</desc>
+<rect width="960" height="1660" fill="#D9DEDD"/>
+
+<!-- ============ ROUTE (slide 7) ============ -->
+<g>
+  <rect width="960" height="540" fill="#FFFFFF"/>
+  <text x="48" y="42" font-size="14" font-weight="bold" fill="#155191">READINESS</text>
+  <text x="912" y="42" font-size="14" fill="#454B53" text-anchor="end">elapsed 20–28</text>
+  <text x="48" y="104" font-size="36" font-weight="bold" fill="#111111">Choose your working route</text>
+  <g font-size="20" fill="#111111">
+    <rect x="48" y="132" width="272" height="196" fill="#EFF4FA" stroke="#5A6270" stroke-width="2"/>
+    <text x="68" y="168" font-size="24" font-weight="bold" fill="#155191">▶ LIVE AGENT</text>
+    <text x="68" y="204">Approved agent + Python.</text>
+    <text x="68" y="232">Generate, inspect, run.</text>
+    <text x="68" y="306" font-size="16" font-weight="bold" fill="#454B53">RECORD: EXECUTED</text>
+    <rect x="344" y="132" width="272" height="196" fill="#EFF4FA" stroke="#5A6270" stroke-width="2"/>
+    <text x="364" y="168" font-size="24" font-weight="bold" fill="#155191">■ LOCAL SCRIPT</text>
+    <text x="364" y="204">Python, no account.</text>
+    <text x="364" y="232">Run the reference, check it.</text>
+    <text x="364" y="306" font-size="16" font-weight="bold" fill="#454B53">RECORD: EXECUTED (REF.)</text>
+    <rect x="640" y="132" width="272" height="196" fill="#EFF4FA" stroke="#5A6270" stroke-width="2"/>
+    <text x="660" y="168" font-size="24" font-weight="bold" fill="#155191">✎ PAPER REVIEW</text>
+    <text x="660" y="204">Specimens + worksheet.</text>
+    <text x="660" y="232">Same checks, by hand.</text>
+    <text x="660" y="306" font-size="16" font-weight="bold" fill="#454B53">RECORD: REVIEWED</text>
+  </g>
+  <rect x="48" y="346" width="864" height="26" fill="#0B1E33"/>
+  <text x="60" y="364" font-size="14" font-weight="bold" fill="#E7B678">UBUNTU / WSL BASH · NORMAL USER</text>
+  <rect x="48" y="372" width="864" height="92" fill="#0B1E33"/>
+  <g font-family="Consolas, Menlo, 'Courier New', monospace" font-size="20" fill="#FFFFFF">
+    <text x="68" y="400">pwd</text><text x="68" y="426">python3 --version</text><text x="68" y="452">ls -l labs/signins.csv</text>
+  </g>
+  <text x="48" y="492" font-size="24" font-weight="bold" fill="#111111">By minute 28, everyone proceeds.</text>
+  <text x="48" y="524" font-size="14" fill="#454B53">CITE 2026 · AI for Cyber Security</text>
+  <text x="912" y="524" font-size="14" fill="#454B53" text-anchor="end">07</text>
+</g>
+
+<!-- ============ LAB with phase strip + status call (slide 14) ============ -->
+<g transform="translate(0,560)">
+  <rect width="960" height="540" fill="#FFFFFF"/>
+  <rect width="960" height="60" fill="#0B1E33"/>
+  <text x="48" y="39" font-size="22" font-weight="bold" fill="#E7B678">LAB 2 · YOUR HANDS · 18 MIN</text>
+  <text x="700" y="39" font-size="14" font-weight="bold" fill="#E7B678" text-anchor="end">SYNTHETIC DATA</text>
+  <text x="912" y="39" font-size="22" font-weight="bold" fill="#FFFFFF" text-anchor="end">Stop at 75</text>
+  <!-- phase strip: widths proportional to minutes (3/8/4/3 of 18) -->
+  <g font-size="14" font-weight="bold">
+    <rect x="48" y="72" width="144" height="30" fill="#FFFFFF" stroke="#5A6270" stroke-width="2"/><text x="56" y="92" fill="#111111">57 Read, predict</text>
+    <rect x="192" y="72" width="384" height="30" fill="#FFFFFF" stroke="#5A6270" stroke-width="2"/><text x="200" y="92" fill="#111111">60 Build, inspect, run</text>
+    <rect x="576" y="72" width="192" height="30" fill="#FFFFFF" stroke="#5A6270" stroke-width="2"/><text x="584" y="92" fill="#111111">68 Check, repair</text>
+    <rect x="768" y="72" width="144" height="30" fill="#FFFFFF" stroke="#5A6270" stroke-width="2"/><text x="776" y="92" fill="#111111">72 Review snippet</text>
+  </g>
+  <text x="48" y="146" font-size="36" font-weight="bold" fill="#111111">Build and check the triage script</text>
+  <g font-size="24" fill="#111111">
+    <text x="48" y="190" font-weight="bold" fill="#155191">1</text><text x="80" y="190">Read the CSV; predict E09, E10 and E12.</text>
+    <text x="48" y="224" font-weight="bold" fill="#155191">2</text><text x="80" y="224">Ask for the script; read it before running.</text>
+    <text x="48" y="258" font-weight="bold" fill="#155191">3</text><text x="80" y="258">Run it, then run the checker.</text>
+    <text x="48" y="292" font-weight="bold" fill="#155191">4</text><text x="80" y="292">Review the snippet. Do not run it.</text>
+  </g>
+  <rect x="48" y="306" width="864" height="24" fill="#0B1E33"/>
+  <text x="60" y="323" font-size="14" font-weight="bold" fill="#E7B678">UBUNTU / WSL BASH · NORMAL USER · IN THE KIT COPY</text>
+  <rect x="48" y="330" width="864" height="64" fill="#0B1E33"/>
+  <g font-family="Consolas, Menlo, 'Courier New', monospace" font-size="20" fill="#FFFFFF">
+    <text x="68" y="356">python3 work/triage.py labs/signins.csv work/flagged-events.csv</text>
+    <text x="68" y="382">python3 labs/check_triage.py work/flagged-events.csv</text>
+  </g>
+  <rect x="48" y="404" width="420" height="80" fill="#EFF4FA"/><rect x="48" y="404" width="6" height="80" fill="#1E6B3A"/>
+  <text x="66" y="426" font-size="16" font-weight="bold" fill="#1E6B3A">✓ DONE WHEN</text>
+  <text x="66" y="452" font-size="20" fill="#111111">Checker prints PASS: exact IDs,</text>
+  <text x="66" y="476" font-size="20" fill="#111111">order, source values and reasons.</text>
+  <rect x="492" y="404" width="420" height="80" fill="#EFF4FA"/><rect x="492" y="404" width="6" height="80" fill="#7A4A00"/>
+  <text x="510" y="426" font-size="16" font-weight="bold" fill="#7A4A00">↪ STUCK?</text>
+  <text x="510" y="452" font-size="20" fill="#111111">Reference script from minute 68,</text>
+  <text x="510" y="476" font-size="20" fill="#111111">or hand-flag all 12 rows.</text>
+  <!-- status call strip -->
+  <text x="48" y="518" font-size="16" font-weight="bold" fill="#454B53">AT 64, HANDS:</text>
+  <text x="178" y="518" font-size="16" font-weight="bold" fill="#1E6B3A">▶ RUNNING</text>
+  <text x="290" y="518" font-size="16" font-weight="bold" fill="#155191">✎ REVIEWING</text>
+  <text x="424" y="518" font-size="16" font-weight="bold" fill="#B3261E">✕ STUCK → SPECIMEN</text>
+  <text x="912" y="518" font-size="14" fill="#454B53" text-anchor="end">Workbook · Lab 2 · 14</text>
+</g>
+
+<!-- ============ REVEAL (slide 15) ============ -->
+<g transform="translate(0,1120)">
+  <rect width="960" height="540" fill="#FFFFFF"/>
+  <rect x="48" y="24" width="112" height="26" fill="#111111"/>
+  <text x="104" y="42" font-size="16" font-weight="bold" fill="#FFFFFF" text-anchor="middle">✓ CHECK</text>
+  <text x="174" y="42" font-size="14" fill="#454B53">Answers. Compare yours before reading on.</text>
+  <text x="912" y="42" font-size="14" fill="#454B53" text-anchor="end">elapsed 75–82</text>
+  <text x="48" y="104" font-size="36" font-weight="bold" fill="#111111">Four flags; show why</text>
+  <g font-size="24">
+    <rect x="48" y="134" width="864" height="64" fill="#EFF4FA"/>
+    <text x="68" y="174" font-family="Consolas, Menlo, monospace" font-weight="bold" fill="#155191">E06</text><text x="140" y="174" fill="#111111">failure_burst</text>
+    <rect x="48" y="208" width="864" height="64" fill="#EFF4FA"/>
+    <text x="68" y="248" font-family="Consolas, Menlo, monospace" font-weight="bold" fill="#155191">E07</text><text x="140" y="248" fill="#111111">outside_baseline</text>
+    <rect x="48" y="282" width="864" height="64" fill="#EFF4FA"/>
+    <text x="68" y="322" font-family="Consolas, Menlo, monospace" font-weight="bold" fill="#155191">E10 · E11</text><text x="210" y="322" fill="#111111">outside_hours</text>
+  </g>
+  <text x="48" y="400" font-size="32" font-weight="bold" fill="#111111">A flag is a question, not a verdict.</text>
+  <text x="48" y="440" font-size="20" fill="#454B53">Trace one excluded row (E08, E09 or E12) and say why.</text>
+  <rect x="48" y="500" width="864" height="1" fill="#CCD2DA"/>
+  <text x="48" y="524" font-size="14" fill="#454B53">CITE 2026 · AI for Cyber Security</text>
+  <text x="912" y="524" font-size="14" fill="#454B53" text-anchor="end">15</text>
+</g>
+</svg>

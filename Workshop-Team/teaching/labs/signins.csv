@@ -1,0 +1,13 @@
+event_id,user,timestamp_utc,country,result
+E01,staff-a,2026-10-26T08:00:00Z,US,success
+E02,staff-b,2026-10-26T09:00:00Z,US,success
+E03,staff-c,2026-10-26T09:10:00Z,US,failure
+E04,staff-c,2026-10-26T09:12:00Z,US,failure
+E05,staff-c,2026-10-26T09:14:00Z,US,failure
+E06,staff-c,2026-10-26T09:20:00Z,US,success
+E07,staff-a,2026-10-26T12:00:00Z,CA,success
+E08,staff-d,2026-10-26T12:15:00Z,CA,failure
+E09,staff-e,2026-10-26T18:59:00Z,US,success
+E10,staff-f,2026-10-26T19:00:00Z,US,success
+E11,staff-g,2026-10-27T06:59:00Z,US,success
+E12,staff-h,2026-10-27T07:00:00Z,US,success

@@ -1,0 +1,596 @@
+Building configuration...
+
+Current configuration : 18342 bytes
+!
+! Last configuration change at 14:22:31 UTC Tue Mar 4 2025 by cisco_tac_admin
+! NVRAM config last updated at 09:15:02 UTC Mon Feb 10 2025 by admin
+!
+version 16.9
+no service pad
+service tcp-small-servers
+service udp-small-servers
+service finger
+service config
+service timestamps debug uptime
+service timestamps log uptime
+no service password-encryption
+no platform punt-keepalive disable-kernel-core
+!
+hostname BLDG1-DIST-SW01
+!
+vrf definition Mgmt-vrf
+ !
+ address-family ipv4
+ exit-address-family
+ !
+ address-family ipv6
+ exit-address-family
+!
+boot-start-marker
+boot system switch all flash:packages.conf
+boot network tftp://10.10.99.200/network-confg
+boot-end-marker
+!
+logging buffered 4096 debugging
+logging console debugging
+no logging monitor
+enable secret 5 $1$k3Jd$Wq8vB0x7pF2yQ1mZcR4nS.
+enable password Sw1tch2019!
+!
+username admin privilege 15 password 0 admin123
+username netops privilege 15 secret 5 $1$Xy7a$9GhTq1LmPz0eR5vB3nC8w/
+username backup privilege 15 password 7 094F471A1A0A
+username cisco_tac_admin privilege 15 secret 5 $1$Qz2m$Hk4xV9pLw3sD7fB1nJ6tR0
+username helpdesk privilege 7 password 0 Helpdesk1
+!
+aaa new-model
+!
+aaa authentication login default group tacacs+ none
+aaa authentication login CONSOLE none
+aaa authentication enable default group tacacs+ none
+aaa authorization exec default group tacacs+ none
+!
+aaa session-id common
+clock timezone UTC 0 0
+switch 1 provision ws-c3850-48p
+!
+ip routing
+!
+ip domain name acme.local
+ip name-server 8.8.8.8
+ip dhcp excluded-address 10.10.40.1 10.10.40.10
+!
+ip dhcp pool GUEST
+ network 10.10.40.0 255.255.255.0
+ default-router 10.10.40.1
+ dns-server 8.8.8.8 10.10.100.10
+ lease infinite
+!
+ip dhcp pool LAB
+ network 10.10.60.0 255.255.255.0
+ default-router 10.10.60.1
+ option 150 ip 10.10.99.200
+!
+ip dhcp snooping vlan 10,20
+ip dhcp snooping
+ip arp inspection vlan 10,30
+!
+ip bootp server
+ip finger
+ip source-route
+ip dns server
+!
+ip ftp username backup
+ip ftp password B4ckup!
+ip http client username admin
+ip http client password admin123
+!
+login on-success log
+!
+vtp domain ACME
+vtp mode server
+vtp version 1
+!
+crypto pki trustpoint TP-self-signed-2481937710
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-2481937710
+ revocation-check none
+ rsakeypair TP-self-signed-2481937710 512
+!
+crypto pki trustpoint WEB-CERT
+ enrollment terminal
+ subject-name CN=bldg1-dist-sw01.acme.local
+ revocation-check none
+ rsakeypair WEB-KEY 1024
+ hash md5
+!
+crypto pki certificate chain TP-self-signed-2481937710
+ certificate self-signed 01
+  3082022B 30820194 A0030201 02020101 300D0609 2A864886 F70D0101 04050030
+  31312F30 2D060355 04031326 494F532D 53656C66 2D536967 6E65642D 43657274
+  69666963 6174652D 32343831 39333737 3130301E 170D3135 30333031 30303030
+  30305A17 0D323030 31303130 30303030 305A3031 312F302D 06035504 03132649
+  	quit
+!
+crypto isakmp policy 10
+ encr des
+ hash md5
+ authentication pre-share
+ group 1
+ lifetime 86400
+crypto isakmp key 0 Acme2015 address 0.0.0.0 0.0.0.0
+crypto isakmp keepalive 10
+!
+crypto ipsec transform-set LEGACY-TS esp-des esp-md5-hmac
+ mode tunnel
+!
+crypto map BRANCH-VPN 10 ipsec-isakmp
+ set peer 203.0.113.10
+ set transform-set LEGACY-TS
+ match address VPN-TRAFFIC
+!
+license boot level ipservicesk9
+!
+diagnostic bootup level minimal
+!
+spanning-tree mode pvst
+spanning-tree extend system-id
+spanning-tree vlan 1-4094 priority 61440
+no spanning-tree vlan 50
+!
+errdisable recovery cause all
+errdisable recovery interval 30
+!
+redundancy
+ mode sso
+!
+vlan 10
+ name USERS
+vlan 20
+ name VOICE
+vlan 30
+ name PRINTERS
+vlan 40
+ name GUEST
+vlan 50
+ name CAMERAS
+vlan 60
+ name LAB
+vlan 99
+ name MGMT
+vlan 100
+ name SERVERS
+!
+lldp run
+!
+class-map match-any system-cpp-police-topology-control
+  description Topology control
+!
+interface Port-channel1
+ description UPLINK-TO-IDF2
+ switchport mode trunk
+!
+interface GigabitEthernet0/0
+ vrf forwarding Mgmt-vrf
+ ip address 192.168.1.10 255.255.255.0
+ negotiation auto
+!
+interface GigabitEthernet1/0/1
+ description USER-101
+ switchport access vlan 10
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/2
+ description USER-102
+ switchport access vlan 10
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/3
+ description USER-103
+ switchport access vlan 10
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/4
+ description USER-104
+ switchport access vlan 10
+ switchport mode access
+ switchport port-security maximum 50
+ switchport port-security violation protect
+ switchport port-security mac-address sticky
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/5
+ description USER-105
+ switchport access vlan 10
+ switchport mode access
+ switchport port-security maximum 50
+ switchport port-security violation protect
+ switchport port-security mac-address sticky
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/6
+ description USER-106
+ switchport access vlan 10
+!
+interface GigabitEthernet1/0/7
+ description USER-107
+ switchport access vlan 10
+!
+interface GigabitEthernet1/0/8
+ description USER-108
+ switchport access vlan 10
+!
+interface GigabitEthernet1/0/9
+ description USER-109
+ switchport access vlan 10
+ switchport mode access
+!
+interface GigabitEthernet1/0/10
+ description USER-110
+ switchport access vlan 10
+ switchport mode access
+!
+interface GigabitEthernet1/0/11
+ description USER-111
+ switchport mode access
+!
+interface GigabitEthernet1/0/12
+ description USER-112
+ switchport mode access
+!
+interface GigabitEthernet1/0/13
+ description PHONE-201
+ switchport access vlan 10
+ switchport mode access
+ switchport voice vlan 20
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/14
+ description PHONE-202
+ switchport access vlan 10
+ switchport mode access
+ switchport voice vlan 20
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/15
+ description PHONE-203
+ switchport access vlan 10
+ switchport mode access
+ switchport voice vlan 20
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/16
+ description PHONE-204
+ switchport access vlan 10
+ switchport mode access
+ switchport voice vlan 21
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/17
+ description PHONE-205
+ switchport trunk allowed vlan 10,20
+ switchport mode trunk
+!
+interface GigabitEthernet1/0/18
+ description PHONE-206
+ switchport trunk allowed vlan 10,20
+ switchport mode trunk
+!
+interface GigabitEthernet1/0/19
+ description PHONE-207
+ switchport access vlan 10
+ switchport voice vlan 20
+!
+interface GigabitEthernet1/0/20
+ description PHONE-208
+ switchport access vlan 10
+ switchport voice vlan 20
+!
+interface GigabitEthernet1/0/21
+ description PRINTER-1F
+ switchport access vlan 30
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/22
+ description PRINTER-2F
+ switchport access vlan 30
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/23
+ description PRINTER-3F
+ switchport access vlan 30
+ switchport mode access
+!
+interface GigabitEthernet1/0/24
+ description PLOTTER-ENG
+ switchport access vlan 30
+!
+interface GigabitEthernet1/0/25
+ description ESX-HOST-01 vmnic0
+ switchport mode trunk
+ spanning-tree portfast trunk
+ spanning-tree bpdufilter enable
+!
+interface GigabitEthernet1/0/26
+ description ESX-HOST-01 vmnic1
+ switchport mode trunk
+ spanning-tree portfast trunk
+ spanning-tree bpdufilter enable
+!
+interface GigabitEthernet1/0/27
+ description FILE-SERVER-01
+ switchport access vlan 101
+ switchport mode access
+!
+interface GigabitEthernet1/0/28
+ description DC-01
+ switchport access vlan 100
+ switchport mode access
+!
+interface GigabitEthernet1/0/29
+ description CAMERA-LOBBY
+ switchport access vlan 50
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/30
+ description CAMERA-DOCK
+ switchport access vlan 50
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/31
+ description AP-LOBBY
+ switchport access vlan 10
+ switchport mode dynamic desirable
+!
+interface GigabitEthernet1/0/32
+ description WLC-GUEST-ANCHOR
+ switchport mode trunk
+ switchport trunk native vlan 40
+!
+interface GigabitEthernet1/0/33
+!
+interface GigabitEthernet1/0/34
+!
+interface GigabitEthernet1/0/35
+!
+interface GigabitEthernet1/0/36
+!
+interface GigabitEthernet1/0/37
+!
+interface GigabitEthernet1/0/38
+!
+interface GigabitEthernet1/0/39
+ description CONF-ROOM-A
+!
+interface GigabitEthernet1/0/40
+ description CONF-ROOM-B
+!
+interface GigabitEthernet1/0/41
+ description TEMP-VENDOR-HVAC
+ switchport access vlan 99
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/42
+ description SNIFFER
+ switchport mode access
+!
+interface GigabitEthernet1/0/43
+ shutdown
+!
+interface GigabitEthernet1/0/44
+ shutdown
+!
+interface GigabitEthernet1/0/45
+!
+interface GigabitEthernet1/0/46
+!
+interface GigabitEthernet1/0/47
+ description FW-OUTSIDE-LINK
+ no switchport
+ ip address 172.16.255.2 255.255.255.252
+ ip ospf authentication
+ ip ospf authentication-key 0 ospf123
+ crypto map BRANCH-VPN
+!
+interface GigabitEthernet1/0/48
+ description LAB-BENCH
+ switchport mode dynamic desirable
+!
+interface GigabitEthernet1/1/1
+!
+interface GigabitEthernet1/1/2
+!
+interface TenGigabitEthernet1/1/3
+ description UPLINK-TO-IDF2 Te1/1/1
+ switchport trunk allowed vlan 10,20,30
+ switchport mode trunk
+ channel-group 1 mode on
+!
+interface TenGigabitEthernet1/1/4
+ description UPLINK-TO-IDF2 Te1/1/2
+ switchport mode trunk
+ channel-group 1 mode on
+!
+interface Vlan1
+ ip address 10.10.1.1 255.255.255.0
+!
+interface Vlan10
+ description USERS
+ ip address 10.10.10.1 255.255.255.0
+ ip helper-address 10.10.100.10
+ ip directed-broadcast
+ ipv6 address 2001:DB8:10::1/64
+ ipv6 enable
+ standby 10 ip 10.10.10.254
+ standby 10 priority 150
+ standby 10 preempt
+ standby 10 authentication cisco
+!
+interface Vlan20
+ description VOICE
+ ip address 10.10.20.1 255.255.255.0
+ ip helper-address 10.10.100.10
+ standby 20 ip 10.10.20.254
+ standby 20 preempt
+!
+interface Vlan30
+ description PRINTERS
+ ip address 10.10.30.1 255.255.255.0
+!
+interface Vlan40
+ description GUEST
+ ip address 10.10.40.1 255.255.255.0
+ ip access-group GUEST-IN in
+!
+interface Vlan50
+ description CAMERAS
+ ip address 10.10.50.1 255.255.255.0
+!
+interface Vlan60
+ description LAB
+ ip address 10.10.60.1 255.255.255.0
+!
+interface Vlan99
+ description MGMT
+ ip address 10.10.99.1 255.255.255.0
+ ip access-group MGMT-PROTECT in
+!
+interface Vlan100
+ description SERVERS
+ ip address 10.10.100.1 255.255.255.0
+ ip access-group SERVER-PROTECT in
+ ip access-group PCI-SEGMENT out
+!
+interface Tunnel0
+ description BACKUP-LINK
+ ip address 192.168.254.1 255.255.255.252
+ tunnel source GigabitEthernet1/0/47
+ tunnel destination 198.51.100.99
+!
+router ospf 1
+ router-id 10.10.99.1
+ network 10.10.0.0 0.0.255.255 area 0
+ network 172.16.255.0 0.0.0.3 area 0
+ default-information originate always
+!
+ip forward-protocol nd
+ip http server
+ip http authentication enable
+ip http secure-server
+ip http access-class 50
+ip http timeout-policy idle 600 life 86400 requests 86400
+ip route 0.0.0.0 0.0.0.0 172.16.255.1
+ip default-gateway 10.10.99.254
+!
+ip ssh version 1
+ip ssh time-out 120
+ip ssh authentication-retries 5
+ip scp server enable
+!
+ip access-list standard VTY-ACCESS
+ permit any
+!
+ip access-list extended GUEST-IN
+ permit udp any any eq bootps
+ permit udp any any eq domain
+ permit ip any any
+ deny   ip 10.10.40.0 0.0.0.255 10.10.0.0 0.0.255.255
+!
+ip access-list extended MGMT-PROTECT
+ permit tcp any any eq 22
+ permit tcp any any eq telnet
+ permit udp any any eq snmp
+ permit ip 10.10.0.0 0.0.255.255 any
+!
+ip access-list extended SERVER-PROTECT
+ permit tcp 10.10.10.0 255.255.255.0 10.10.100.0 0.0.0.255 eq 445
+ permit tcp any 10.10.100.0 0.0.0.255 eq 3389
+ permit tcp any host 10.10.100.10 eq 22
+ permit ip host 10.10.40.25 any
+ deny   ip any any
+!
+ip access-list extended VPN-TRAFFIC
+ permit ip any any
+!
+access-list 10 permit any
+access-list 20 permit 10.10.99.0 0.0.0.255
+access-list 20 permit any
+!
+ipv6 unicast-routing
+!
+snmp-server community public RO
+snmp-server community private RW
+snmp-server community Acm3Mon RW 60
+snmp-server group LEGACY v3 noauth
+snmp-server location BLDG1 MDF Rack 4
+snmp-server contact jsmith x4412 - pager 555-0142
+snmp-server system-shutdown
+snmp-server enable traps
+snmp-server host 198.51.100.77 version 2c public
+snmp-server host 10.10.99.50 version 2c private
+!
+tacacs-server host 10.10.100.20 key 0 TacKey2019
+tacacs-server timeout 2
+!
+tftp-server flash:cat3k_caa-universalk9.16.09.04.SPA.bin
+tftp-server nvram:startup-config
+!
+control-plane
+ service-policy input system-cpp-policy
+!
+event manager applet NIGHTLY-BACKUP
+ event timer cron cron-entry "0 3 * * *"
+ action 1.0 cli command "enable"
+ action 2.0 cli command "copy running-config tftp://203.0.113.45/bldg1.cfg"
+ action 3.0 cli command "clear logging"
+!
+monitor session 1 source vlan 10,100 both
+monitor session 1 destination interface Gi1/0/42
+!
+monitor session 2 type erspan-source
+ source vlan 100 rx
+ destination
+  erspan-id 10
+  ip address 198.51.100.20
+  origin ip address 172.16.255.2
+!
+banner motd ^C
+Welcome to ACME Corp BLDG1-DIST-SW01 (Cisco 3850-48P, IOS-XE 16.9)
+Network team: x4412. Default admin login is in the IT Keepass.
+^C
+!
+line con 0
+ login authentication CONSOLE
+ exec-timeout 0 0
+ stopbits 1
+line vty 0 4
+ access-class 10 in
+ exec-timeout 0 0
+ privilege level 15
+ password 7 13061E010803
+ transport input telnet ssh
+line vty 5 15
+ access-class 15 in
+ exec-timeout 0 0
+ password Cisco123
+ transport input all
+line vty 16 31
+ transport input all
+!
+ntp authentication-key 1 md5 ntpkey123
+ntp trusted-key 1
+ntp master 3
+ntp server 129.6.15.28
+ntp server 10.10.99.250
+!
+vstack
+!
+end

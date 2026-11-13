@@ -1,0 +1,220 @@
+[
+  {
+    "id": "C07",
+    "core_slide": 7,
+    "kind": "lab",
+    "title": "Choose your working route",
+    "minutes": 8,
+    "steps": [
+      "Open the prepared teaching folder.",
+      "Choose live, local Python, or paper.",
+      "Stop setup at minute 25.",
+      "Use the final three minutes to review evidence."
+    ],
+    "done_when": "By minute 25, everyone has a route; by minute 28, a policy prediction.",
+    "fallback": "Packet P0/P1: no login, terminal, download or partner needed.",
+    "workbook_ref": "R0 · packet P0/P1",
+    "notes": "Five minutes maximum readiness/recovery plus three minutes evidence/transition; not eight minutes of setup.",
+    "provenance": "SYNTHETIC",
+    "elapsed": "20–28",
+    "phases": [
+      [
+        "readiness/recovery",
+        5
+      ],
+      [
+        "evidence/transition",
+        3
+      ]
+    ]
+  },
+  {
+    "id": "C09",
+    "core_slide": 9,
+    "kind": "lab",
+    "title": "Build the checklist",
+    "minutes": 10,
+    "steps": [
+      "Read the fictional policy.",
+      "Copy workbook L1 prompt, or repair packet P1.",
+      "Keep requirements separate from suggestions.",
+      "Check each system’s deadline and evidence."
+    ],
+    "done_when": "Four systems, correct deadline, verification/evidence, and unresolved decisions.",
+    "fallback": "Packet P1: correct the flawed draft and write one evidence row.",
+    "workbook_ref": "L1 · packet P1",
+    "notes": "Stop at minute 41. Do not project the full prompt or answer specimen during work.",
+    "provenance": "SYNTHETIC",
+    "elapsed": "31–41",
+    "phases": [
+      [
+        "predict",
+        2
+      ],
+      [
+        "draft/repair",
+        5
+      ],
+      [
+        "review",
+        3
+      ]
+    ]
+  },
+  {
+    "id": "C14",
+    "core_slide": 14,
+    "kind": "lab",
+    "title": "Build and check the triage script",
+    "minutes": 18,
+    "steps": [
+      "Predict rows using workbook L2 rules.",
+      "Review generated code before running it.",
+      "Compare exact IDs, source values and reasons.",
+      "Explain one boundary and one limitation."
+    ],
+    "done_when": "Checked output matches the hand key; input remains unchanged; one boundary explained.",
+    "fallback": "At minute 68 use reviewed reference code or packet P2.",
+    "workbook_ref": "L2 · packet P2",
+    "notes": "Stop generation at minute 75. S14A/S14B may replace this view during its existing work time.",
+    "provenance": "SYNTHETIC",
+    "elapsed": "57–75",
+    "phases": [
+      [
+        "predict",
+        3
+      ],
+      [
+        "generate/review/run",
+        8
+      ],
+      [
+        "check/repair",
+        4
+      ],
+      [
+        "snippet review",
+        3
+      ]
+    ]
+  },
+  {
+    "id": "C18",
+    "core_slide": 18,
+    "kind": "lab",
+    "title": "Build a local review report",
+    "minutes": 13,
+    "steps": [
+      "Approve the smallest plan.",
+      "Use the checked CSV, not invented output.",
+      "Build static HTML with escaped data.",
+      "Trace the display to a source row."
+    ],
+    "done_when": "Four events, three categories, exact values, safe text, no compromise claim.",
+    "fallback": "At minute 98 use reviewed reference or packet P3.",
+    "workbook_ref": "L3 · packet P3",
+    "notes": "Stop features at minute 105. No scanner, server, external assets or dependency installation.",
+    "provenance": "SYNTHETIC",
+    "elapsed": "92–105",
+    "phases": [
+      [
+        "approve plan",
+        3
+      ],
+      [
+        "build/render",
+        6
+      ],
+      [
+        "source/safe-text check",
+        4
+      ]
+    ]
+  },
+  {
+    "id": "S07A",
+    "parent_slide": 7,
+    "kind": "concept",
+    "title": "One folder; three routes",
+    "minutes": 0,
+    "display_window": [
+      20,
+      25
+    ],
+    "shell_context": "Linux/WSL Bash terminal · prepared kit only",
+    "points": [
+      "Live agent: approved access and normal permissions.",
+      "Local Python: reviewed references; no AI account.",
+      "Paper: packet P0–P3; same evidence decisions."
+    ],
+    "code": "cd \"$HOME/cite-workshop/teaching\"\npwd\npython3 --version\nbash ../linux/preflight.sh",
+    "workbook_ref": "R0 · Linux guide: In the room",
+    "fallback": "If the prepared folder is absent, use packet P0.",
+    "notes": "Optional support, no added minutes. Commands assume the organizer prepared exactly this kit layout; never run preflight on macOS/native Windows as a Linux-success check. Discovery does not prove model access, sandboxing or WSL2.",
+    "provenance": "SYNTHETIC"
+  },
+  {
+    "id": "S14A",
+    "parent_slide": 14,
+    "kind": "concept",
+    "title": "Run, then compare the exact rows",
+    "minutes": 0,
+    "display_window": [
+      60,
+      72
+    ],
+    "shell_context": "Linux/WSL Bash terminal · cwd: teaching",
+    "points": [
+      "Read the proposed code and output path first.",
+      "A count alone cannot verify the result.",
+      "Keep source CSV unchanged."
+    ],
+    "code": "python3 work/triage.py \\\n  labs/signins.csv work/flagged-events.csv\npython3 labs/check_triage.py work/flagged-events.csv",
+    "workbook_ref": "L2 · packet P2",
+    "fallback": "Reference command in L2, or hand-review packet P2.",
+    "notes": "Zero extra time inside slide 14. work/triage.py must implement the workbook CLI contract before this command is used. Dollar prompt markers belong to design only, never copied commands.",
+    "provenance": "SYNTHETIC"
+  },
+  {
+    "id": "S14B",
+    "parent_slide": 14,
+    "kind": "concept",
+    "title": "When the checker disagrees",
+    "minutes": 0,
+    "display_window": [
+      68,
+      75
+    ],
+    "points": [
+      "Check success-only and same-user filters.",
+      "Exactly ten minutes counts; equal timestamps do not.",
+      "Trace the first mismatch before rewriting everything."
+    ],
+    "workbook_ref": "L2 · packet P2",
+    "fallback": "Use the reference or correct specimen B manually.",
+    "notes": "Zero extra time. Does not reveal the four correct IDs. At minute 75 reveal the key on core slide 15; do not continue generation.",
+    "provenance": "SYNTHETIC"
+  },
+  {
+    "id": "S18A",
+    "parent_slide": 18,
+    "kind": "concept",
+    "title": "Check the report against the CSV",
+    "minutes": 0,
+    "display_window": [
+      98,
+      105
+    ],
+    "shell_context": "Linux/WSL Bash terminal · cwd: teaching",
+    "points": [
+      "Four events; three distinct reason categories.",
+      "Trace one UTC timestamp to source.",
+      "Render data as text; no compromise verdict."
+    ],
+    "code": "python3 work/build_report.py \\\n  work/flagged-events.csv work/review.html",
+    "workbook_ref": "L3 · packet P3",
+    "fallback": "Reviewed reference or paper screen; record what actually ran.",
+    "notes": "Zero extra time. Substitute checked reference-events.csv if needed. Additional empty/markup tests use supplied files at the checkpoint, not a feature build.",
+    "provenance": "SYNTHETIC"
+  }
+]

@@ -15,7 +15,7 @@ A one-page checklist to keep by your desk. It is the [[Guardrails]] section turn
 - [ ] Run a destructive script in report-only mode first, against an export, before it touches anything live.
 - [ ] Work in a scratch folder or a non-production copy, not the live system. Use a test tenant for anything that touches identity.
 - [ ] Generate and review config changes first, then apply them in a maintenance window, not live from the chat.
-- [ ] Use plain `claude` with approvals on for anything connected to a real system. Keep the `clauded` alias to throwaway folders only.
+- [ ] Use plain `claude` in Manual mode with approvals on in the workshop and for real work. Review existing allow rules. Do not use the bypass alias; a throwaway folder is not isolation.
 
 ## Protect the data
 

@@ -1,0 +1,12 @@
+INERT CODE-REVIEW SPECIMEN — do not execute this text file.
+Intended rule: flag success outside 07:00–18:59 UTC or after >=3 prior
+failures for the same user in the preceding 10 minutes, inclusive.
+
+01  outside = timestamp.hour < 7 or timestamp.hour > 19
+02  failures = [row for row in rows
+03              if row['result'] == 'failure'
+04              and 0 < (timestamp - row['time']).total_seconds() < 600]
+05  suspicious = outside or len(failures) >= 3
+
+Locate at least three defects. How would you test each one?
+This is a deliberately incomplete snippet, not working reference code.

@@ -1,0 +1,40 @@
+{
+  "slides": 55,
+  "outline_order": [
+    "Intro",
+    "Guardrails",
+    "Hands-on setup",
+    "Examples and demos",
+    "Skills, agents, and plugins",
+    "Application builds",
+    "Getting started",
+    "Close"
+  ],
+  "duration_minutes": 120,
+  "exact_logo_verified": "/Users/kevin/Documents/Obsidian Vault/Cite Talk - AI for Cyber Security/Files/Mark-Title-COLOR-ForLightBG.png",
+  "black_slides": [
+    1,
+    8,
+    13,
+    24,
+    35,
+    43,
+    48,
+    52
+  ],
+  "source_notes": [
+    "Application Builds.md",
+    "Cite Talk Guide.html",
+    "Close.md",
+    "Examples.md",
+    "Getting Started.md",
+    "Guardrails.md",
+    "Intro.md",
+    "Setup Guide.md",
+    "Setup Walkthrough.md",
+    "Skills Agents Plugins.md",
+    "Talk Outline.md"
+  ],
+  "validation": "PASS: eight-section order, notes, logo, backgrounds, bounds, exact app prompt, and PDF pages.",
+  "rendering_limit": "PDF proof shares layout instructions; native PowerPoint rendering was not compared."
+}

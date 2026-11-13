@@ -1,0 +1,5 @@
+event_id,user,timestamp_utc,reasons
+E06,staff-c,2026-10-26T09:20:00Z,failure_burst
+E07,staff-a,2026-10-26T12:00:00Z,outside_baseline
+E10,staff-f,2026-10-26T19:00:00Z,outside_hours
+E11,staff-g,2026-10-27T06:59:00Z,outside_hours

@@ -107,7 +107,7 @@ modify the source file.
 ```
 
 - `name` and `description` are required. The description is how Claude decides to delegate, so write it the same way as a skill's.
-- `tools` is optional. Listing `Read, Bash, Grep` means this agent cannot edit or delete files, which is what you want for an analyst. Leave it out and the agent inherits every tool.
+- `tools` is optional. Listing `Read, Bash, Grep` leaves out Edit and Write, but Bash can still change or delete files. Keep approvals on, use a copy of the input, and verify that the source stayed unchanged. Leave the tool list out and the agent inherits the parent tools.
 - `model` is optional. `sonnet` is a sensible default for routine work; use `opus` for harder reasoning.
 - The body is the agent's whole system prompt. It is its job description.
 

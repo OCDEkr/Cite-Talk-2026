@@ -1,0 +1,9 @@
+# Coordinator environment findings
+
+- Team launched successfully: cite-lead (Codex) w1:pA; cite-design (Claude) w1:pC; cite-linux (Codex) w1:pB; cite-teacher (Codex) w1:pD. These are actual Herdr panes in w1:t2. Caller context supplied and verified by Kevin is w1:p2.
+- Three Codex startup hook-review overlays were dismissed with Escape without trusting or enabling hooks; task prompts were then submitted and actual work verified. Do not change the user's global hook settings.
+- Original git changes are pre-existing; all team outputs belong only within Workshop-Team/.
+- The existing scripts/build_workshop.py creates PPTX and a separately drawn PDF; that separately drawn PDF is NOT a rendering of the PPTX. Do not label it a visual proof of PowerPoint. The existing builders may be used as reference but must not be executed with their original output paths.
+- Document environment prepared and imports verified: /Users/kevin/.hermes/environments/documents/gen-673c9dde9c6d4bbc80b99ddee6dc1bc5/venv/bin/python (pptx, PIL, pypdf, pypdfium2 available). Use this interpreter for building/testing, do not pip install into it. Use Hermes package management if more dependencies are required.
+- Microsoft PowerPoint exists at /Applications/Microsoft PowerPoint.app. Keynote, LibreOffice/soffice and pdftoppm were not found in the checked locations/PATH. PowerPoint may support a real PDF export through AppleScript, but this has NOT yet been exercised and may require automation permission. State a blocker honestly if export is unavailable.
+- The existing draft Setup Guide includes a bypass-permissions alias, blank SSH key passphrases and VPN-disconnection advice. The team should not reproduce these as routine workshop instructions; use normal approvals, no unnecessary SSH/publishing setup, and approved network support instead.

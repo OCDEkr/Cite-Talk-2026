@@ -10,7 +10,7 @@ tags: [cite-talk-2026, setup, handout]
 
 This is the handout for the hands-on portion of the talk. Work through it top to bottom. Each step ends with a check so you know it worked before moving on. The presenter's version with timing is in [[Setup Walkthrough]].
 
-If you can do steps 1 through 4 before the session, do. Conference wifi is slow and the downloads are large.
+Complete steps 1 through 9 before the session, including installations and first sign-in. The workshop reserves 25 minutes for readiness checks and bounded recovery, not a full installation session. Install only missing tools; use the existing [[Setup Guides/Git Setup Guide]], [[Setup Guides/Node.js Setup Guide]], and [[Setup Guides/Python Setup Guide]] for platform-specific checks and recovery.
 
 ## What you need before you start
 
@@ -73,53 +73,24 @@ The second line shows your Windows user folder in Unix form, something like `/c/
 
 Where Git Bash differs from WSL in the rest of this guide:
 
-- Step 3: install Python and Node with winget, under the "Windows native" heading. Git is already installed.
+- Step 3: follow the native Windows sections of [[Setup Guides/Python Setup Guide]] and [[Setup Guides/Node.js Setup Guide]]. Git is already installed.
 - Step 4: use the PowerShell install command for Claude Code, then run `claude` from Git Bash.
-- Step 6: the alias goes in `~/.bashrc`, the same as Linux. Git Bash creates the file if it is missing.
+- Step 6: start plain `claude` and check Manual mode and existing allow rules. No bypass alias is created.
 - Step 9: the WSL extension is not needed. Set Git Bash as the VS Code terminal instead.
 
 ## 3. Install Git, Python, and Node
 
 Claude Code itself does not need Python or Node. The hands-on exercises do, because the scripts Claude writes for you will be in one or the other. Git is required for the GitHub steps.
 
-### macOS
+### Follow the existing platform-specific guides
 
-Install Homebrew if you do not have it (this also installs Git):
+Use one current instruction set for each tool rather than mixing installers:
 
-```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-```
+- [[Setup Guides/Git Setup Guide]] — check Git first, then use the matching operating-system installation and recovery steps.
+- [[Setup Guides/Node.js Setup Guide]] — check Node first; review installer scripts before executing them.
+- [[Setup Guides/Python Setup Guide]] — check Python in the actual workshop terminal, including a virtual-environment check where directed.
 
-Then:
-
-```bash
-brew install python node
-```
-
-### Linux and WSL (Ubuntu or Debian)
-
-```bash
-sudo apt update
-sudo apt install -y git python3 python3-pip python3-venv curl
-```
-
-The Node in Ubuntu's apt repository is old. Use nvm instead:
-
-```bash
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
-source ~/.bashrc
-nvm install --lts
-```
-
-### Windows native (Git Bash users)
-
-Run this in PowerShell, not in Git Bash. You already have Git from step 2.
-
-```powershell
-winget install Python.Python.3.12 OpenJS.NodeJS.LTS
-```
-
-Then close Git Bash and open it again so it sees the new PATH. In Git Bash, `python3` may not exist; use `python --version` instead.
+Run each command in the shell named by its guide. WSL is Linux inside Ubuntu; native Windows/Git Bash uses the Windows instructions. Reopen the terminal after installing. In Git Bash, use `python --version` where `python3` is unavailable. Complete installations before the workshop.
 
 ### Check
 
@@ -127,8 +98,8 @@ Open a new terminal window, then:
 
 ```bash
 git --version
-python3 --version
 node --version
+python3 --version   # macOS, Linux, WSL; use python --version in native Windows/Git Bash
 ```
 
 Each prints a version number. If one says "command not found", close the terminal, open a new one, and try again. Installers often change your PATH but the current window does not see it.
@@ -187,38 +158,25 @@ The first run opens a browser window to log in. Sign in with the account that ha
 
 If the browser does not open (common in WSL), the terminal prints a URL. Copy it into a browser on Windows, log in, and paste the code it gives you back into the terminal.
 
-## 6. Set up a shortcut for the hands-on work
+## 6. Keep approval prompts on
 
-By default Claude Code asks before every file edit and every command. That is the right default for your real work. For the exercises in this session we are going to turn that off, because stopping to approve every step would eat the whole hour.
+Start plain `claude`, check the permission mode, and select Manual (ask before edits and commands). Do not assume the startup default. Review existing allow rules in `/permissions`; already-permitted actions may not ask again. Read each proposed state-changing action before approving it.
 
-Add this line to `~/.zshrc` on macOS or `~/.bashrc` on Linux, WSL, and Git Bash:
+The workshop does not create or use the `clauded` shortcut or `--dangerously-skip-permissions`. A scratch folder is not an isolation boundary. Use `/permissions` only for narrow, deliberate exceptions, not blanket approval.
 
-```bash
-alias clauded="claude --dangerously-skip-permissions"
-```
-
-Then reload the shell:
-
-```bash
-source ~/.zshrc    # macOS
-source ~/.bashrc   # Linux, WSL, and Git Bash
-```
-
-Read the flag name. It means what it says. With this on, Claude will run commands and change files without asking. Use `clauded` only in a scratch folder or a fresh project that contains nothing you care about. For anything connected to a real system, use plain `claude` and approve steps as they come.
-
-If you would rather not have the alias at all, the exercises still work with plain `claude`. You will just press Enter more.
+Check: ask for a harmless file in your workshop folder. You should see and understand the edit or command approval before accepting it. If you do not see a prompt, inspect the active mode and allow rules.
 
 ## 7. Create a GitHub account and an SSH key
 
 If you do not have a GitHub account, create one at github.com/signup using the same email you gave Git in step 3.
 
-Then make an SSH key. This is how your machine will prove to GitHub that it is you, without typing a password every time you push.
+First check for an existing appropriate SSH key. Reuse it if suitable; do not overwrite a private key. If you need a new key, the command below creates one. This is how your machine proves to GitHub that it is you.
 
 ```bash
 ssh-keygen -t ed25519 -C "you@yourdistrict.org"
 ```
 
-Press Enter to accept the default file location. It will ask for a passphrase. For this session, press Enter twice to leave it blank so the exercises do not stop to prompt you. On your work machine afterward, set a passphrase and let your OS keychain remember it; a blank passphrase means anyone who copies the file can act as you on GitHub.
+Use the default file location only if no key already exists there. If asked whether to overwrite an existing key, answer `n`; reuse the suitable key or follow GitHub's guide for a different filename. Protect new keys with a passphrase and use your approved SSH-agent/keychain workflow. Never print or share the private key.
 
 Print the public key:
 
@@ -234,7 +192,7 @@ Check:
 ssh -T git@github.com
 ```
 
-The first time it asks whether to trust GitHub's host key. Type `yes`. Then it prints "Hi yourusername! You've successfully authenticated". That line is success; the rest of the message about no shell access is normal.
+The first time, compare the displayed host fingerprint with GitHub's published SSH key fingerprints. Type `yes` only if they match. Then it prints "Hi yourusername! You've successfully authenticated". That line is success; the rest of the message about no shell access is normal. See GitHub's documentation on checking existing SSH keys, key passphrases, and testing your SSH connection before class.
 
 ## 8. Install the GitHub command line tool
 
@@ -296,7 +254,7 @@ Now put it together. Make a new folder, start Claude in it, and let Claude set u
 
 ```bash
 mkdir -p ~/my-project && cd ~/my-project
-clauded
+claude
 ```
 
 At the Claude prompt, type:
@@ -311,7 +269,7 @@ Wait for it to finish, then paste this, replacing the username:
 Set up this folder as a git repository named "my-project", create a private GitHub repository under the username YOUR_GITHUB_USERNAME, add it as the origin remote using SSH, and push. Use the gh command for anything that needs GitHub itself.
 ```
 
-Claude will show you each command as it runs it. Watch what it does. This is the habit to build: read what the tool is about to do, even when you have given it permission to do it.
+Confirm Manual mode and inspect existing allow rules. Read each proposed command before approving it. Reuse your prework practice repository if it already exists; do not overwrite an existing project. Never push private keys, credentials, or real district data.
 
 If you skipped step 8, Claude cannot create the repository for you. Create an empty private repository in the GitHub web interface first, then tell Claude the SSH URL it shows you (it starts with `git@github.com:`) and ask it to add that as the remote and push.
 
@@ -322,7 +280,7 @@ Check: open github.com/YOUR_GITHUB_USERNAME/my-project in a browser. The files C
 - `claude: command not found` after install. Open a new terminal. If still missing, see the PATH fix in step 4.
 - Login loops or "not authorized". You are signed into a free claude.ai account. Claude Code needs a paid plan.
 - `Permission denied (publickey)` from GitHub. The key is not on your GitHub account yet, or you generated it under a different name. Run `ls ~/.ssh` and check for `id_ed25519.pub`, then redo the paste in step 7.
-- WSL cannot reach the network. On some district laptops the VPN client blocks WSL networking. Disconnect the VPN for the session.
+- WSL cannot reach the network. Follow your district's approved network/VPN troubleshooting process; do not disable security controls to make the workshop work.
 - `code .` does nothing in WSL. Install the WSL extension in VS Code on the Windows side, then restart the Ubuntu terminal.
 - Git Bash says `python3: command not found`. The Windows installer names it `python`. Use that, or run `alias python3=python` and add the same line to `~/.bashrc`.
 - Claude Code in Git Bash cannot find Git Bash. Add the path to `~/.claude/settings.json`: `{"env": {"CLAUDE_CODE_GIT_BASH_PATH": "C:\\Program Files\\Git\\bin\\bash.exe"}}`.

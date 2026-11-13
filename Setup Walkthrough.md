@@ -12,10 +12,11 @@ Presenter notes for the hands-on setup. The attendee version is [[Setup Guide]];
 
 ## Before the session
 
-- Email the [[Setup Guide]] to registrants a week ahead and ask them to finish steps 1 through 4. Most of the room will not, but the ones who do will not be downloading Homebrew over conference wifi.
+- Email [[Setup Guide]] and the three existing guides in Setup Guides a week ahead. Ask attendees to finish steps 1 through 9, including first sign-in, GitHub authentication and editor setup. In-room setup is 25 minutes of readiness checks and bounded recovery, not a full installation session.
 - Bring a phone hotspot. If the venue wifi dies, you can still demo.
 - Have a second laptop with everything already installed, or a VM snapshot, so a broken step on your machine does not stall the room.
-- Decide whether to hand out a shared Claude account for people without a paid plan. If you do, make it a Team seat you can revoke afterward, not your own login.
+- Confirm attendee access to the selected account route and the existing repository/files before class. Do not share personal logins. The existing free route is a backup that needs preflight, not a guaranteed equivalent.
+- Recovery has a hard stop at minute 41: use the documented VS Code extension or browser-created-repository route when applicable. Anyone still blocked can review the same supplied report/config against presenter output; call that evidence review, not agent execution. Do not let one install hold the room.
 
 ## Slide: What we are setting up and why
 
@@ -25,32 +26,17 @@ Explain the platform choice. Windows users get a Bash shell, either WSL or Git B
 
 ## Slide: Steps 1 to 3, terminal and language runtimes
 
-Walk through step 3 on your own machine only for the platform you use. Point Windows and Linux users at the handout for theirs.
+Check versions in the actual workshop terminal. Point anyone missing a tool to its existing platform-specific guide in Setup Guides; installation is prework.
 
 Say explicitly that Claude Code does not need Python or Node. People will ask. The exercises need them because the scripts Claude writes for you will be in Python or JavaScript.
 
-Install commands to show on the slide, by platform:
-
-macOS, using Homebrew (which also gives them Git):
-
-```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-brew install python node
-```
-
-Windows with Git Bash. Run these in PowerShell, not in Git Bash, because winget is a Windows tool. Git itself came with the Git Bash install in step 2.
-
-```powershell
-winget install Python.Python.3.12 OpenJS.NodeJS.LTS
-```
-
-Then close Git Bash and reopen it so it sees the new PATH. Point out the naming gotcha: the Windows Python installer makes a `python` command, not `python3`. In Git Bash they check with `python --version`.
+Exact existing files for slide 10: `Setup Guides/Git Setup Guide.md`, `Setup Guides/Node.js Setup Guide.md`, and `Setup Guides/Python Setup Guide.md`. Use these as the installation authority rather than maintaining another set of installer commands here. Native Windows/Git Bash checks `python --version`; WSL checks `python3 --version` inside Ubuntu. Reopen the terminal after installing.
 
 Checkpoint: ask for hands when `git --version`, `python --version` (or `python3` on Mac), and `node --version` all print something.
 
 ## Slide: Step 4, install Claude Code
 
-Run the install command live. Call out that it shows no progress, because people will think it hung.
+Installation is prework. Show the installer only as a recovery reference; do not spend the readiness block waiting on a long download.
 
 Run `claude doctor` and show the output. This is the command to tell people to run when they ask you for help later.
 
@@ -68,7 +54,7 @@ Offer this for anyone who does not have a paid Claude plan and wants to follow a
 
 Be honest about two things before anyone sets it up.
 
-First, the big one for this room. Set it up on a throwaway account and say this out loud: anything you type into this free model is logged and may be used to train it. NVIDIA's free endpoint logs prompts to improve its products, and OpenRouter marks these free providers as ones that may train on your input. Treat every prompt as public. Do not enter student data, credentials, district information, or anything you would not post on a billboard. This is the opposite of the paid setup, where your data is not used for training.
+First, the big one for this room: treat backup-route prompts as public and assume they may be logged or used for training. Do not enter student data, credentials, district information, or anything sensitive. Privacy terms depend on the selected provider, plan, settings and district agreement; a paid plan is not by itself a privacy guarantee. Preflight current terms and availability before class.
 
 Second, the honest limitation. OpenRouter's own documentation says Claude Code is optimized for Anthropic models and may not work correctly with other providers. Expect the free model to be slower and to stumble on the agentic steps that the paid models handle cleanly. It is good enough to follow along and see the shape of the tool. It is not the experience the rest of the talk demonstrates.
 
@@ -91,19 +77,15 @@ Checkpoint: `/status` shows the OpenRouter base URL and the Nemotron model inste
 
 Presenter note: the model ID and the free status can change. Confirm `nvidia/nemotron-3-ultra-550b-a55b:free` is still listed at openrouter.ai before the talk, and have a backup free model ID ready in case it is retired or rate-limited on the day.
 
-## Slide: Step 6, the alias
+## Slide: Step 6, approval prompts
 
-This is the step to spend a minute on, because the room is IT and security staff and the flag is called `--dangerously-skip-permissions`.
+Run plain `claude`, check the active permission mode, and select Manual (ask before edits and commands). Review existing allow rules in `/permissions`; already-permitted actions can still run without prompting. Do not assume a default mode.
 
-Show the default behavior first: run plain `claude`, ask it to create a file, and let the room see the approval prompt. Then explain that for the next hour you are turning that off so the exercises move, and that the alias name is `clauded` so nobody confuses it with the safe default.
-
-State the rule plainly: `clauded` only in a scratch folder. Anything touching a real system uses `claude`.
-
-Alternative to mention if someone objects: `/permissions` inside a session lets you allow specific commands without turning everything off. That is the right answer for real work. The alias is the right answer for a 60-minute workshop.
+Ask for a harmless file in the workshop folder and read the proposed change aloud before approving it. The workshop does not create or use a permission-bypass alias. A scratch folder is not isolation. Use `/permissions` only for narrow, deliberate exceptions.
 
 ## Slide: Step 7, GitHub and SSH keys
 
-Do `ssh-keygen` live. Show the blank passphrase and say why you are doing it (no prompts during the exercises) and why they should not do it on their work machine (a copied key file is a usable credential).
+Check authentication from prework. Before creating a key, check for an existing suitable one; never overwrite a private key. Protect new keys with a passphrase. Show only the public key and verify GitHub's host fingerprint before trusting a first connection.
 
 Show the paste into GitHub. Do `ssh -T git@github.com` and point at the "successfully authenticated" line, because the "does not provide shell access" line after it looks like an error.
 
@@ -119,29 +101,27 @@ Fast. Show the Extensions view and the three names. Show the Claude Code panel o
 
 ## Slide: Step 10, first project
 
-The payoff. Do it live, with `clauded` in a fresh folder, and narrate what Claude is doing as it runs `git init`, writes CLAUDE.md, calls `gh repo create`, and pushes. Then open the GitHub page in the browser.
+The payoff. Use plain `claude` in a fresh practice folder, or reuse the prework practice repository without overwriting anything. Narrate and review the proposed `git init`, CLAUDE.md, repository-creation and push actions before approving them. Then open the GitHub page in the browser.
 
-Pause on the moment Claude runs a command and say: this is the thing to watch. You gave it permission to run anything. Read what it ran.
+Pause on the first approval request and say: this is the thing to watch. Read what it wants to run before you approve it. Never push private keys, credentials or real district data.
 
-Checkpoint: hands up for a repository visible on GitHub. This is the gate for the next section.
+Checkpoint: hands up for a private practice repository visible on GitHub. This is not a gate for reading the supplied PDF/config locally. Reserve the last three minutes for recovery, then move to the security exercise at minute 41.
 
 ## Timing
 
-| Step | Minutes | Notes |
-| --- | --- | --- |
-| Intro and platform choice | 3 | |
-| 1 to 3, runtimes | 8 | Longest if nobody did prework |
-| 4, install Claude Code | 4 | |
-| 5, login | 4 | WSL browser issue costs time |
-| 5b, OpenRouter free option | 3 | Only if someone needs it; say the training warning |
-| 6, alias | 4 | Do not rush the warning |
-| 7, SSH keys | 7 | Most hands-on help needed here |
-| 8, gh CLI | 3 | |
-| 9, VS Code | 4 | |
-| 10, first project | 8 | |
-| Buffer | 10 | |
+| Slide | Readiness check | Minutes | Clock |
+| --- | --- | --- | --- |
+| 9 | 1–2, terminal | 2 | 16–18 |
+| 10 | 3, Git / Node.js / Python | 2 | 18–20 |
+| 11 | 4, Claude Code | 2 | 20–22 |
+| 12 | 5 / 5b, account route | 3 | 22–25 |
+| 13 | 6, approvals | 3 | 25–28 |
+| 14 | 7, SSH | 3 | 28–31 |
+| 15 | 8, gh | 2 | 31–33 |
+| 16 | 9, VS Code | 2 | 33–35 |
+| 17 | 10, practice project + recovery | 6 | 35–41 |
 
-About 55 minutes with buffer. If the session slot is shorter, cut step 8 and have people create the repository in the browser, and cut the VS Code slide to a mention.
+25 minutes total. The final six minutes include three for the project checkpoint and three for bounded recovery. Installs and first login are prework. If needed, skip gh and create the repository in the browser, and reduce VS Code to a mention. Do not extend setup past minute 41.
 
 ## Suggestions not in the original list
 
@@ -152,6 +132,6 @@ These are additions beyond what was first planned. Keep or drop as you see fit.
 - The gh CLI. The original example prompt asked Claude to create and push a repository using only a public key path. Claude cannot create a GitHub repository with an SSH key alone; it needs gh or a browser. The handout prompt is rewritten around gh, with a fallback for people who skip it.
 - The original prompt had a typo in the key filename (`is_ed236665.pub`). The default from `ssh-keygen -t ed25519` is `id_ed25519.pub`, which is what the handout uses.
 - A troubleshooting section at the end of the handout, written from the failures most likely in a K-12 room: PATH, free accounts, VPN clients that block WSL.
-- A prework email. Even a 20 percent prework rate cuts the runtime step in half.
+- A prework email. Ask attendees to complete installations and first login before the session; do not promise a particular completion rate or time saving.
 - Git Bash as a second Windows path. Some district laptops cannot enable WSL without a ticket to the imaging team. Git Bash installs as a normal app and gives Claude Code the shell it wants.
-- Consider whether to show `/permissions` instead of the alias for the real-work guidance later in the talk. The alias is fine for the workshop. Leaving a room of security staff with only the alias as the pattern they learned is a bad look.
+- Use `/permissions` and Manual mode rather than a bypass alias. This applies to the workshop as well as real work.

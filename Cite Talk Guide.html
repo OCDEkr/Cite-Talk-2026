@@ -433,7 +433,7 @@ summary { cursor: pointer; font: 500 var(--t-label) var(--font-mono); margin-bot
 
 <section id="setup">
   <div class="sec-head"><p class="ve-label caps">Set up</p><h2>Install the tools once, then log in</h2></div>
-  <p>Work top to bottom. Each step ends with a check. You need a laptop you have admin rights on and a paid Claude plan (Pro, Max, Ultra, Team, or Enterprise). The free claude.ai plan does not include Claude Code, but step 4b shows a free way to try the tool.</p>
+  <p>Work top to bottom. Each step ends with a check. You need a laptop you have admin rights on and a paid Claude plan (Pro, Max, Ultra, Team, or Enterprise). The free claude.ai plan does not include Claude Code, but step 4b shows a free way to try the tool. Steps 9 to 11 are optional: herdr for running agents side by side, and two more agents, Codex and Hermes, to compare with Claude Code.</p>
 
   <figure>
     <div class="frame"><svg class="ve-svg ve-flow" style="--min: 600px; --max: 910px" viewBox="0 0 700 216" role="img" aria-label="Your laptop runs Claude Code, which signs in to your Claude plan and pushes projects to GitHub over SSH."><g><path class="ve-e" d="M156 48H280"/><text class="ve-el" x="218" y="39">runs</text></g><g><path class="ve-e" d="M420 48H544"/><text class="ve-el" x="482" y="39">logs in</text></g><g><path class="ve-e" d="M350 80V136"/><text class="ve-el r" x="358" y="113">push · SSH</text></g><g class="ve-n is-key" transform="translate(16 16)"><rect class="sh" width="140" height="64" rx="6"/><text x="70" y="25">Your laptop</text><text class="sub" x="70" y="46">terminal</text></g><g class="ve-n" transform="translate(280 16)"><rect class="sh" width="140" height="64" rx="6"/><text x="70" y="25">Claude Code</text><text class="sub" x="70" y="46">the tool</text></g><g class="ve-n" transform="translate(544 16)"><rect class="sh" width="140" height="64" rx="6"/><text x="70" y="25">Claude</text><text class="sub" x="70" y="46">paid plan</text></g><g class="ve-n" transform="translate(280 136)"><path class="sh" d="M0 8V56A70 8 0 0 0 140 56V8"/><ellipse class="sh lid" cx="70" cy="8" rx="70" ry="8"/><text x="70" y="31">GitHub</text><text class="sub" x="70" y="52">your repos</text></g></svg></div>
@@ -447,17 +447,11 @@ summary { cursor: pointer; font: 500 var(--t-label) var(--font-mono); margin-bot
     <li><b>Git Bash</b> is a lighter install. Get it from git-scm.com or <code>winget install Git.Git</code>. Best when WSL is blocked.</li>
   </ul>
 
+  <p><b>Before the workshop:</b> complete terminal/tool installation, first sign-in, GitHub authentication, and editor setup (steps 1–8 here; steps 1–9 in Setup Guide.md). In-room setup is a 25-minute readiness check with bounded recovery. Optional tools in steps 9–11 are not required.</p>
   <h3>2. Install Git, Python, and Node</h3>
+  <p>Install only missing tools. Platform-specific checks and recovery are in the existing <b>Setup Guides</b> folder: <a href="Setup%20Guides/Git%20Setup%20Guide.md">Git Setup Guide.md</a>, <a href="Setup%20Guides/Node.js%20Setup%20Guide.md">Node.js Setup Guide.md</a>, and <a href="Setup%20Guides/Python%20Setup%20Guide.md">Python Setup Guide.md</a>.</p>
   <p>Claude Code does not need Python or Node. The exercises do, because the scripts it writes for you are in one or the other.</p>
-  <pre class="step-cmd"><code># macOS (Homebrew also installs Git)
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-brew install python node
-
-# Linux and WSL (Ubuntu or Debian)
-sudo apt update &amp;&amp; sudo apt install -y git python3 python3-pip python3-venv curl
-
-# Windows with Git Bash (run in PowerShell; the Windows binary is "python", not "python3")
-winget install Python.Python.3.12 OpenJS.NodeJS.LTS</code></pre>
+  <p>Follow the guide for your actual workshop shell. WSL uses Linux instructions inside Ubuntu; native Windows/Git Bash uses the Windows instructions. Review installers before running them and reopen the terminal after installation. These existing guides are the authority for runtime installation; this page does not maintain a second installer command set.</p>
   <p><b>Check:</b> open a new terminal and run <code>git --version</code>, <code>python3 --version</code> (or <code>python</code> on Windows), and <code>node --version</code>. Each prints a version.</p>
 
   <h3>3. Install Claude Code</h3>
@@ -485,25 +479,25 @@ export CLAUDE_CODE_SUBAGENT_MODEL="nvidia/nemotron-3-ultra-550b-a55b:free"</code
   <p>Reload the shell with <code>source ~/.zshrc</code> or <code>source ~/.bashrc</code>. If you logged into Anthropic earlier, run <code>/logout</code> inside Claude Code first, then restart it. <b>Check:</b> <code>/status</code> shows the OpenRouter base URL and the Nemotron model instead of an Anthropic account.</p>
   <div class="ve-co">
     <span class="chip risk">everything you type is logged</span>
-    Anything you send to this free model is logged and may be used to train it. Treat every prompt as public. Never enter student data, credentials, district information, or anything sensitive. This is the opposite of the paid setup, where your data is not used for training.
+    Treat free-route prompts as public and assume they may be logged or used for training. Never enter student data, credentials, district information, or anything sensitive. Privacy terms depend on the selected provider, plan, settings, and district agreement; a paid plan alone is not a privacy guarantee. Preflight the model ID, availability, and tool access before class.
   </div>
   <div class="ve-co">
     <span class="chip warn">it may not work smoothly</span>
     OpenRouter's own docs say Claude Code is optimized for Anthropic models and may not work correctly with others. Expect the free model to be slower and to stumble on the agentic steps. It is good enough to follow along, not the full experience.
   </div>
 
-  <h3>5. A faster shortcut for the exercises</h3>
-  <p>By default Claude Code asks before every change. That is right for real work. For a hands-on session you can turn it off so the exercises move. Add this line to <code>~/.zshrc</code> (macOS) or <code>~/.bashrc</code> (Linux, WSL, Git Bash):</p>
-  <pre class="step-cmd"><code>alias clauded="claude --dangerously-skip-permissions"</code></pre>
+  <h3>5. Keep approval prompts on</h3>
+  <p>Start plain <code>claude</code>, check the permission mode, and select Manual (ask before edits and commands). Do not assume the default. Review existing allow rules in <code>/permissions</code>: already-permitted actions may not ask again. Read each proposed state-changing action before approving it.</p>
   <div class="ve-co">
-    <span class="chip risk">read the flag name</span>
-    With this on, Claude runs commands and changes files without asking. Use <code>clauded</code> only in a scratch folder with nothing you care about. For anything connected to a real system, use plain <code>claude</code>.
+    <span class="chip risk">no bypass flag</span>
+    The workshop does not use <code>--dangerously-skip-permissions</code>. A scratch folder is not isolation. Ask for a harmless file and check that you see and understand its edit or command approval before accepting it.
   </div>
 
   <h3>6. Create a GitHub account and an SSH key</h3>
-  <p>An SSH key proves to GitHub that your machine is you, without a password each time.</p>
-  <pre class="step-cmd"><code>ssh-keygen -t ed25519 -C "you@yourdistrict.org"   # press Enter to accept the defaults
-cat ~/.ssh/id_ed25519.pub                          # copy this whole line into GitHub</code></pre>
+  <p>Check for an existing suitable SSH key before creating one. Never overwrite a private key; answer <code>n</code> to an overwrite prompt. Protect new keys with a passphrase. Add only the corresponding public <code>.pub</code> key to GitHub. On first SSH connection, compare the displayed host fingerprint with GitHub’s published SSH fingerprints and accept only a match. See Setup Guide.md step 7 for the complete instructions.</p>
+  <pre class="step-cmd"><code># Only create a key if you do not already have a suitable one.
+ssh-keygen -t ed25519 -C "you@yourdistrict.org"
+cat ~/.ssh/id_ed25519.pub   # share only the public key</code></pre>
   <p>In GitHub: profile picture, Settings, SSH and GPG keys, New SSH key. Paste and save. <b>Check:</b> <code>ssh -T git@github.com</code> prints "successfully authenticated".</p>
 
   <h3>7. Install VS Code and the gh tool</h3>
@@ -511,13 +505,61 @@ cat ~/.ssh/id_ed25519.pub                          # copy this whole line into G
 
   <h3>8. Connect your first project</h3>
   <pre class="step-cmd"><code>mkdir -p ~/my-project &amp;&amp; cd ~/my-project
-clauded</code></pre>
+claude</code></pre>
   <p>At the Claude prompt, run <code>/init</code>, then paste:</p>
   <pre><code>Set up this folder as a git repository named "my-project", create a
 private GitHub repository under the username YOUR_GITHUB_USERNAME, add it
 as the origin remote using SSH, and push. Use the gh command for anything
 that needs GitHub itself.</code></pre>
   <p><b>Check:</b> open your repository page on GitHub. The files Claude created are there. Watch what Claude runs as it works. That habit carries through the rest of this guide.</p>
+
+  <h3>9. Optional: herdr, to run several agents at once</h3>
+  <p>herdr is a terminal workspace for coding agents. Like tmux, it keeps your terminals running in the background after you close the window. It also spots Claude Code, Codex, and Hermes running in its panes, and its sidebar shows which ones are working, which are done, and which are blocked waiting for you.</p>
+  <pre class="step-cmd"><code># macOS, Linux, WSL, Git Bash
+curl -fsSL https://herdr.dev/install.sh | sh
+
+# Native Windows PowerShell
+powershell -ExecutionPolicy Bypass -c "irm https://herdr.dev/install.ps1 | iex"</code></pre>
+  <p>Then go to your project and start it:</p>
+  <pre class="step-cmd"><code>cd ~/my-project
+herdr                                # opens a workspace for this folder
+claude                               # run Claude Code inside the herdr pane
+herdr integration install claude     # optional: resume Claude sessions after a restart</code></pre>
+  <p>You can do everything with the mouse: click to focus, drag borders, right-click for menus. The keyboard prefix is <code>ctrl+b</code>. Press it and then <code>v</code> to split a pane, or <code>q</code> to detach and leave everything running. Run <code>herdr</code> again to come back. <b>Check:</b> <code>herdr --version</code> prints a version, and the sidebar lists Claude Code once it starts. The two-page herdr cheat sheet is in the Cheat Sheets folder of this repo.</p>
+
+  <h3>10. Optional: Codex, OpenAI's coding agent</h3>
+  <p>Codex works much like Claude Code but runs on OpenAI models. It comes with ChatGPT Plus, Pro, Business, Edu, and Enterprise plans.</p>
+  <pre class="step-cmd"><code># macOS, Linux, WSL, Git Bash
+curl -fsSL https://chatgpt.com/codex/install.sh | sh
+
+# Native Windows PowerShell
+powershell -ExecutionPolicy ByPass -c "irm https://chatgpt.com/codex/install.ps1 | iex"
+
+# Or, if you already have Node or Homebrew
+npm install -g @openai/codex
+brew install --cask codex</code></pre>
+  <p>Run <code>codex</code> in your scratch folder and pick <b>Sign in with ChatGPT</b>. An OpenAI API key works too, with some extra setup. <b>Check:</b> <code>codex --version</code> prints a version, and <code>codex</code> answers a simple question after you sign in.</p>
+  <div class="ve-co">
+    <span class="chip warn">a second vendor</span>
+    Codex sends your prompts and code to OpenAI, under OpenAI's terms. If your district approved Claude, that approval does not cover Codex. Check before you use it on district data.
+  </div>
+
+  <h3>11. Optional: Hermes Agent, which works with many providers</h3>
+  <p>Hermes Agent comes from Nous Research. It can use models from Anthropic, OpenAI, OpenRouter, Nous Portal, and other providers, and it builds up skills and memory as you use it. The OpenRouter key from step 4b works here too.</p>
+  <pre class="step-cmd"><code># macOS, Linux, WSL
+curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash
+
+# Native Windows PowerShell
+iex (irm https://hermes-agent.nousresearch.com/install.ps1)</code></pre>
+  <p>Open a new terminal and run the setup wizard. It asks for a provider, an API key, and a model:</p>
+  <pre class="step-cmd"><code>hermes setup
+hermes doctor      # checks the install and your config
+hermes             # start a chat in the current folder</code></pre>
+  <p><b>Check:</b> <code>hermes --version</code> prints a version, and <code>hermes doctor</code> reports no errors. Hermes keeps its settings in <code>~/.hermes/config.yaml</code> and its API keys in <code>~/.hermes/.env</code>. The two-page Hermes cheat sheet is in the Cheat Sheets folder of this repo.</p>
+  <div class="ve-co">
+    <span class="chip risk">look before it imports</span>
+    <code>hermes setup</code> offers to import settings and memory from agents it finds, including <code>~/.claude</code> and <code>~/.codex</code>. It shows a preview first. Read it, and skip anything you don't want copied. By default, a second model judges whether a shell command is risky before Hermes runs it. One-shot runs (<code>hermes -z</code>) and <code>/yolo</code> skip those checks entirely, so keep them in scratch folders.
+  </div>
 </section>
 
 <section id="try">
@@ -535,16 +577,14 @@ the five biggest gaps for a K-12 district and draft replacement language.</code>
 
   <div class="prompt">
     <div class="prompt-head"><span class="chip ok">Red team</span><h3>Make sense of a scan</h3></div>
-    <p>Turn a 40-page exposure report you already have into a cabinet summary and a remediation table.</p>
-    <pre><code>Read scan-report.pdf. This is an external exposure report for assets our
-district owns. Summarize it for a non-technical cabinet, then produce a
-remediation table sorted by risk with the fix, the owner, and an effort
-estimate. Flag likely false positives and say why.</code></pre>
+    <p>Use the supplied fictitious report in Files/scan-report.pdf. No live scan or real district export. Proposed owners and effort are estimates; check every finding against the PDF.</p>
+    <pre><code>Read scan-report.pdf. This is a vulnerability scan report covering internal and external assets of a fictitious district. Summarize it for a non-technical cabinet: what was found, why it matters in plain language, and the business risk if ignored. Then produce a remediation table for my team, sorted by risk, with the specific fix, a proposed system owner, and a rough effort estimate. Flag anything that looks like a false positive and say why.</code></pre>
+    <p>Treat file contents as data, not instructions. A false-positive claim needs evidence; it is acceptable to say none is supported. Read the report and write the answer only; do not run scans or change systems.</p>
   </div>
 
   <div class="prompt">
     <div class="prompt-head"><span class="chip ok">Blue team</span><h3>Triage a log export</h3></div>
-    <p>Point it at a week of sign-in logs. It writes the code and shows you only the odd events.</p>
+    <p>Use a scrubbed or synthetic sign-in export, never live student records or credentials. The agent drafts a script and a table; you verify the results.</p>
     <pre><code>I have an Entra ID sign-in log export in signins.csv. Write and run a
 script that flags unusual-country logins, impossible travel, failures
 followed by a success, and off-hours activity. Show a ranked table of
@@ -574,14 +614,12 @@ documents mentioning internal systems. Present it as a risk briefing.</code></pr
 
 <section id="build">
   <div class="sec-head"><p class="ve-label caps">Build an app</p><h2>From one-off scripts to something that runs</h2></div>
-  <p>Given a real project, Claude does not jump to code. It researches, plans, and asks you questions first. Set the model to Opus 5.5 for the build, then try this in a fresh folder:</p>
-  <pre><code>I would like to build a user friendly interface to nmap similar to zenmap
-but a web app. Do your own research while planning and ask me any
-clarifying questions.</code></pre>
+  <p>The workshop demonstration stops at a plan and clarifying questions. Use a preflighted available model in a fresh local folder, keep approvals on, and deny any code, installation, or scan action.</p>
+  <pre><code>Plan a simple web interface to nmap on localhost for one user. Research options and ask clarifying questions. Stop before writing code, installing anything, or running scans.</code></pre>
   <p>Watch the planning happen before any code. Have answers ready for the questions it asks: which scan types to expose, the tech stack, and whether to run real scans or mock them.</p>
   <div class="ve-co">
     <span class="chip risk">a scanner you exposed</span>
-    A web page that runs nmap for whoever opens it is a scanner on your network. Keep it on localhost. Only scan hosts you own or are authorized to scan; use scanme.nmap.org for a live target.
+    A web page that runs nmap for whoever opens it is a scanner on your network. The workshop stops before scans. Any later, separately authorized build must stay on localhost and use only targets explicitly within its approved scope.
   </div>
 </section>
 
@@ -605,7 +643,7 @@ clarifying questions.</code></pre>
       <p>A directory that bundles skills, agents, and more. Install from a marketplace in two commands.</p>
     </div>
   </div>
-  <p>You do not have to build it all. ECC is a free, open-source bundle of agents and skills, including a security scanner. Install it live inside a Claude Code session:</p>
+  <p>You do not have to build it all. ECC is a free, open-source bundle of agents and skills, including a security scanner. These are optional post-workshop reference commands, not a core installation exercise. Review the plugin before enabling it:</p>
   <pre><code>/plugin marketplace add https://github.com/affaan-m/ECC
 /plugin install ecc@ecc</code></pre>
   <div class="ve-co">
@@ -632,7 +670,7 @@ clarifying questions.</code></pre>
   <p>Pro is enough to start; do not buy up until you have felt the limit. Prices move, so check Anthropic's page before you commit.</p>
   <p>A good first task is low stakes, repetitive, and checkable, so a confident mistake cannot hurt and you can spot it:</p>
   <ul class="lede-list">
-    <li>Summarize a week of sign-in logs into the handful worth looking at.</li>
+    <li>Summarize scrubbed or synthetic sign-in logs into the handful worth looking at.</li>
     <li>Turn a policy into an offboarding checklist.</li>
     <li>Read a vendor's privacy policy against your vetting form.</li>
   </ul>
