@@ -1,0 +1,17 @@
+{
+  "skill_name": "cisco-ios-config-audit",
+  "evals": [
+    {"id": 1, "name": "legacy-2960-inherited",
+     "prompt": "I just inherited the network at our Building 2 office and found this switch config on a shared drive (/Users/kevin/.claude/skills/cisco-ios-config-audit-workspace/test-configs/legacy-2960.txt). It's an old 2960. Can you go through it and tell me what's wrong security-wise and how to fix it? Write the report to report.md.",
+     "expected_output": "Severity-ranked audit flagging Smart Install, public/RW SNMP, enable password/type 7, telnet/no vty ACL, DTP dynamic ports, VLAN1 mgmt, VTP unknown, with fix commands and secrets masked.",
+     "files": ["/Users/kevin/.claude/skills/cisco-ios-config-audit-workspace/test-configs/legacy-2960.txt"]},
+    {"id": 2, "name": "c9300-dhcp-breakage-and-review",
+     "prompt": "we pushed our new hardened template to HQ-FL3-ACC-01 (9300, config at /Users/kevin/.claude/skills/cisco-ios-config-audit-workspace/test-configs/c9300-access.cfg) last night and this morning people on floor 3 are saying their laptops aren't getting IPs. lab bench port too. can you figure out why and also do a proper security review before we roll this template to the other 40 switches? put the writeup in report.md",
+     "expected_output": "Identifies DHCP snooping with untrusted Port-channel uplink as the outage cause, VLAN 140 undefined for lab bench, undefined MGMT-ONLY and SNMP-POLLERS ACLs (permit all), HTTP server on IOS XE (CVE-2023-20198), no AAA local fallback, type 7 TACACS keys.",
+     "files": ["/Users/kevin/.claude/skills/cisco-ios-config-audit-workspace/test-configs/c9300-access.cfg"]},
+    {"id": 3, "name": "dist-3850-pci-prep",
+     "prompt": "We've got a PCI assessment next week and the assessor will look at our branch B distribution switch (Catalyst 3850). Config is at /Users/kevin/.claude/skills/cisco-ios-config-audit-workspace/test-configs/dist-3850.cfg. What are the biggest problems and what should I prioritise fixing this week? Save your answer as report.md.",
+     "expected_output": "Prioritized list: HTTP server/WebUI, telnet, vty 5-15 without ACL, SNMP RW / no ACL, undefined SERVERS-IN ACL leaving server VLAN unfiltered, VTP server no password, OSPF no auth/passive, HSRP no auth, directed-broadcast, cleartext RADIUS key, service config; with change-safety notes.",
+     "files": ["/Users/kevin/.claude/skills/cisco-ios-config-audit-workspace/test-configs/dist-3850.cfg"]}
+  ]
+}
