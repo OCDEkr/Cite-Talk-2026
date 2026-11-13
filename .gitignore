@@ -10,3 +10,6 @@ Thumbs.db
 # Office lock files and Python caches
 ~$*
 __pycache__/
+
+# Workshop team working files (local only)
+Workshop-Team/

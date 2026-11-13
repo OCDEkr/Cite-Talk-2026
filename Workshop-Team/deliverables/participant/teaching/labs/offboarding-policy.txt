@@ -1,7 +1,0 @@
-PURPOSE-CREATED SYNTHETIC TRAINING POLICY — Riverbend Workshop District
-P1. Disable departing staff accounts within 24 hours of the effective separation time.
-P2. HR notifies IT of the effective separation time by email.
-P3. IT records completion and verification evidence in the offboarding ticket.
-P4. Systems in scope: Entra ID, Google Workspace, Aeries, and the VPN.
-P5. Retention, delegated ownership, after-hours coverage and exception approval are not specified.
-This is a workshop fixture, not district policy or legal guidance.
