@@ -14,6 +14,8 @@
 .reslist ul { margin-top: var(--s-2); }
 .reslist li { margin-block: var(--s-2); }
 .rule-n { font: var(--t-h2); color: var(--accent); margin-right: var(--s-2); }
+.fullnote { margin-top: var(--s-5); }
+.case h3 a { color: var(--accent); }
 </style>
 </head>
 <body><main>
@@ -51,6 +53,7 @@
     <a href="#build">Build an app</a>
     <a href="#extend">Extend it</a>
     <a href="#start">Get started</a>
+    <a href="#cheats">Cheat sheets</a>
     <a href="#more">Resources</a>
   </div>
   <span class="pos"></span>
@@ -76,11 +79,23 @@
       <p>It reads what it needs, writes code, runs it, reads the output, and fixes its own mistakes. Claude Code works this way.</p>
     </div>
   </div>
-  <p>Why this matters most for a small team: a large security operations center already has a scripter and an analyst, so the tool makes them a little faster. A two-person district shop has neither, so the script never got written and the control never got implemented. For that shop the work did not exist before. Now it does.</p>
+  <p>In security work, that looks like this:</p>
+  <ul class="lede-list">
+    <li><b>Log triage.</b> Hand it a week of firewall or Entra sign-in exports. It writes the parsing code, runs it, and shows you the outliers, so you review those instead of the raw log.</li>
+    <li><b>Config review.</b> Point it at a switch config, a Group Policy export, or a Google Workspace admin dump and ask it to check against CIS benchmarks. It drafts the findings and you verify them.</li>
+    <li><b>Glue scripts.</b> Pulling stale accounts from AD, checking them against HR, and drafting the disable list used to be a two-day project that never got scheduled. Now it takes an afternoon.</li>
+    <li><b>Incident response prep.</b> The playbook, the evidence-collection script, and the tabletop scenario get built in one session instead of one quarter.</li>
+    <li><b>Reading vendor code.</b> Ask what a vendor's PowerShell deployment script does before you run it as admin.</li>
+    <li><b>Compliance paperwork.</b> Turn a control spreadsheet into evidence requests and draft responses.</li>
+  </ul>
+  <p>All of this was always possible. Writing and debugging the code was what made it expensive, and that cost has dropped by roughly an order of magnitude.</p>
+  <p>Why this matters most for a small team: a large security operations center already has a scripter and an analyst, so the tool makes them a little faster. A two-person district shop has neither, so the script never got written and the control never got implemented. Only about one district in three has a full-time cybersecurity staff member (CoSN, 2023). For the other two, the work did not exist before. Now it does.</p>
+  <p>Attackers have the same tools. They use them to write phishing kits and scan for exposures faster, and small targets were already the ones who could not keep up. This time the defender's costs have dropped too.</p>
   <div class="ve-co">
     <span class="chip warn">honest caveat</span>
     It is not a security product. It knows nothing about your environment until you show it, and it makes confident mistakes. You stay the person who checks the result.
   </div>
+  <p class="fullnote">Full note: <a href="Intro.md">Intro.md</a></p>
 </section>
 
 <section id="safe">
@@ -91,18 +106,24 @@
       <thead><tr><th>Rule</th><th>What it means</th><th>Status</th></tr></thead>
       <tbody>
         <tr><td><span class="rule-n">1</span>Read before you run</td><td>For anything that deletes, disables, writes, or sends, read what it will do first.</td><td><span class="chip risk">state-changing</span></td></tr>
-        <tr><td><span class="rule-n">2</span>Work in a safe place</td><td>Scratch folder, test tenant, non-production copy. Run cleanup scripts in report-only mode first.</td><td><span class="chip warn">sandbox</span></td></tr>
-        <tr><td><span class="rule-n">3</span>Protect the data</td><td>No student records, credentials, or data-privacy-agreement material in a prompt. FERPA and SOPIPA apply.</td><td><span class="chip risk">legal weight</span></td></tr>
-        <tr><td><span class="rule-n">4</span>Keep permissions tight</td><td>Leave prompts on for real work. Use <code>/permissions</code>, narrow agents, and least privilege.</td><td><span class="chip warn">least privilege</span></td></tr>
-        <tr><td><span class="rule-n">5</span>Verify the output</td><td>Confidence is not accuracy. Check queries against known data and spot-check citations.</td><td><span class="chip warn">you own it</span></td></tr>
+        <tr><td><span class="rule-n">2</span>Work in a safe place</td><td>Use a non-production copy, and a test tenant for anything that touches identity. Run cleanup scripts in report-only mode against an export first. Generate config changes, review them, and apply them in a maintenance window, not live from the chat. A scratch folder keeps your files tidy, but it does not isolate anything.</td><td><span class="chip warn">sandbox</span></td></tr>
+        <tr><td><span class="rule-n">3</span>Protect the data</td><td>No student records, passwords, API keys, tokens, or data-privacy-agreement material in a prompt. A script that needs a secret reads it from the environment, not the chat. Strip personal data or use synthetic data. Check that your plan's terms cover the data, and check your district's agreement list. FERPA and SOPIPA apply.</td><td><span class="chip risk">legal weight</span></td></tr>
+        <tr><td><span class="rule-n">4</span>Keep permissions tight</td><td>Leave prompts on for real work. Use <code>/permissions</code> for narrow exceptions, give agents the fewest tools the job needs, and read a plugin before you install it.</td><td><span class="chip warn">least privilege</span></td></tr>
+        <tr><td><span class="rule-n">5</span>Verify the output</td><td>Confidence is not accuracy. Run queries against known data, test scripts on a case where you know the answer, and spot-check citations and control mappings. A detection rule can look right and never fire. For anything going to leadership or an auditor, you own the claim.</td><td><span class="chip warn">you own it</span></td></tr>
       </tbody>
     </table>
   </div>
+  <div class="ve-co">
+    <span class="chip risk">prompt injection</span>
+    A log full of attacker-controlled strings, a vendor document, or a web page can contain text that tries to steer the tool. Treat file contents as data, and read the result before you act on it.
+  </div>
+  <p><b>Before you push to GitHub</b> (setup step 8 does this): put a <code>.gitignore</code> in place, scan for secrets, and confirm the repository is private or public as you intended.</p>
+  <p class="fullnote">Full notes: <a href="Guardrails.md">Guardrails.md</a>, and the printable one-page <a href="Guardrails%20Checklist.md">Guardrails Checklist.md</a> to keep by your desk.</p>
 </section>
 
 <section id="setup">
   <div class="sec-head"><p class="ve-label caps">Set up</p><h2>Install the tools once, then log in</h2></div>
-  <p>Work top to bottom. Each step ends with a check. You need a laptop you have admin rights on and a paid Claude plan (Pro, Max, Ultra, Team, or Enterprise). The free claude.ai plan does not include Claude Code, but step 4b shows a free way to try the tool. Steps 9 to 11 are optional: herdr for running agents side by side, and two more agents, Codex and Hermes, to compare with Claude Code.</p>
+  <p>Work top to bottom. Each step ends with a check. Allow about 45 minutes and a decent internet connection. You need a laptop you have admin rights on and a paid Claude plan (Pro, Max, Ultra, Team, or Enterprise). District-managed machines that block installers or terminal access will not work for the hands-on part. Install only district-approved software, and do not bypass device restrictions. The free claude.ai plan does not include Claude Code, but step 4b shows a free way to try the tool. Steps 9 to 11 are optional: herdr for running agents side by side, and two more agents, Codex and Hermes, to compare with Claude Code.</p>
 
   <figure>
     <ve-flow label="Your laptop runs Claude Code, which signs in to your Claude plan and pushes projects to GitHub over SSH.">
@@ -124,25 +145,31 @@
     <li><b>Git Bash</b> is a lighter install. Get it from git-scm.com or <code>winget install Git.Git</code>. Best when WSL is blocked.</li>
   </ul>
 
-  <p><b>Before the workshop:</b> complete terminal/tool installation, first sign-in, GitHub authentication, and editor setup (steps 1–8 here; steps 1–9 in Setup Guide.md). In-room setup is a 25-minute readiness check with bounded recovery. Optional tools in steps 9–11 are not required.</p>
+  <p><b>Before the workshop:</b> complete terminal/tool installation, first sign-in, GitHub authentication, and editor setup (steps 1–8 here, which are steps 1–10 in <a href="Setup%20Guide.md">Setup Guide.md</a>). In-room setup is a 25-minute readiness check with bounded recovery. Optional tools in steps 9–11 are not required.</p>
   <h3>2. Install Git, Python, and Node</h3>
   <p>Install only missing tools. Platform-specific checks and recovery are in the existing <b>Setup Guides</b> folder: <a href="Setup%20Guides/Git%20Setup%20Guide.md">Git Setup Guide.md</a>, <a href="Setup%20Guides/Node.js%20Setup%20Guide.md">Node.js Setup Guide.md</a>, and <a href="Setup%20Guides/Python%20Setup%20Guide.md">Python Setup Guide.md</a>.</p>
   <p>Claude Code does not need Python or Node. The exercises do, because the scripts it writes for you are in one or the other.</p>
   <p>Follow the guide for your actual workshop shell. WSL uses Linux instructions inside Ubuntu; native Windows/Git Bash uses the Windows instructions. Review installers before running them and reopen the terminal after installation. These existing guides are the authority for runtime installation; this page does not maintain a second installer command set.</p>
-  <p><b>Check:</b> open a new terminal and run <code>git --version</code>, <code>python3 --version</code> (or <code>python</code> on Windows), and <code>node --version</code>. Each prints a version.</p>
+  <p><b>Check:</b> open a new terminal and run <code>git --version</code>, <code>python3 --version</code> (or <code>python</code> on Windows), <code>node --version</code>, and <code>npm --version</code>. Each prints a version.</p>
+  <p>Then tell Git who you are, using the email you will attach to GitHub in step 6:</p>
+  <pre class="step-cmd"><code>git config --global user.name "Your Name"
+git config --global user.email "you@yourdistrict.org"</code></pre>
 
   <h3>3. Install Claude Code</h3>
-  <pre class="step-cmd"><code># macOS, Linux, WSL, Git Bash
+  <pre class="step-cmd"><code># macOS, Linux, WSL
 curl -fsSL https://claude.ai/install.sh | bash
 
-# Native Windows PowerShell
+# Windows, including Git Bash users: run this in PowerShell,
+# then use claude from Git Bash afterward
 irm https://claude.ai/install.ps1 | iex</code></pre>
-  <p><b>Check:</b> in a new terminal, run <code>claude --version</code> and <code>claude doctor</code>. The first prints a version; the second runs diagnostics and should report no errors. If <code>claude</code> is not found, close and reopen the terminal.</p>
+  <p>The installer shows no progress bar. Wait for it to return to the prompt. <b>Check:</b> in a new terminal, run <code>claude --version</code> and <code>claude doctor</code>. The first prints a version; the second runs diagnostics and should report no errors. If <code>claude</code> is not found, close and reopen the terminal. If it is still missing, add the install folder to your PATH and open a new terminal:</p>
+  <pre class="step-cmd"><code>echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc    # macOS
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc   # Linux and WSL</code></pre>
 
   <h3>4. Log in to your plan</h3>
   <pre class="step-cmd"><code>mkdir -p ~/claude-scratch &amp;&amp; cd ~/claude-scratch
 claude</code></pre>
-  <p>The first run opens a browser to sign in. Use the account with the paid plan. At the Claude prompt, type <code>/status</code> to confirm the account, then <code>/exit</code>.</p>
+  <p>The first run opens a browser to sign in. Use the account with the paid plan. At the Claude prompt, type <code>/status</code> to confirm the account, then <code>/exit</code>. If no browser opens (common in WSL), the terminal prints a URL. Open it in a browser on Windows, log in, and paste the code it gives you back into the terminal.</p>
   <h3>4b. No paid plan? Use a free model through OpenRouter</h3>
   <p>If you do not have a paid Claude plan, you can point Claude Code at a free model hosted on OpenRouter instead. Make a free account and an API key at openrouter.ai/keys, then add this to <code>~/.zshrc</code> (macOS) or <code>~/.bashrc</code> (Linux, WSL, Git Bash):</p>
   <pre class="step-cmd"><code>export OPENROUTER_API_KEY="paste-your-openrouter-key-here"
@@ -177,8 +204,21 @@ ssh-keygen -t ed25519 -C "you@yourdistrict.org"
 cat ~/.ssh/id_ed25519.pub   # share only the public key</code></pre>
   <p>In GitHub: profile picture, Settings, SSH and GPG keys, New SSH key. Paste and save. <b>Check:</b> <code>ssh -T git@github.com</code> prints "successfully authenticated".</p>
 
+  <p>No GitHub account yet? Create one at github.com/signup with the same email you gave Git in step 2.</p>
+
   <h3>7. Install VS Code and the gh tool</h3>
-  <p>Download VS Code from code.visualstudio.com and add the Python and Claude Code extensions. Install the GitHub command-line tool so Claude can create repositories for you: <code>brew install gh</code> on Mac, <code>sudo apt install -y gh</code> on Linux and WSL, then <code>gh auth login</code>.</p>
+  <p>Download VS Code from code.visualstudio.com and add two extensions: Python (Microsoft) and Claude Code (Anthropic). The Claude Code extension bundles its own copy of the tool, so it works even if the terminal install in step 3 gave you trouble.</p>
+  <ul class="lede-list">
+    <li><b>Windows with WSL:</b> also install the WSL extension. Then <code>code .</code> in the Ubuntu terminal opens the current folder in VS Code.</li>
+    <li><b>Windows with Git Bash:</b> make Git Bash the VS Code terminal. Open the Command Palette (Ctrl+Shift+P), run "Terminal: Select Default Profile", and choose Git Bash.</li>
+  </ul>
+  <p>The GitHub command-line tool, <code>gh</code>, is optional. It lets Claude create repositories for you instead of you doing it in the browser.</p>
+  <pre class="step-cmd"><code>brew install gh              # macOS
+sudo apt install -y gh       # Linux and WSL
+winget install GitHub.cli    # Windows, in PowerShell
+
+gh auth login                # GitHub.com, SSH, your key, Login with a web browser</code></pre>
+  <p><b>Check:</b> <code>gh auth status</code> shows you logged in, and the VS Code Extensions view shows each extension as installed.</p>
 
   <h3>8. Connect your first project</h3>
   <pre class="step-cmd"><code>mkdir -p ~/my-project &amp;&amp; cd ~/my-project
@@ -188,28 +228,41 @@ claude</code></pre>
 private GitHub repository under the username YOUR_GITHUB_USERNAME, add it
 as the origin remote using SSH, and push. Use the gh command for anything
 that needs GitHub itself.</code></pre>
+  <p>Confirm Manual mode and read each proposed command before approving it. If you already made a practice repository during prework, reuse it; do not overwrite an existing project. Never push private keys, credentials, or real district data. If you skipped <code>gh</code>, create an empty private repository on github.com first, then give Claude the SSH URL it shows (it starts with <code>git@github.com:</code>) and ask it to add that remote and push.</p>
   <p><b>Check:</b> open your repository page on GitHub. The files Claude created are there. Watch what Claude runs as it works. That habit carries through the rest of this guide.</p>
+
+  <h3>If something goes wrong</h3>
+  <ul class="lede-list">
+    <li><code>claude: command not found</code>: open a new terminal, then try the PATH fix in step 3.</li>
+    <li>Login loops or "not authorized": you are signed in to a free claude.ai account. Claude Code needs a paid plan, or the OpenRouter route in step 4b.</li>
+    <li><code>Permission denied (publickey)</code> from GitHub: the public key is not on your account yet. Run <code>ls ~/.ssh</code>, look for <code>id_ed25519.pub</code>, and repeat the paste in step 6.</li>
+    <li>Git Bash says <code>python3: command not found</code>: the Windows installer names it <code>python</code>. Use that, or add <code>alias python3=python</code> to <code>~/.bashrc</code>.</li>
+    <li>Claude Code cannot find Git Bash: add <code>{"env": {"CLAUDE_CODE_GIT_BASH_PATH": "C:\\Program Files\\Git\\bin\\bash.exe"}}</code> to <code>~/.claude/settings.json</code>.</li>
+    <li><code>code .</code> does nothing in WSL: install the WSL extension in VS Code on the Windows side, then restart the Ubuntu terminal.</li>
+    <li>WSL cannot reach the network: follow your district's approved network or VPN process. Do not disable security controls to get the workshop working.</li>
+  </ul>
 
   <h3>9. Optional: herdr, to run several agents at once</h3>
   <p>herdr is a terminal workspace for coding agents. Like tmux, it keeps your terminals running in the background after you close the window. It also spots Claude Code, Codex, and Hermes running in its panes, and its sidebar shows which ones are working, which are done, and which are blocked waiting for you.</p>
-  <pre class="step-cmd"><code># macOS, Linux, WSL, Git Bash
+  <p>Nobody needs herdr for the workshop. It earns its place once you have two or three agent sessions going and lose track of which one is waiting on you.</p>
+  <pre class="step-cmd"><code># macOS, Linux, WSL
 curl -fsSL https://herdr.dev/install.sh | sh
 
-# Native Windows PowerShell
+# Windows PowerShell
 powershell -ExecutionPolicy Bypass -c "irm https://herdr.dev/install.ps1 | iex"</code></pre>
   <p>Then go to your project and start it:</p>
   <pre class="step-cmd"><code>cd ~/my-project
 herdr                                # opens a workspace for this folder
 claude                               # run Claude Code inside the herdr pane
 herdr integration install claude     # optional: resume Claude sessions after a restart</code></pre>
-  <p>You can do everything with the mouse: click to focus, drag borders, right-click for menus. The keyboard prefix is <code>ctrl+b</code>. Press it and then <code>v</code> to split a pane, or <code>q</code> to detach and leave everything running. Run <code>herdr</code> again to come back. <b>Check:</b> <code>herdr --version</code> prints a version, and the sidebar lists Claude Code once it starts. The two-page herdr cheat sheet is in the Cheat Sheets folder of this repo.</p>
+  <p>You can do everything with the mouse: click to focus, drag borders, right-click for menus. The keyboard prefix is <code>ctrl+b</code>. Press it and then <code>v</code> to split a pane, or <code>q</code> to detach and leave everything running. Run <code>herdr</code> again to come back. <b>Check:</b> <code>herdr --version</code> prints a version, and the sidebar lists Claude Code once it starts. The two-page <a href="Cheat%20Sheets/herdr-Cheat-Sheet.pdf">herdr cheat sheet</a> covers panes, tabs, workspaces, and the rest of the keys.</p>
 
   <h3>10. Optional: Codex, OpenAI's coding agent</h3>
   <p>Codex works much like Claude Code but runs on OpenAI models. It comes with ChatGPT Plus, Pro, Business, Edu, and Enterprise plans.</p>
-  <pre class="step-cmd"><code># macOS, Linux, WSL, Git Bash
+  <pre class="step-cmd"><code># macOS, Linux, WSL
 curl -fsSL https://chatgpt.com/codex/install.sh | sh
 
-# Native Windows PowerShell
+# Windows PowerShell
 powershell -ExecutionPolicy ByPass -c "irm https://chatgpt.com/codex/install.ps1 | iex"
 
 # Or, if you already have Node or Homebrew
@@ -232,11 +285,12 @@ iex (irm https://hermes-agent.nousresearch.com/install.ps1)</code></pre>
   <pre class="step-cmd"><code>hermes setup
 hermes doctor      # checks the install and your config
 hermes             # start a chat in the current folder</code></pre>
-  <p><b>Check:</b> <code>hermes --version</code> prints a version, and <code>hermes doctor</code> reports no errors. Hermes keeps its settings in <code>~/.hermes/config.yaml</code> and its API keys in <code>~/.hermes/.env</code>. The two-page Hermes cheat sheet is in the Cheat Sheets folder of this repo.</p>
+  <p><b>Check:</b> <code>hermes --version</code> prints a version, and <code>hermes doctor</code> reports no errors. Hermes keeps its settings in <code>~/.hermes/config.yaml</code> and its API keys in <code>~/.hermes/.env</code>. The two-page <a href="Cheat%20Sheets/Hermes-Agent-Cheat-Sheet.pdf">Hermes cheat sheet</a> has the session keys, approvals, and commands.</p>
   <div class="ve-co">
     <span class="chip risk">look before it imports</span>
-    <code>hermes setup</code> offers to import settings and memory from agents it finds, including <code>~/.claude</code> and <code>~/.codex</code>. It shows a preview first. Read it, and skip anything you don't want copied. By default, a second model judges whether a shell command is risky before Hermes runs it. One-shot runs (<code>hermes -z</code>) and <code>/yolo</code> skip those checks entirely, so keep them in scratch folders.
+    <code>hermes setup</code> offers to import settings and memory from agents it finds, including <code>~/.claude</code> and <code>~/.codex</code>. It shows a preview first. Read it, and skip anything you don't want copied. By default, a second model judges whether a shell command is risky before Hermes runs it. One-shot runs (<code>hermes -z</code>) and <code>/yolo</code> skip those checks entirely. Leave them out of the workshop, and remember that a scratch folder does not isolate anything.
   </div>
+  <p class="fullnote">Full note: <a href="Setup%20Guide.md">Setup Guide.md</a>, plus the runtime guides in <b>Setup Guides</b> linked from step 2.</p>
 </section>
 
 <section id="try">
@@ -248,15 +302,52 @@ hermes             # start a chat in the current folder</code></pre>
     <p>Compare your acceptable use policy to CIS and NIST, and get a table of gaps with draft replacement text.</p>
     <pre><code>Read the policy in aup.pdf. Compare it against the CIS Controls v8
 Implementation Group 1 safeguards and the NIST CSF 2.0 Govern function.
-Produce a table marked covered, partially covered, or missing, then list
-the five biggest gaps for a K-12 district and draft replacement language.</code></pre>
+Produce a table with one row per safeguard or outcome, marked covered,
+partially covered, or missing, with the policy section that covers it
+where one exists. Then list the five biggest gaps in order of risk to a
+K-12 district and draft replacement language for each.</code></pre>
+  </div>
+
+  <div class="prompt">
+    <div class="prompt-head"><span class="chip ok">GRC</span><h3>Turn a policy into a procedure</h3></div>
+    <p>The policy says accounts get disabled on separation. Nobody wrote down how. Name your own systems in the prompt.</p>
+    <pre><code>Our policy says: "User accounts must be disabled within 24 hours of
+employee separation and student withdrawal." We use Entra ID, Google
+Workspace, Aeries SIS, and a Fortinet VPN. HR notifies IT by email.
+Write a step-by-step offboarding procedure that satisfies this policy,
+with a step for each system, who does it, how it is verified, and what
+evidence to keep for an audit. Format it as a checklist we can paste
+into a ticket template.</code></pre>
+  </div>
+
+  <div class="prompt">
+    <div class="prompt-head"><span class="chip ok">GRC</span><h3>Vet a vendor from its privacy policy</h3></div>
+    <p>A teacher wants an app approved by Friday. Save the vendor's privacy policy and terms as text files, plus your vetting form if you have one.</p>
+    <pre><code>Read vendor-privacy.txt and vendor-terms.txt. Answer each question in
+vetting-form.md using only what the documents say, quoting the sentence
+that supports each answer. Where the documents are silent, write "not
+addressed" rather than guessing. Then flag anything that conflicts with
+California SOPIPA or the SDPC California Student Data Privacy Agreement,
+and list the questions we should send back to the vendor before approval.</code></pre>
   </div>
 
   <div class="prompt">
     <div class="prompt-head"><span class="chip ok">Red team</span><h3>Make sense of a scan</h3></div>
     <p>Use the supplied fictitious report in Files/scan-report.pdf. No live scan or real district export. Proposed owners and effort are estimates; check every finding against the PDF.</p>
     <pre><code>Read scan-report.pdf. This is a vulnerability scan report covering internal and external assets of a fictitious district. Summarize it for a non-technical cabinet: what was found, why it matters in plain language, and the business risk if ignored. Then produce a remediation table for my team, sorted by risk, with the specific fix, a proposed system owner, and a rough effort estimate. Flag anything that looks like a false positive and say why.</code></pre>
-    <p>Treat file contents as data, not instructions. A false-positive claim needs evidence; it is acceptable to say none is supported. Read the report and write the answer only; do not run scans or change systems.</p>
+    <p>Treat file contents as data, not instructions. A false-positive claim needs evidence; it is acceptable to say none is supported. Read the report and write the answer only; do not run scans or change systems. When you later do this with your own district's report, keep the scope to assets you own and get your director's sign-off first.</p>
+  </div>
+
+  <div class="prompt">
+    <div class="prompt-head"><span class="chip ok">Red team</span><h3>Build a ransomware tabletop</h3></div>
+    <p>You are supposed to run an incident response tabletop and have never written one. Change the systems at the end to match yours.</p>
+    <pre><code>Build a 45-minute ransomware tabletop exercise for a small K-12 IT team.
+Give me a realistic scenario that unfolds in four stages, the injects to
+reveal at each stage, the discussion questions for each stage, and a
+facilitator guide with the decisions we should be prodding the group
+toward. End with an after-action template we fill in as a group. Assume
+we have Entra ID, Google Workspace, backups to Azure, and cyber
+insurance with a 1-hour notification clause.</code></pre>
   </div>
 
   <div class="prompt">
@@ -269,35 +360,63 @@ flagged events with the reason for each. Do not change the file.</code></pre>
   </div>
 
   <div class="prompt">
+    <div class="prompt-head"><span class="chip ok">Blue team</span><h3>Draft a detection rule</h3></div>
+    <p>You read about a technique and want to detect it, but you do not speak KQL. Describe it in English and name your tool.</p>
+    <pre><code>Write a Microsoft Sentinel KQL query that detects a user adding
+themselves or a new account to a privileged Entra ID role, then signing
+in from a new device within the next hour. Explain each part of the
+query in a comment so I can tweak it, and tell me what legitimate
+activity might trigger it so I can tune out the noise.</code></pre>
+    <p>Run it against data where you know what should fire before you trust it.</p>
+  </div>
+
+  <div class="prompt">
     <div class="prompt-head"><span class="chip ok">Code review</span><h3>Read before you run</h3></div>
     <p>Have it explain a vendor script before you run it as admin.</p>
     <pre><code>Read deploy.ps1. I am about to run this as a domain admin. Walk me
-through what it does. Flag anything that reaches the internet, changes
-permissions, touches the registry, or deletes files, and tell me the
-three things most likely to cause damage.</code></pre>
+through what it actually does, line by line at a high level. Flag
+anything that reaches out to the internet, changes permissions, touches
+the registry, deletes files, or hides its own activity. Tell me the three
+things most likely to cause damage if I run it as-is, and what I should
+verify before running it.</code></pre>
   </div>
 
   <div class="prompt">
     <div class="prompt-head"><span class="chip ok">OSINT</span><h3>What you leak publicly</h3></div>
     <p>Build the picture an outsider sees of your district, from public sources only.</p>
     <pre><code>Using only public web sources, build a profile of what an outsider could
-learn about Example Unified School District to target us: email format,
-IT and finance staff on the public site, tech in job postings, and public
-documents mentioning internal systems. Present it as a risk briefing.</code></pre>
+easily learn about Example Unified School District that would help them
+target us: our email address format, names and titles of IT and finance
+staff who appear on the public site, technologies mentioned in job
+postings, and any documents indexed publicly that mention internal
+systems. Present it as a risk briefing with what to remove or lock down
+for each item. Do not attempt to access anything non-public.</code></pre>
   </div>
 
   <p>The strongest one to watch live is log triage. You review the handful of flagged events instead of the whole log, and the script it wrote is yours to run again next week.</p>
+  <p class="fullnote">Full note: <a href="Examples.md">Examples.md</a> has four more prompts (phishing-awareness content for a tabletop, explaining a Defender alert, finding bugs in your own cleanup script, and checking staff exposure in known breaches), with what to have ready and what to look at in each result.</p>
 </section>
 
 <section id="build">
   <div class="sec-head"><p class="ve-label caps">Build an app</p><h2>From one-off scripts to something that runs</h2></div>
-  <p>The workshop demonstration stops at a plan and clarifying questions. Use a preflighted available model in a fresh local folder, keep approvals on, and deny any code, installation, or scan action.</p>
-  <pre><code>Plan a simple web interface to nmap on localhost for one user. Research options and ask clarifying questions. Stop before writing code, installing anything, or running scans.</code></pre>
-  <p>Watch the planning happen before any code. Have answers ready for the questions it asks: which scan types to expose, the tech stack, and whether to run real scans or mock them.</p>
+  <p>This is where you build a real, working application: a web version of Zenmap that runs nmap scans and shows the results in your browser. Claude does not jump to code. It researches, plans, and asks you questions first, then writes and runs the whole thing. Install nmap first, start Claude in a fresh folder, and paste the prompt.</p>
+  <p>If you are signed in to an Anthropic plan, switch to Opus 5.5 with <code>/model opus</code> before you start; the planning is stronger and the build is faster. On the free OpenRouter route from step 4b, skip that and keep your free model. Expect it to be slower and to need more help along the way. Either way, keep approvals on and read what it wants to run.</p>
+  <pre><code>I would like to build a user friendly interface to nmap similar to zenmap
+but a web app. Do your own research while planning and ask me any
+clarifying questions.</code></pre>
+  <p>Watch the planning happen before any code, then watch it scaffold a real project: a folder structure, a web front end, and a backend that calls nmap. Have answers ready for the questions it asks. These keep the session moving:</p>
+  <ul class="lede-list">
+    <li><b>Which scan types?</b> Ping sweep, port scan, and service and version detection. Leave OS detection off by default, since it needs elevated privileges.</li>
+    <li><b>Which tech stack?</b> Let Claude pick something simple it can run locally, such as a Python backend and a plain web front end.</li>
+    <li><b>Real scans or mocked?</b> Real scans. Point them at your own machine (127.0.0.1), a lab VM you own, or scanme.nmap.org, which the nmap project runs for exactly this kind of testing.</li>
+    <li><b>Logins and multiple users?</b> Out of scope. One local user.</li>
+  </ul>
+  <p>When it finishes, launch the app, run a scan, and check that the results match what nmap prints on its own. You will have gone from one sentence to a working tool in a single session.</p>
   <div class="ve-co">
-    <span class="chip risk">a scanner you exposed</span>
-    A web page that runs nmap for whoever opens it is a scanner on your network. The workshop stops before scans. Any later, separately authorized build must stay on localhost and use only targets explicitly within its approved scope.
+    <span class="chip risk">scan only what you may scan</span>
+    Scanning a network you do not own or have written permission to scan can break your district's policies and the law, even with a test tool. Your own machine, a lab VM you own, and scanme.nmap.org are fine. Do not scan the district network, a neighbor's network, or any public site without permission. The app itself is a scanner, so keep it bound to localhost and never expose it on a network without a login.
   </div>
+  <p class="fullnote">Full note: <a href="Application%20Builds.md">Application Builds.md</a></p>
 </section>
 
 <section id="extend">
@@ -307,12 +426,12 @@ documents mentioning internal systems. Present it as a risk briefing.</code></pr
     <div class="case" data-st="ok">
       <span class="chip ok">a task</span>
       <h3>Skill</h3>
-      <p>A folder with a <code>SKILL.md</code> that teaches one task. Lives in <code>~/.claude/skills/</code>. Runs as <code>/skill-name</code>.</p>
+      <p>A folder with a <code>SKILL.md</code> that teaches one task. Personal skills live in <code>~/.claude/skills/</code>; a project's <code>.claude/skills/</code> ships to anyone who clones it. Runs as <code>/skill-name</code>.</p>
     </div>
     <div class="case" data-st="ok">
       <span class="chip ok">a worker</span>
       <h3>Agent</h3>
-      <p>A subagent you delegate a job to, with its own tools and clean context. A read-only reviewer that cannot change files is the classic case.</p>
+      <p>A subagent you delegate a job to, with its own tools and clean context. It lives in <code>~/.claude/agents/</code> or a project's <code>.claude/agents/</code>. Use one when the job is big or you want to limit what it can touch.</p>
     </div>
     <div class="case" data-st="ok">
       <span class="chip ok">a package</span>
@@ -320,13 +439,65 @@ documents mentioning internal systems. Present it as a risk briefing.</code></pr
       <p>A directory that bundles skills, agents, and more. Install from a marketplace in two commands.</p>
     </div>
   </div>
-  <p>You do not have to build it all. ECC is a free, open-source bundle of agents and skills, including a security scanner. These are optional post-workshop reference commands, not a core installation exercise. Review the plugin before enabling it:</p>
+  <h3>Write your first skill</h3>
+  <p>Make the folder with <code>mkdir -p ~/.claude/skills/config-review</code>, then save this as <code>SKILL.md</code> inside it:</p>
+  <pre><code>---
+description: Reviews a network device config against district security standards. Use when the user shares a switch, router, or firewall config and asks whether it is safe.
+---
+
+## Instructions
+
+Review the configuration the user provides. Check for:
+- default or weak credentials, and SNMP community strings left at public or private
+- management interfaces reachable from student or guest networks
+- telnet or other unencrypted management, where SSH should be used
+- missing logging to the district syslog server
+
+Produce a table of findings: issue, the line it is on, severity for a
+school network, and the exact fix. Do not change the file.</code></pre>
+  <p>Claude reads only the <code>description</code> to decide when to use a skill, so write it as what the skill does and when to use it. Without a <code>name</code>, the skill takes the folder name. Test it by pasting a config and asking whether it is safe, or by typing <code>/config-review</code>.</p>
+
+  <h3>Write your first agent</h3>
+  <p>An agent is one Markdown file. Save this as <code>~/.claude/agents/log-triage.md</code>:</p>
+  <pre><code>---
+name: log-triage
+description: Reviews exported security logs and surfaces only the events worth a human look. Use for sign-in logs, firewall logs, or audit exports.
+tools: Read, Bash, Grep
+model: sonnet
+---
+
+You are a security log analyst for a K-12 school district. When given a
+log file, write and run code to find anomalies: logins from unusual
+locations, impossible travel, bursts of failures followed by a success,
+and activity outside normal hours. Return a ranked table of only the
+events that merit review, each with the reason it was flagged. Never
+modify the source file.</code></pre>
+  <p><code>name</code> and <code>description</code> are required. Leave out <code>tools</code> and the agent gets every tool you have. <code>model</code> is optional: <code>sonnet</code> suits routine work, <code>opus</code> harder reasoning. The body is its whole brief. Test it with "use the log-triage agent on signins.csv".</p>
+  <div class="ve-co">
+    <span class="chip risk">not read-only</span>
+    Leaving Edit and Write out of the tool list does not make an agent read-only. Bash can still change or delete files. Keep approvals on, give it a copy of the input, and check afterward that the source is unchanged.
+  </div>
+
+  <h3>Package or install a plugin</h3>
+  <p>A plugin is a folder with a manifest at <code>.claude-plugin/plugin.json</code> and <code>skills/</code> and <code>agents/</code> folders holding the same files you just wrote. Try one locally with <code>claude --plugin-dir ./my-security-pack</code>. To share it, push it to a Git repository with a <code>marketplace.json</code>.</p>
+  <p>You do not have to build it all. ECC is a free, open-source bundle of dozens of agents and hundreds of skills, including a security scanner. These are optional post-workshop reference commands, not a core installation exercise. ECC loads a lot into every session, which costs context and usage, so review it first and consider its guided installer (<code>npx ecc-universal@2.2.3 setup</code>; check the repository for the current version), which lets you pick a smaller profile:</p>
   <pre><code>/plugin marketplace add https://github.com/affaan-m/ECC
 /plugin install ecc@ecc</code></pre>
+  <p>Smaller plugins that each do one job install the same way. Run <code>/reload-plugins</code> or restart afterward:</p>
+  <pre><code>/plugin marketplace add blader/humanizer               # rewrites AI-sounding drafts
+/plugin install humanizer@humanizer
+/plugin marketplace add obra/superpowers-marketplace   # plan, test first, debug
+/plugin install superpowers@superpowers-marketplace
+/plugin install frontend-design@claude-plugins-official   # interfaces that look right
+/plugin marketplace add pbakaus/impeccable             # front-end quality audits
+/plugin install impeccable@impeccable
+/plugin marketplace add mattpocock/skills              # includes a /tdd skill
+/plugin install mattpocock-skills@mattpocock</code></pre>
   <div class="ve-co">
     <span class="chip risk">plugins run as you</span>
     An enabled plugin's hooks and servers run with your permissions in every session. Read what a plugin does before you install it, the same way you read a script.
   </div>
+  <p class="fullnote">Full note: <a href="Skills%20Agents%20Plugins.md">Skills Agents Plugins.md</a></p>
 </section>
 
 <section id="start">
@@ -341,26 +512,55 @@ documents mentioning internal systems. Present it as a risk briefing.</code></pr
         <tr><td>Max</td><td class="num">$100</td><td>One person who leans on the tool daily.</td></tr>
         <tr><td>Ultra</td><td class="num">$200</td><td>The highest limits, for all-day use.</td></tr>
         <tr><td>Team / Enterprise</td><td class="num">per seat</td><td>A district rollout, with admin controls.</td></tr>
+        <tr><td>API or Console</td><td class="num">per token</td><td>Automation and scripts, or metered team use.</td></tr>
       </tbody>
     </table>
   </div>
-  <p>Pro is enough to start; do not buy up until you have felt the limit. Prices move, so check Anthropic's page before you commit.</p>
+  <p>Usage is not a monthly bucket. Each plan has a rolling limit every few hours plus a weekly cap, and Claude Code and the Claude chat app draw from the same quota. Pro is enough to start; do not buy up until you have hit the limit and felt it. Prices move, so check Anthropic's page before you commit.</p>
+  <p>Install plain Claude Code in week one and nothing else. Add a plugin when a real need shows up, one at a time, after you have read what it does.</p>
   <p>A good first task is low stakes, repetitive, and checkable, so a confident mistake cannot hurt and you can spot it:</p>
   <ul class="lede-list">
     <li>Summarize scrubbed or synthetic sign-in logs into the handful worth looking at.</li>
     <li>Turn a policy into an offboarding checklist.</li>
     <li>Read a vendor's privacy policy against your vetting form.</li>
+    <li>Draft the tabletop exercise you have been putting off.</li>
   </ul>
-  <p>Then turn the task you repeat most into a skill, so the tool does it your way every time. Grow by one thing a month: a skill, then an agent, then a plugin.</p>
+  <p>Bad first tasks are anything that disables accounts, changes production config, or touches student data. Save those for after you trust the tool and your own review habit.</p>
+  <p>Then turn the task you repeat most into a skill, so the tool does it your way every time. Track the time it saves; a rough note like "this used to take a day, now an afternoon" is what you show leadership. Grow by one thing a month: a skill, then an agent, then a plugin.</p>
+  <h3>Bring it to your team</h3>
+  <p>Run a small pilot before anyone scales. You will need evidence, meaning the hours saved in your own first month. You will need a short written rule set covering what data may go in, which plan or account to use, and the read-before-you-run habit. If more than a couple of people will use it, pick a Team or Enterprise plan for the admin controls and shared billing. Know whether your plan's terms cover district data before someone from cabinet asks.</p>
   <div class="ve-co">
     <span class="chip ok">the one action</span>
     Monday: pick one annoying task, open a terminal, and give it one hour. Everything else follows from that.
+  </div>
+  <p class="fullnote">Full note: <a href="Getting%20Started.md">Getting Started.md</a></p>
+</section>
+
+<section id="cheats">
+  <div class="sec-head"><p class="ve-label caps">Cheat sheets</p><h2>Two pages per tool, for next to the keyboard</h2></div>
+  <p>Each sheet prints on two landscape pages and covers starting a session, the keys you use most, and the safety settings. They are in the <b>Cheat Sheets</b> folder of this repository.</p>
+  <div class="cases">
+    <div class="case" data-st="ok">
+      <span class="chip ok">core</span>
+      <h3><a href="Cheat%20Sheets/Claude-Code-Cheat-Sheet.pdf">Claude Code</a></h3>
+      <p>Starting and resuming sessions, keys, permission modes and Shift+Tab, stopping and rewinding, and habits that save you.</p>
+    </div>
+    <div class="case" data-st="warn">
+      <span class="chip warn">optional</span>
+      <h3><a href="Cheat%20Sheets/herdr-Cheat-Sheet.pdf">herdr</a></h3>
+      <p>The prefix key, panes, tabs, workspaces, agent states in the sidebar, and driving herdr from the command line. Goes with setup step 9.</p>
+    </div>
+    <div class="case" data-st="warn">
+      <span class="chip warn">optional</span>
+      <h3><a href="Cheat%20Sheets/Hermes-Agent-Cheat-Sheet.pdf">Hermes Agent</a></h3>
+      <p>Setup and upkeep, session keys, adding context, approvals for risky commands, and skills and memory. Goes with setup step 11.</p>
+    </div>
   </div>
 </section>
 
 <section id="more">
   <div class="sec-head"><p class="ve-label caps">Resources</p><h2>Repositories worth knowing</h2></div>
-  <p>These open-source projects are grouped by what they do. Check each repository before you rely on it; projects move fast.</p>
+  <p>These open-source projects are grouped by what they do. Several overlap, so pick one per job rather than stacking them. Check each repository before you rely on it; projects move fast. Plugins in Anthropic's official directory install with <code>/plugin install &lt;name&gt;@claude-plugins-official</code>.</p>
 
   <div class="reslist">
     <h3>Claude Code core and official</h3>
@@ -395,7 +595,7 @@ documents mentioning internal systems. Present it as a risk briefing.</code></pr
       <li><a href="https://github.com/BloopAI/vibe-kanban">Vibe-Kanban</a>. A kanban board paired with coding agents. Note: the project is shutting down.</li>
     </ul>
 
-    <h3>Codebase and web context</h3>
+    <h3>Codebase understanding and web context</h3>
     <ul>
       <li><a href="https://github.com/upstash/context7">Context7</a>. Gives agents current, version-specific documentation for libraries.</li>
       <li><a href="https://github.com/yamadashy/repomix">RepoMix</a>. Packs a whole repository into one AI-friendly file, with secret scanning.</li>
@@ -422,11 +622,12 @@ documents mentioning internal systems. Present it as a risk briefing.</code></pr
       <li><a href="https://github.com/HPE-AppliedSecurityResearch/maltese">Maltese</a>. Emulates malware network traffic to test detectors. Dual-use; keep it in an isolated lab with authorization.</li>
     </ul>
   </div>
+  <p class="fullnote">Full note: <a href="Resource%20Index.md">Resource Index.md</a></p>
 </section>
 
 <section class="sources" aria-label="Sources">
   <p class="ve-label caps">Sources</p>
-  <p>Built from the Cite Talk 2026 notes. Commands and paths checked against the Claude Code docs. Key claims are sourced in <code>Sources.md</code>: the Claude Code documentation, the 2022 Stanford study on security of AI-assisted code, Anthropic's September 2026 threat report on adversary use of AI, and CoSN's K-12 cybersecurity staffing data.</p>
+  <p>Built from the Cite Talk 2026 notes. Commands and paths checked against the Claude Code docs. Key claims are sourced in <a href="Sources.md">Sources.md</a>: the Claude Code documentation, the 2022 Stanford study on security of AI-assisted code, Anthropic's September 2026 threat report on adversary use of AI, and CoSN's K-12 cybersecurity staffing data. The Stanford study used an older model (OpenAI Codex), so it supports the overconfidence point, not a measure of current tools. To check whether your data is covered, read Anthropic's <a href="https://www.anthropic.com/legal/commercial-terms">Commercial Terms</a> and <a href="https://www.anthropic.com/legal/privacy">Privacy Policy</a> for the plan you use.</p>
 </section>
 
 </main></body>
