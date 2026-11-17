@@ -11,7 +11,7 @@ Workspace: Use ~/cite-workshop as the local Git workspace from setup step 8. For
 
 Section 5 of [[Talk Outline]]. This is where the talk moves from one-off tasks to building a working application. The earlier sections showed Claude writing a script and finishing. Here it plans, researches, asks questions, and builds something that runs.
 
-The build runs in five phases, each with a checkpoint: plan, design, code, run and fix, verify. Claude moves to the next phase only after you approve the current one. The outcome is a functioning local app, checked against nmap itself.
+The build runs in six phases, each with a checkpoint: plan, design, code, review, run and fix, verify. Claude moves to the next phase only after you approve the current one. The outcome is a functioning local app, checked against nmap itself.
 
 ## Demo 1. An nmap web front end
 
@@ -19,7 +19,7 @@ What this demo shows: Claude does not jump straight to code. Given a real projec
 
 Do not run this while preparing the file. Run it live in the workshop, in a fresh project folder, so the room watches the planning happen in real time. No runtime results or screenshots are recorded here; the room sees whatever the live session produces.
 
-Pacing is about 30 minutes: plan 4, design 4, code 12, run and fix 6, verify 4. That is proposed classroom pacing, not rehearsed, and not a guarantee that every build finishes in 30 minutes.
+Pacing is about 30 minutes: plan 4, design 4, code 9, review 5, run and fix 4, verify 4. That is proposed classroom pacing, not rehearsed, and not a guarantee that every build finishes in 30 minutes.
 
 Before you start:
 - nmap is installed during prework. Python is too, if Claude picks a Python backend.
@@ -54,7 +54,7 @@ Before you write any code, show me the design: the files you will create, how th
 
 Checkpoint: the design states 127.0.0.1, the three scan types, no sudo, and an argument list for nmap. Send it back if it mentions 0.0.0.0, a shell command string, or sudo. The argument-list point is a review check on the code Claude proposes, part of verifying the output; it is not a separate lab.
 
-### Phase 3. Code (about 12 minutes)
+### Phase 3. Code (about 9 minutes)
 
 ```
 The design is approved. Write the code now. Ask me before you install any package, and tell me what each command you want to run does.
@@ -62,7 +62,46 @@ The design is approved. Write the code now. Ask me before you install any packag
 
 Checkpoint: read each approval. Installing a package is a state change, so approve it on purpose. Deny anything that asks for sudo.
 
-### Phase 4. Run and fix (about 6 minutes)
+### Phase 4. Review the code (about 5 minutes)
+
+Review the code before you run it. This app takes text from a web form and passes it to a program that sends packets across a network. You approved the design, but you did not watch every line get written, and code Claude writes has the same kinds of bugs as code a person writes: input that is not checked, a server listening on every interface, a command built from a string. In the Stanford study listed in [[Sources]], people who wrote code with an AI assistant produced less secure code than those without one, and were more likely to believe their code was secure. Running a review first is how you catch that before the app touches anything.
+
+#### Install the code review skill if you do not have it
+
+Current versions of Claude Code include `/code-review` as a built-in command, so there is nothing separate to install.
+
+1. In Claude, type `/code-review`. If it appears in the command menu, you have it.
+2. If it does not appear, type `/exit`, then run `claude update` in the terminal and start `claude` again. If you installed Claude Code with Homebrew, npm, or WinGet, update it through that package manager instead.
+3. Type `/code-review` again to confirm it is there.
+
+The official plugin marketplace also has a `code-review` plugin (`/plugin install code-review@claude-plugins-official`). It reviews GitHub pull requests and needs an open PR to work on. This build is local and has no PR, so use the built-in command.
+
+#### Prompt to run the review
+
+```
+Use the code-review skill to review all the code you wrote for this app in the nmap-app folder. Do not change any files yet.
+
+List every issue you find, most severe first. For each issue give me:
+1. The issue: what is wrong, with the file name and line number.
+2. Explanation: why it matters and what could happen if this code runs as written, including any security impact.
+3. How to fix it: the specific change you would make.
+
+Check these points in particular: the server binds to 127.0.0.1 only; nmap is called with an argument list and never a shell command string; the target and scan type are validated against the allowed options before nmap runs; nothing needs sudo or root; no secrets or passwords are written into the code.
+
+When the list is done, stop and wait for me to choose which fixes to apply.
+```
+
+You can also run the command directly with `/code-review high nmap-app`. The prompt above is the better choice in the workshop, because it asks for the issue, explanation, and fix layout and tells Claude to wait. Do not use the `--fix` flag here; it applies fixes before you have read them.
+
+When the list comes back, read each finding and pick what to fix:
+
+```
+Apply the fixes for issues 1 and 2. Show me the change for each one, then run the code review again on the files you changed.
+```
+
+Checkpoint: every high-severity finding is fixed or you have a stated reason to leave it, and the second review comes back clean on those points. The review is the same model checking its own work, so it can miss things. It does not replace reading the diff yourself or the nmap comparison in Phase 6.
+
+### Phase 5. Run and fix (about 4 minutes)
 
 ```
 Start the app on 127.0.0.1 and tell me the address to open. If it fails, show me the error and propose one fix at a time.
@@ -70,7 +109,7 @@ Start the app on 127.0.0.1 and tell me the address to open. If it fails, show me
 
 Checkpoint: the startup output shows 127.0.0.1, not 0.0.0.0, and the page opens in a browser.
 
-### Phase 5. Verify (about 4 minutes)
+### Phase 6. Verify (about 4 minutes)
 
 - Run one scan of 127.0.0.1 from the app.
 - In a second terminal, run the same kind of scan with nmap on its own, for example `nmap -sT 127.0.0.1` for an unprivileged port scan. The open ports should match.

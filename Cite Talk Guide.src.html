@@ -476,7 +476,7 @@ messages I can send to each affected person.</code></pre>
 <section id="build">
   <div class="sec-head"><p class="ve-label caps">Build an app</p><h2>From one-off scripts to something that runs</h2></div>
   <p><b>Workspace:</b> Use <code>~/cite-workshop</code>, the local Git repository from setup step 8. For the application, create a fresh <code>nmap-app</code> subfolder inside it and open Claude there. It remains part of the same repository; do not initialize a second repository. If that subfolder already exists, deliberately reuse it or choose another fresh name.</p>
-  <p>This is where you build a real, working application: a web version of Zenmap that runs nmap scans and shows the results in your browser. Claude does not jump to code. It researches, plans, and asks you questions first. You approve each phase before the next one starts: plan, design, code, run, verify. The workshop pacing is about 30 minutes in total; that is a plan, not a guarantee, and some builds take longer.</p>
+  <p>This is where you build a real, working application: a web version of Zenmap that runs nmap scans and shows the results in your browser. Claude does not jump to code. It researches, plans, and asks you questions first. You approve each phase before the next one starts: plan, design, code, review, run, verify. The workshop pacing is about 30 minutes in total; that is a plan, not a guarantee, and some builds take longer.</p>
   <p>Before you start: install nmap during prework, start Claude in a fresh folder, and keep approvals on. Use the model your plan offers that you tested before the session. On the free OpenRouter route from step 4b, expect it to be slower and to need more help along the way. Either way, read what it wants to run.</p>
 
   <h3>Phase 1. Plan (about 4 minutes)</h3>
@@ -503,17 +503,42 @@ list built from allowed options, never by building a shell command
 string from what the user types. Wait for my approval.</code></pre>
   <p>Check the design for each requirement before you approve it. If it mentions 0.0.0.0, a shell string, or sudo, send it back.</p>
 
-  <h3>Phase 3. Code (about 12 minutes)</h3>
+  <h3>Phase 3. Code (about 9 minutes)</h3>
   <pre><code>The design is approved. Write the code now. Ask me before you install
 any package, and tell me what each command you want to run does.</code></pre>
   <p>Read each approval. Installing a package changes your machine, so approve it on purpose. Deny anything that asks for <code>sudo</code>.</p>
 
-  <h3>Phase 4. Run and fix (about 6 minutes)</h3>
+  <h3>Phase 4. Review the code (about 5 minutes)</h3>
+  <p>Review the code before you run it. This app takes text from a web form and passes it to a program that sends packets across a network. You approved the design, but you did not watch every line get written, and code Claude writes has the same kinds of bugs as code a person writes: input that is not checked, a server listening on every interface, a command built from a string. In the Stanford study listed in Sources, people who wrote code with an AI assistant produced less secure code than those without one, and were more likely to believe it was secure.</p>
+  <p><b>Check that you have the skill.</b> Current versions of Claude Code include <code>/code-review</code> as a built-in command. Type <code>/code-review</code> in Claude; if it is not in the command menu, type <code>/exit</code>, run <code>claude update</code>, and start <code>claude</code> again. If you installed Claude Code with Homebrew, npm, or WinGet, update it through that package manager instead. The <code>code-review</code> plugin in the official marketplace is a different tool: it reviews GitHub pull requests, and this local build has none.</p>
+  <pre><code>Use the code-review skill to review all the code you wrote for this
+app in the nmap-app folder. Do not change any files yet.
+
+List every issue you find, most severe first. For each issue give me:
+1. The issue: what is wrong, with the file name and line number.
+2. Explanation: why it matters and what could happen if this code
+   runs as written, including any security impact.
+3. How to fix it: the specific change you would make.
+
+Check these points in particular: the server binds to 127.0.0.1 only;
+nmap is called with an argument list and never a shell command string;
+the target and scan type are validated against the allowed options
+before nmap runs; nothing needs sudo or root; no secrets or passwords
+are written into the code.
+
+When the list is done, stop and wait for me to choose which fixes to
+apply.</code></pre>
+  <p>Read each finding, then choose what to fix:</p>
+  <pre><code>Apply the fixes for issues 1 and 2. Show me the change for each one,
+then run the code review again on the files you changed.</code></pre>
+  <p>Move on when every high-severity finding is fixed or you have a stated reason to leave it. Do not use the <code>--fix</code> flag here; it applies fixes before you have read them. The review is the same model checking its own work, so it can miss things. It does not replace reading the changes yourself or the nmap comparison in Phase 6.</p>
+
+  <h3>Phase 5. Run and fix (about 4 minutes)</h3>
   <pre><code>Start the app on 127.0.0.1 and tell me the address to open. If it
 fails, show me the error and propose one fix at a time.</code></pre>
   <p>Confirm the startup output shows 127.0.0.1, not 0.0.0.0. Open the page in your browser.</p>
 
-  <h3>Phase 5. Verify (about 4 minutes)</h3>
+  <h3>Phase 6. Verify (about 4 minutes)</h3>
   <p>Run one scan of 127.0.0.1 from the app. Then run the same kind of scan with nmap on its own in a second terminal, for example <code>nmap -sT 127.0.0.1</code> for a port scan, and check that the open ports match. Type an invalid target such as <code>not-a-host</code> and confirm the app shows an error instead of running something else.</p>
   <p>If it works, you have gone from one sentence to a working tool. If it does not work by the end of the time, say what works and what does not. Do not call it finished until the results match nmap.</p>
   <div class="ve-co">
