@@ -10,7 +10,7 @@ tags: [cite-talk-2026, setup, handout]
 
 This is the handout for the hands-on portion of the talk. Work through it top to bottom. Each step ends with a check so you know it worked before moving on. The presenter's version with timing is in [[Setup Walkthrough]]. Steps 1 through 8 here match steps 1 through 8 in the [[Cite Talk Guide]].
 
-Before the session, finish steps 1 through 4 and step 7: install the tools, sign in to your Claude account, and install VS Code. Do not create the workshop folder or repository ahead of time; you make it in the room. The workshop reserves 25 minutes for readiness checks, approval prompts (step 5), a GitHub account (step 6), and your local workshop repository (step 8). Install only missing tools; use the existing [[Setup Guides/Git Setup Guide]], [[Setup Guides/Node.js Setup Guide]], and [[Setup Guides/Python Setup Guide]] for platform-specific checks and recovery.
+Before the session, finish steps 1 through 4 and step 7: install the tools (including the GitHub command-line tool, `gh`), sign in to your Claude account, and install VS Code. Do not create the workshop folder or repository ahead of time; you make it in the room. The workshop reserves 25 minutes for readiness checks, approval prompts (step 5), a GitHub account and `gh` sign-in (step 6), and your local workshop repository (step 8). Install only missing tools; use the existing [[Setup Guides/Git Setup Guide]], [[Setup Guides/GitHub CLI Setup Guide]], [[Setup Guides/Node.js Setup Guide]], and [[Setup Guides/Python Setup Guide]] for platform-specific checks and recovery.
 
 ## What you need before you start
 
@@ -76,20 +76,21 @@ The second line shows your Windows user folder in Unix form, something like `/c/
 
 Where Git Bash differs from WSL in the rest of this guide:
 
-- Step 2: follow the native Windows sections of [[Setup Guides/Python Setup Guide]] and [[Setup Guides/Node.js Setup Guide]]. Git is already installed.
+- Step 2: follow the native Windows sections of [[Setup Guides/GitHub CLI Setup Guide]], [[Setup Guides/Python Setup Guide]], and [[Setup Guides/Node.js Setup Guide]]. Git is already installed.
 - Step 3: use the PowerShell install command for Claude Code, then run `claude` from Git Bash.
 - Step 5: start plain `claude` and check Manual mode and existing allow rules. No bypass alias is created.
 - Step 7: the WSL extension is not needed. Set Git Bash as the VS Code terminal instead.
 
-## 2. Install Git, Python, and Node
+## 2. Install Git, the GitHub CLI, Python, and Node
 
-Claude Code itself does not need Python or Node. The hands-on exercises do, because the scripts Claude writes for you will be in one or the other. Git is required for your local workshop repository in step 8.
+Claude Code itself does not need Python or Node. The hands-on exercises do, because the scripts Claude writes for you will be in one or the other. Git is required for your local workshop repository in step 8. The GitHub command-line tool, `gh`, is how Claude creates your remote GitHub repository and works with it; you sign it in during step 6.
 
 ### Follow the existing platform-specific guides
 
 Use one current instruction set for each tool rather than mixing installers:
 
 - [[Setup Guides/Git Setup Guide]]: check Git first, then use the matching operating-system installation and recovery steps.
+- [[Setup Guides/GitHub CLI Setup Guide]]: check `gh` first. On Ubuntu, Debian, and WSL, use GitHub's package repository; the plain `apt install gh` package is outdated and broken.
 - [[Setup Guides/Node.js Setup Guide]]: check Node first; review installer scripts before executing them.
 - [[Setup Guides/Python Setup Guide]]: check Python in the actual workshop terminal, including a virtual-environment check where directed.
 
@@ -101,6 +102,7 @@ Open a new terminal window, then:
 
 ```bash
 git --version
+gh --version
 node --version
 npm --version
 python3 --version   # macOS, Linux, WSL; use python --version in native Windows/Git Bash
@@ -187,9 +189,17 @@ You do this in the room. If you already have a GitHub account, sign in at github
 
 Otherwise, go to github.com/signup and follow the prompts. Use an email address your district allows and that you can open now; GitHub asks you to verify it. Each person uses their own account. Never share a password or verification code, and nobody creates an account for someone else.
 
-Check: you can sign in at github.com.
+Then sign the GitHub CLI in to that account:
 
-If the verification email is slow or signup is blocked, keep going. Step 8 needs Git, not a GitHub account. Finish the account after the session.
+```bash
+gh auth login
+```
+
+Pick `GitHub.com`, `HTTPS`, `Yes` to authenticate Git with your GitHub credentials, and `Login with a web browser`. Copy the one-time code it prints, press Enter, and enter the code in the browser. In WSL, if no browser opens, paste the printed URL into a Windows browser. [[Setup Guides/GitHub CLI Setup Guide]] explains each prompt and where the token is stored.
+
+Check: you can sign in at github.com, and `gh auth status` shows `Logged in to github.com` with your username.
+
+If the verification email is slow or signup is blocked, keep going. Step 8 needs Git, not a GitHub account or `gh`. Finish the account and `gh auth login` after the session.
 
 ## 7. Install VS Code and extensions
 
@@ -246,9 +256,11 @@ To open the folder in VS Code, run `code .` from the folder, or use File > Open 
 
 ## Optional after step 8: connect to GitHub
 
-None of this is required for the workshop. Do it when you want to back up or share a project on GitHub. Pushing needs at least one commit, and a commit needs the Git identity from step 2.
+None of this is required for the workshop. Do it when you want to back up or share a project on GitHub. You need `gh` installed and signed in (steps 2 and 6). Pushing needs at least one commit, and a commit needs the Git identity from step 2.
 
-### SSH key
+### Optional: SSH key
+
+You can skip this. `gh auth login` with HTTPS already lets Git push to GitHub. Set up SSH if you prefer it or your district requires it.
 
 First check for an existing appropriate SSH key. Reuse it if suitable; do not overwrite a private key. If you need a new key, the command below creates one. This is how your machine proves to GitHub that it is you.
 
@@ -274,41 +286,7 @@ ssh -T git@github.com
 
 The first time, compare the displayed host fingerprint with GitHub's published SSH key fingerprints. Type `yes` only if they match. Then it prints "Hi yourusername! You've successfully authenticated". That line is success; the rest of the message about no shell access is normal. See GitHub's documentation on checking existing SSH keys, key passphrases, and testing your SSH connection.
 
-### GitHub command line tool
-
-This lets Claude create repositories for you instead of you doing it by hand in the browser.
-
-macOS:
-
-```bash
-brew install gh
-```
-
-Linux and WSL:
-
-```bash
-sudo apt install -y gh
-```
-
-Windows with Git Bash, from PowerShell:
-
-```powershell
-winget install GitHub.cli
-```
-
-Then log in:
-
-```bash
-gh auth login
-```
-
-Pick GitHub.com, SSH, the key you made, and "Login with a web browser". Follow the prompts.
-
-Check:
-
-```bash
-gh auth status
-```
+To have `gh` use SSH for new repositories, run `gh config set git_protocol ssh`.
 
 ### Push to a private GitHub repository
 
@@ -322,12 +300,12 @@ claude
 Paste this, replacing the username:
 
 ```
-Set up this folder as a git repository named "cite-workshop", create a private GitHub repository under the username YOUR_GITHUB_USERNAME, add it as the origin remote using SSH, and push. Use the gh command for anything that needs GitHub itself.
+Set up this folder as a git repository named "cite-workshop", create a private GitHub repository under the username YOUR_GITHUB_USERNAME, add it as the origin remote, and push. Use the gh command for anything that needs GitHub itself.
 ```
 
 Confirm Manual mode and inspect existing allow rules. Read each proposed command before approving it. Reuse your workshop folder from step 8; do not overwrite an existing project. Never push private keys, credentials, or real district data.
 
-If you skipped the GitHub command line tool, use this workshop's browser-based fallback. Create an empty private repository in the GitHub web interface first, then tell Claude the SSH URL it shows you (it starts with `git@github.com:`) and ask it to add that as the remote and push.
+If `gh` is blocked on your machine, use the browser-based fallback. Create an empty private repository in the GitHub web interface first, then tell Claude the URL it shows you and ask it to add that as the remote and push.
 
 Check: open github.com/YOUR_GITHUB_USERNAME/cite-workshop in a browser. The files Claude committed should be there.
 
@@ -336,7 +314,9 @@ Check: open github.com/YOUR_GITHUB_USERNAME/cite-workshop in a browser. The file
 - `claude: command not found` after install. Open a new terminal. If still missing, see the PATH fix in step 3.
 - Login loops or "not authorized". You are signed into a free claude.ai account. Claude Code needs a paid plan.
 - `mkdir: ... File exists` in step 8. The folder is already there. Reuse it only if it is your own workshop folder, or pick a new folder name.
-- GitHub verification email does not arrive. Continue with step 8, which needs only Git, and finish the account later.
+- GitHub verification email does not arrive. Continue with step 8, which needs only Git, and finish the account and `gh auth login` later.
+- `gh: command not found`. Open a new terminal window. On Windows, check in Git Bash, and in WSL install `gh` inside Ubuntu. See [[Setup Guides/GitHub CLI Setup Guide]].
+- `gh` errors on Ubuntu or Debian with version 2.45 or 2.46. That is the broken distro package. Remove it and install from GitHub's repository as the GitHub CLI guide shows.
 - `Permission denied (publickey)` from GitHub (optional SSH). The key is not on your GitHub account yet, or you generated it under a different name. Run `ls ~/.ssh` and check for `id_ed25519.pub`, then redo the paste in the optional SSH section.
 - WSL cannot reach the network. Follow your district's approved network/VPN troubleshooting process; do not disable security controls to make the workshop work.
 - `code .` does nothing in WSL. Install the WSL extension in VS Code on the Windows side, then restart the Ubuntu terminal.

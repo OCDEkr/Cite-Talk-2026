@@ -208,6 +208,7 @@ Transient files are described collectively at the end. `README.md` is this repos
 | File | Availability | Purpose / usage |
 |---|---|---|
 | `Setup Guides/Git Setup Guide.md` | tracked | Platform-specific Git check-first, installation, success-check, and recovery instructions. |
+| `Setup Guides/GitHub CLI Setup Guide.md` | tracked | GitHub CLI (`gh`) check-first, installation from GitHub's official packages, `gh auth login` walkthrough, and recovery. |
 | `Setup Guides/Node.js Setup Guide.md` | tracked | Platform-specific Node.js check-first, installation, success-check, and recovery instructions. |
 | `Setup Guides/Python Setup Guide.md` | tracked | Platform-specific Python/virtual-environment checks, installation instructions, and recovery. |
 

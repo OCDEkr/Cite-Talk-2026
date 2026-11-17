@@ -147,12 +147,12 @@
     <li><b>Git Bash</b> is a lighter install. Get it from git-scm.com or <code>winget install Git.Git</code>. Best when WSL is blocked.</li>
   </ul>
 
-  <p><b>Before the workshop:</b> do steps 1–4 and step 7: install the tools, sign in to your Claude plan, and install VS Code. Do not create the workshop folder or repository ahead of time. In the room we check those steps, then do step 5 (approval prompts), step 6 (GitHub account), and step 8 (your local workshop repository) together. Connecting to GitHub with SSH, <code>gh</code>, or a push is optional and comes after step 8. Steps 1–8 here match steps 1–8 in <a href="Setup%20Guide.md">Setup Guide.md</a>. Optional tools in steps 9–11 are not required.</p>
-  <h3>2. Install Git, Python, and Node</h3>
-  <p>Install only missing tools. Platform-specific checks and recovery are in the existing <b>Setup Guides</b> folder: <a href="Setup%20Guides/Git%20Setup%20Guide.md">Git Setup Guide.md</a>, <a href="Setup%20Guides/Node.js%20Setup%20Guide.md">Node.js Setup Guide.md</a>, and <a href="Setup%20Guides/Python%20Setup%20Guide.md">Python Setup Guide.md</a>.</p>
-  <p>Claude Code does not need Python or Node. The exercises do, because the scripts it writes for you are in one or the other.</p>
+  <p><b>Before the workshop:</b> do steps 1–4 and step 7: install the tools (including the GitHub CLI, <code>gh</code>), sign in to your Claude plan, and install VS Code. Do not create the workshop folder or repository ahead of time. In the room we check those steps, then do step 5 (approval prompts), step 6 (GitHub account and <code>gh auth login</code>), and step 8 (your local workshop repository) together. Creating a remote repository and pushing to it is optional and comes after step 8. Steps 1–8 here match steps 1–8 in <a href="Setup%20Guide.md">Setup Guide.md</a>. Optional tools in steps 9–11 are not required.</p>
+  <h3>2. Install Git, the GitHub CLI, Python, and Node</h3>
+  <p>Install only missing tools. Platform-specific checks and recovery are in the <b>Setup Guides</b> folder: <a href="Setup%20Guides/Git%20Setup%20Guide.md">Git Setup Guide.md</a>, <a href="Setup%20Guides/GitHub%20CLI%20Setup%20Guide.md">GitHub CLI Setup Guide.md</a>, <a href="Setup%20Guides/Node.js%20Setup%20Guide.md">Node.js Setup Guide.md</a>, and <a href="Setup%20Guides/Python%20Setup%20Guide.md">Python Setup Guide.md</a>.</p>
+  <p>Claude Code does not need Python or Node. The exercises do, because the scripts it writes for you are in one or the other. The GitHub CLI, <code>gh</code>, is how Claude creates your remote GitHub repository and works with it; you sign it in during step 6. On Ubuntu, Debian, and WSL, install <code>gh</code> from GitHub's package repository as the guide shows. Plain <code>apt install gh</code> gets an outdated package that GitHub says is broken.</p>
   <p>Follow the guide for your actual workshop shell. WSL uses Linux instructions inside Ubuntu; native Windows/Git Bash uses the Windows instructions. Review installers before running them and reopen the terminal after installation. These existing guides are the authority for runtime installation; this page does not maintain a second installer command set.</p>
-  <p><b>Check:</b> open a new terminal and run <code>git --version</code>, <code>python3 --version</code> (or <code>python</code> on Windows), <code>node --version</code>, and <code>npm --version</code>. Each prints a version.</p>
+  <p><b>Check:</b> open a new terminal and run <code>git --version</code>, <code>gh --version</code>, <code>python3 --version</code> (or <code>python</code> on Windows), <code>node --version</code>, and <code>npm --version</code>. Each prints a version.</p>
   <p><b>Optional:</b> tell Git who you are. The workshop does not make commits, so you can skip this today; you need it before your first commit, for example before the optional push after step 8. Check the current values first and keep any values your organization manages:</p>
   <pre class="step-cmd"><code>git config --global user.name
 git config --global user.email</code></pre>
@@ -204,7 +204,10 @@ export CLAUDE_CODE_SUBAGENT_MODEL="nvidia/nemotron-3-ultra-550b-a55b:free"</code
 
   <h3>6. Create a GitHub account</h3>
   <p>You do this in the room. If you already have a GitHub account, sign in at github.com. Otherwise, go to github.com/signup and follow the prompts. Use an email address your district allows and that you can open now; GitHub asks you to verify it. Each person uses their own account. Never share a password or verification code, and nobody creates an account for someone else.</p>
-  <p><b>Check:</b> you can sign in at github.com. If the verification email is slow or signup is blocked, keep going. Step 8 needs Git, not a GitHub account. Finish the account after the session.</p>
+  <p>Then sign the GitHub CLI in to that account:</p>
+  <pre class="step-cmd"><code>gh auth login    # GitHub.com, HTTPS, Yes (authenticate Git), Login with a web browser</code></pre>
+  <p>Copy the one-time code it prints, press Enter, and enter the code in the browser. In WSL, if no browser opens, paste the printed URL into a Windows browser. If <code>gh</code> says it saved the token to a plain-text file, treat that file as a password: never share it or commit it.</p>
+  <p><b>Check:</b> you can sign in at github.com, and <code>gh auth status</code> shows your username. If the verification email is slow or signup is blocked, keep going. Step 8 needs Git, not a GitHub account or <code>gh</code>. Finish the account and <code>gh auth login</code> after the session.</p>
 
   <h3>7. Install VS Code and extensions</h3>
   <p>Download VS Code from code.visualstudio.com and add two extensions: Python (Microsoft) and Claude Code (Anthropic). The Claude Code extension bundles its own copy of the tool, so it works even if the terminal install in step 3 gave you trouble.</p>
@@ -227,32 +230,27 @@ git rev-parse --show-toplevel</code></pre>
   <p><b>Optional: let Claude write a CLAUDE.md.</b> <code>/init</code> is a Claude Code command, not part of Git. It drafts a CLAUDE.md file that tells Claude about this project; it does not create a Git repository, because <code>git init</code> already did that. Run <code>claude</code> in the folder, type <code>/init</code>, and read the file-write approval before you accept it.</p>
 
   <h3>Optional after step 8: connect to GitHub</h3>
-  <p>None of this is required for the workshop. Do it when you want to back up or share a project on GitHub. Pushing needs at least one commit, and a commit needs the optional Git identity from step 2.</p>
-  <p><b>SSH key.</b> Check for an existing suitable SSH key before creating one. Never overwrite a private key; answer <code>n</code> to an overwrite prompt. Protect new keys with a passphrase. Add only the corresponding public <code>.pub</code> key to GitHub. On first SSH connection, compare the displayed host fingerprint with GitHub’s published SSH fingerprints and accept only a match. See the optional SSH section of Setup Guide.md for the complete instructions.</p>
+  <p>None of this is required for the workshop. Do it when you want to back up or share a project on GitHub. You need <code>gh</code> installed and signed in (steps 2 and 6). Pushing needs at least one commit, and a commit needs the optional Git identity from step 2.</p>
+  <p><b>Optional: SSH key.</b> You can skip this: <code>gh auth login</code> with HTTPS already lets Git push. Set up SSH if you prefer it or your district requires it, then run <code>gh config set git_protocol ssh</code>. Check for an existing suitable SSH key before creating one. Never overwrite a private key; answer <code>n</code> to an overwrite prompt. Protect new keys with a passphrase. Add only the corresponding public <code>.pub</code> key to GitHub. On first SSH connection, compare the displayed host fingerprint with GitHub’s published SSH fingerprints and accept only a match. See the optional SSH section of Setup Guide.md for the complete instructions.</p>
   <pre class="step-cmd"><code># Only create a key if you do not already have a suitable one.
 ssh-keygen -t ed25519 -C "you@yourdistrict.org"
 cat ~/.ssh/id_ed25519.pub   # share only the public key</code></pre>
   <p>In GitHub: profile picture, Settings, SSH and GPG keys, New SSH key. Paste and save. <b>Check:</b> <code>ssh -T git@github.com</code> prints "successfully authenticated".</p>
-  <p><b>The gh tool.</b> The GitHub command-line tool, <code>gh</code>, lets Claude create repositories for you instead of you doing it in the browser.</p>
-  <pre class="step-cmd"><code>brew install gh              # macOS
-sudo apt install -y gh       # Linux and WSL
-winget install GitHub.cli    # Windows, in PowerShell
-
-gh auth login                # GitHub.com, SSH, your key, Login with a web browser</code></pre>
-  <p><b>Check:</b> <code>gh auth status</code> shows you logged in.</p>
   <p><b>Push to a private repository.</b> From <code>~/cite-workshop</code>, start <code>claude</code> and paste:</p>
   <pre><code>Set up this folder as a git repository named "cite-workshop", create a
 private GitHub repository under the username YOUR_GITHUB_USERNAME, add it
-as the origin remote using SSH, and push. Use the gh command for anything
+as the origin remote, and push. Use the gh command for anything
 that needs GitHub itself.</code></pre>
-  <p>Confirm Manual mode and read each proposed command before approving it. Reuse your workshop folder from step 8; do not overwrite an existing project. Never push private keys, credentials, or real district data. If you skipped <code>gh</code>, create an empty private repository on github.com first, then give Claude the SSH URL it shows (it starts with <code>git@github.com:</code>) and ask it to add that remote and push. <b>Check:</b> open your repository page on GitHub. The files Claude committed are there.</p>
+  <p>Confirm Manual mode and read each proposed command before approving it. Reuse your workshop folder from step 8; do not overwrite an existing project. Never push private keys, credentials, or real district data. If <code>gh</code> is blocked on your machine, create an empty private repository on github.com first, then give Claude the URL it shows and ask it to add that remote and push. <b>Check:</b> open your repository page on GitHub. The files Claude committed are there.</p>
 
   <h3>If something goes wrong</h3>
   <ul class="lede-list">
     <li><code>claude: command not found</code>: open a new terminal, then try the PATH fix in step 3.</li>
     <li>Login loops or "not authorized": you are signed in to a free claude.ai account. Claude Code needs a paid plan, or the OpenRouter route in step 4b.</li>
     <li><code>mkdir: ... File exists</code> in step 8: the folder is already there. Reuse it only if it is your own workshop folder, or pick a new folder name.</li>
-    <li>GitHub verification email does not arrive: continue with step 8, which needs only Git, and finish the account later.</li>
+    <li>GitHub verification email does not arrive: continue with step 8, which needs only Git, and finish the account and <code>gh auth login</code> later.</li>
+    <li><code>gh: command not found</code>: open a new terminal window. On Windows check in Git Bash; in WSL install <code>gh</code> inside Ubuntu. See <a href="Setup%20Guides/GitHub%20CLI%20Setup%20Guide.md">GitHub CLI Setup Guide.md</a>.</li>
+    <li><code>gh</code> errors on Ubuntu or Debian at version 2.45 or 2.46: that is the broken distro package. Remove it and install from GitHub's repository.</li>
     <li><code>Permission denied (publickey)</code> from GitHub (optional SSH): the public key is not on your account yet. Run <code>ls ~/.ssh</code>, look for <code>id_ed25519.pub</code>, and repeat the paste in the optional SSH steps after step 8.</li>
     <li>Git Bash says <code>python3: command not found</code>: the Windows installer names it <code>python</code>. Use that, or add <code>alias python3=python</code> to <code>~/.bashrc</code>.</li>
     <li>Claude Code cannot find Git Bash: add <code>{"env": {"CLAUDE_CODE_GIT_BASH_PATH": "C:\\Program Files\\Git\\bin\\bash.exe"}}</code> to <code>~/.claude/settings.json</code>.</li>
